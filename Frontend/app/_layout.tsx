@@ -1,5 +1,6 @@
 import { SplashScreen, Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
 
@@ -46,13 +47,17 @@ export default function RootLayout() {
 
 
 function RootLayoutNav() {
+  const insets = useSafeAreaInsets();
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DarkTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DarkTheme}>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }
+
