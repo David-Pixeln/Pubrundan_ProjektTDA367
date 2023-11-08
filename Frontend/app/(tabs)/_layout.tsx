@@ -17,7 +17,7 @@ function TabBarIcon(props: TabBarIconProps) {
   const Icon = props.Icon;
   const iconProps = { ...props, Icon: undefined, size: props.size || 28 };
 
-  return <Icon style={{ marginBottom: -16 }} {...iconProps} />;
+  return <Icon style={{ marginBottom: 0 }} {...iconProps} />;
 }
 
 
@@ -32,7 +32,7 @@ export default function TabsLayout() {
           headerShown: false,
           tabBarActiveTintColor: colors.primary,
           //tabBarLabel: navigation.isFocused() ? route.name : ''
-          //tabBarShowLabel: false,
+          tabBarShowLabel: false,
         };
     }}
     >
@@ -51,7 +51,7 @@ export default function TabsLayout() {
 
       <Tabs.Screen name="pub_route"
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon Icon={VectorIcons.FontAwesome} name="navigate" color={color} />
+          tabBarIcon: ({ color }) => <TabBarIcon Icon={VectorIcons.Ionicons} name="navigate" color={color} />
         }}
       />
 
