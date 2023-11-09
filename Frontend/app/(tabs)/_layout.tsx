@@ -43,9 +43,9 @@ export default function TabsLayout() {
         }}
       />
 
-      <Tabs.Screen name="explore"
+      <Tabs.Screen name="search"
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon Icon={VectorIcons.MaterialIcons} name="location-on" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon Icon={VectorIcons.FontAwesome} name="search" size={24} color={color} />
         }}
       />
 
@@ -61,9 +61,9 @@ export default function TabsLayout() {
         }}
       />
 
-      <Tabs.Screen name="search"
+      <Tabs.Screen name="profile"
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon Icon={VectorIcons.FontAwesome} name="search" size={24} color={color} />
+          tabBarIcon: ({ color }) => <TabBarIcon Icon={VectorIcons.FontAwesome} name="user" size={24} color={color} />,
         }}
       />
 
