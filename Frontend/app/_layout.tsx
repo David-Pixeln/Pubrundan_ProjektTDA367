@@ -6,7 +6,7 @@ import { useFonts } from 'expo-font';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { ThemeContext, DarkTheme, CustomTheme } from '@constants/themes';
 import { StatusBar, setStatusBarStyle } from 'expo-status-bar';
-import { View } from 'react-native';
+
 
 export {
   // Catch any errors thrown by the Layout component.
