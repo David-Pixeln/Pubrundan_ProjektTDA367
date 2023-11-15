@@ -1,69 +1,67 @@
+import { useContext } from 'react';
 import { Tabs } from 'expo-router';
-import { useTheme } from '@react-navigation/native';
+import { ThemeContext } from '@constants/themes';
 
+import { Icon } from '@components/icon';
 import * as VectorIcons from '@expo/vector-icons';
-
-
-type IconType = typeof VectorIcons[keyof typeof VectorIcons];
-
-type TabBarIconProps = {
-  Icon: IconType;
-  name: IconType['name'];
-  size?: number;
-  color: string;
-};
-
-function TabBarIcon(props: TabBarIconProps) {
-  const Icon = props.Icon;
-  const iconProps = { ...props, Icon: undefined, size: props.size || 28 };
-
-  return <Icon style={{ marginBottom: 0 }} {...iconProps} />;
-}
+import { SearchBarWithFilter, SearchBarStyles } from '@components/searchBar';
 
 
 export default function TabsLayout() {
-  const { colors } = useTheme();
+  const theme = useContext(ThemeContext);
+  const colors = theme.colors;
+  const searchBarStyles = SearchBarStyles(theme);
 
   return (
     <Tabs
-      initialRouteName='index'
-      screenOptions={({ route, navigation }) => {
-        return {
-          headerShown: false,
-          tabBarActiveTintColor: colors.primary,
-          //tabBarLabel: navigation.isFocused() ? route.name : ''
-          tabBarShowLabel: false,
-        };
+      initialRouteName='search'
+      screenOptions={{
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: colors.background.s600,
+        },
+        
+        tabBarStyle: {
+          backgroundColor: colors.background.s600,
+        },
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.text,
     }}
     >
 
       <Tabs.Screen name="index" 
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon Icon={VectorIcons.FontAwesome} name="home" color={color} />,
+          tabBarIcon: ({ color }) => <Icon Icon={VectorIcons.FontAwesome} name="home" color={color} />,
         }}
       />
 
       <Tabs.Screen name="search"
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon Icon={VectorIcons.FontAwesome} name="search" size={24} color={color} />
+          headerShown: true,
+          headerTitle: () => <SearchBarWithFilter />,
+          headerTitleAlign: 'center',
+          headerTitleContainerStyle: searchBarStyles.container,
+          
+          tabBarIcon: ({ color }) => <Icon Icon={VectorIcons.FontAwesome} name="search" size={24} color={color} />
         }}
       />
 
-      <Tabs.Screen name="pub_route"
+      <Tabs.Screen name="explore"
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon Icon={VectorIcons.Ionicons} name="navigate" color={color} />
+          tabBarIcon: ({ color }) => <Icon Icon={VectorIcons.Ionicons} name="navigate" color={color} />
         }}
       />
 
       <Tabs.Screen name="friends"
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon Icon={VectorIcons.FontAwesome5} name="user-friends" size={24} color={color} />
+          tabBarIcon: ({ color }) => <Icon Icon={VectorIcons.FontAwesome5} name="user-friends" size={24} color={color} />
         }}
       />
 
       <Tabs.Screen name="profile"
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon Icon={VectorIcons.FontAwesome} name="user" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <Icon Icon={VectorIcons.FontAwesome} name="user" size={24} color={color} />,
         }}
       />
 

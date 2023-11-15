@@ -1,13 +1,12 @@
 import { SplashScreen, Stack } from 'expo-router';
-import { useColorScheme } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
 
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { ThemeProvider } from '@react-navigation/native';
-import { LightTheme, DarkTheme } from '@constants/Colors';
-import { StatusBar } from 'expo-status-bar';
+import { ThemeContext, DarkTheme, CustomTheme } from '@constants/themes';
+import { StatusBar, setStatusBarStyle } from 'expo-status-bar';
+import { View } from 'react-native';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -48,20 +47,19 @@ export default function RootLayout() {
 
 
 function RootLayoutNav() {
-  const insets = useSafeAreaInsets();
-  const colorScheme = useColorScheme();
+  const theme: CustomTheme = DarkTheme;
 
   return (
     <SafeAreaProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DarkTheme}>
+      <ThemeContext.Provider value={theme}>
         <StatusBar
           animated={true}
-          style='auto'
+          style={ theme.dark ? 'light' : 'dark' }
         />
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
-      </ThemeProvider>
+      </ThemeContext.Provider>
     </SafeAreaProvider>
   );
 }
