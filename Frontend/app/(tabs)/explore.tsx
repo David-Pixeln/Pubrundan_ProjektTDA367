@@ -1,8 +1,9 @@
 import { ThemeContext } from "@constants/themes";
 import { useContext } from "react";
-import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View } from "react-native";
 import { StyleSheet } from "react-native";
+import MapView from "react-native-maps";
+
 
 export default function Explore() {
   const theme = useContext(ThemeContext);
@@ -11,12 +12,16 @@ export default function Explore() {
     container: {
       flex: 1,
     },
+    map: {
+      width: '100%',
+      height: '100%',
+    }
   });
   
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={{color: theme.colors.text}}>Explore</Text>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <MapView style={styles.map} />
+    </View>
   );
 }
