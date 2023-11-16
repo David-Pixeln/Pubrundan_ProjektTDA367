@@ -14,7 +14,7 @@ export default function TabsLayout() {
 
   return (
     <Tabs
-      initialRouteName='search'
+      initialRouteName='index'
       screenOptions={{
         headerShown: false,
         headerStyle: {
