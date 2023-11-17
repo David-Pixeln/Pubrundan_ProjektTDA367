@@ -1,4 +1,3 @@
-
 import { Icon } from "@components/icon";
 import * as VectorIcons from '@expo/vector-icons';
 import { SearchBar} from "./SearchBar";
