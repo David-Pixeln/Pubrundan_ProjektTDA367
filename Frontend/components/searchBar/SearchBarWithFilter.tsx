@@ -15,7 +15,7 @@ export function SearchBarWithFilter() {
   return (
     <View style={styles.viewContainer}>
       <SearchBar />
-      <Icon Icon={VectorIcons.FontAwesome} name='filter' />
+      <Icon iconType={VectorIcons.FontAwesome} name='filter' />
     </View>
   );
 }

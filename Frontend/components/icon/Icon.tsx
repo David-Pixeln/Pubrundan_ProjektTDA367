@@ -1,18 +1,19 @@
 import * as VectorIcons from '@expo/vector-icons';
+import { StyleProp, ViewStyle } from 'react-native';
 
 
 type IconType = typeof VectorIcons[keyof typeof VectorIcons];
 
 export type IconProps = {
-  Icon: IconType;
+  iconType: IconType;
   name: IconType['name'];
   size?: number;
   color?: string;
+  style?: StyleProp<ViewStyle>;
 };
 
-export function Icon(props: IconProps) {
-  const Icon = props.Icon;
-  const iconProps = { ...props, Icon: undefined, size: props.size || 28, color: props.color || 'white' };
+export function Icon({iconType: IconType, size=28, color='white', ...props}: IconProps) {
+  const iconProps = { size, color, ...props};
 
-  return <Icon style={{ marginBottom: 0 }} {...iconProps} />;
+  return <IconType style={{ marginBottom: 0, ...(props.style as object)}} {...iconProps} />;
 }
