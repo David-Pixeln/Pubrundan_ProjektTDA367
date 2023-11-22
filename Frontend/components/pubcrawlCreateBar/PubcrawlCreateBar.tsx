@@ -18,19 +18,20 @@ export function PubcrawlCreateBar () {
         </Text>
         <Icon style={styles.icon} iconType={VectorIcons.MaterialIcons} name='directions-walk' />
       </Pressable>
+      
       <Pressable style={styles.button2}>
         <Text style={styles.text}>
           Plan
         </Text>
         <Icon style={styles.icon} iconType={VectorIcons.MaterialCommunityIcons} name='vector-polyline-edit' />
       </Pressable>
+
       <Pressable style={styles.button3}>
         <Text style={styles.text}>
           Browse
         </Text>
         <Icon style={styles.icon}  iconType={VectorIcons.FontAwesome5} name='route' />
       </Pressable>
-      
     </View>
   )
 }
