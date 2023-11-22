@@ -5,7 +5,6 @@ import { ThemeContext } from '@constants/themes';
 import { SearchBarStyles } from './SearchBar.style';
 import * as VectorIcons from '@expo/vector-icons';
 
-
 export type SearchBarProps = {
   placeholder?: string;
   onChangeText?: (text: string) => void;
