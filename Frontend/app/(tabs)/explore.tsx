@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { View, Pressable, StyleSheet } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { ExplorePageStyles } from "@styles/explore.style";
-import { PubcrawlCreateBar } from "@components/pubcrawlCreateBar";
+import { PubCrawlCreateBar } from "@components/pubCrawlCreateBar";
 import { Icon } from "@components/icon";
 import * as VectorIcons from '@expo/vector-icons';
 

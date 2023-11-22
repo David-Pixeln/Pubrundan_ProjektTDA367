@@ -1,13 +1,13 @@
-import { View, StyleSheet, Pressable } from 'react-native'
-import { styles as barStyles } from './PubcrawlCreateBar.style'
-import { CustomTheme, ThemeContext } from '@constants/themes';
+import { View, Pressable } from 'react-native'
+import { styles as barStyles } from './PubCrawlCreateBar.style'
+import { ThemeContext } from '@constants/themes';
 import { useContext } from 'react';
 import { Text } from '@components/Text';
 import * as VectorIcons from '@expo/vector-icons';
 import { Icon } from "@components/icon";
 
 
-export function PubcrawlCreateBar () {
+export function PubCrawlCreateBar () {
   const theme = useContext(ThemeContext);
   const styles = barStyles(theme);
 
@@ -36,5 +36,3 @@ export function PubcrawlCreateBar () {
     </View>
   )
 }
-
-
