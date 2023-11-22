@@ -18,7 +18,7 @@ export const ExplorePageStyles = (theme: CustomTheme) => StyleSheet.create({
     elevation: 3,
     justifyContent: 'center',
     borderRadius: 100,
-    backgroundColor: "#414361",
+    backgroundColor: theme.colors.background.s600,
   },
   button2: {
     width: 52,
@@ -27,7 +27,7 @@ export const ExplorePageStyles = (theme: CustomTheme) => StyleSheet.create({
     elevation: 3,
     justifyContent: 'center',
     borderRadius: 100,
-    backgroundColor: "#414361",
+    backgroundColor: theme.colors.background.s600,
   },
   icon: {
     postition: "relative",
