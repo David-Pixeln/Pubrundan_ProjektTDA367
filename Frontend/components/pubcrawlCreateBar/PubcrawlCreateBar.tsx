@@ -6,6 +6,7 @@ import { Text } from '@components/Text';
 import * as VectorIcons from '@expo/vector-icons';
 import { Icon } from "@components/icon";
 
+
 export function PubcrawlCreateBar () {
   const theme = useContext(ThemeContext);
   const styles = barStyles(theme);
@@ -18,7 +19,7 @@ export function PubcrawlCreateBar () {
         </Text>
         <Icon style={styles.icon} iconType={VectorIcons.MaterialIcons} name='directions-walk' />
       </Pressable>
-      
+
       <Pressable style={styles.button2}>
         <Text style={styles.text}>
           Plan
