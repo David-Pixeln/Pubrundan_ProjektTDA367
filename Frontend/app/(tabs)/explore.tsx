@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-=======
 import { ThemeContext } from "@constants/themes";
 import { useContext, useState } from "react";
 import { View, Pressable, StyleSheet } from "react-native";
@@ -199,16 +195,10 @@ const mapStyle = [
     ]
   }
 ]
->>>>>>> Stashed changes
 
 
 export default function Explore() {
   return (
-<<<<<<< Updated upstream
-    <SafeAreaView>
-      <Text>Explore</Text>
-    </SafeAreaView>
-=======
     <View style={styles.container}>
       <MapView 
         style={styles.map}
@@ -235,7 +225,6 @@ export default function Explore() {
       <PubcrawlCreateBar></PubcrawlCreateBar>
       
     </View>
->>>>>>> Stashed changes
   );
 }
 
