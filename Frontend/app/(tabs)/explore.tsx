@@ -225,7 +225,7 @@ export default function Explore() {
         <Icon style={styles.searchIcon} iconType={VectorIcons.Ionicons} name='search'></Icon>
       </Pressable>
       
-      <PubcrawlCreateBar></PubcrawlCreateBar>
+      <PubCrawlCreateBar />
     </View>
   );
 }
