@@ -32,7 +32,7 @@ export default function TabsLayout() {
 
       <Tabs.Screen name="index" 
         options={{
-          tabBarIcon: ({ color }) => <Icon Icon={VectorIcons.FontAwesome} name="home" color={color} />,
+          tabBarIcon: ({ color }) => <Icon iconType={VectorIcons.FontAwesome} name="home" color={color} />,
         }}
       />
 
@@ -43,25 +43,25 @@ export default function TabsLayout() {
           headerTitleAlign: 'center',
           headerTitleContainerStyle: searchBarStyles.container,
           
-          tabBarIcon: ({ color }) => <Icon Icon={VectorIcons.FontAwesome} name="search" size={24} color={color} />
+          tabBarIcon: ({ color }) => <Icon iconType={VectorIcons.FontAwesome} name="search" size={24} color={color} />
         }}
       />
 
       <Tabs.Screen name="explore"
         options={{
-          tabBarIcon: ({ color }) => <Icon Icon={VectorIcons.Ionicons} name="navigate" color={color} />
+          tabBarIcon: ({ color }) => <Icon iconType={VectorIcons.Ionicons} name="navigate" color={color} />
         }}
       />
 
       <Tabs.Screen name="friends"
         options={{
-          tabBarIcon: ({ color }) => <Icon Icon={VectorIcons.FontAwesome5} name="user-friends" size={24} color={color} />
+          tabBarIcon: ({ color }) => <Icon iconType={VectorIcons.FontAwesome5} name="user-friends" size={24} color={color} />
         }}
       />
 
       <Tabs.Screen name="profile"
         options={{
-          tabBarIcon: ({ color }) => <Icon Icon={VectorIcons.FontAwesome} name="user" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <Icon iconType={VectorIcons.FontAwesome} name="user" size={24} color={color} />,
         }}
       />
 

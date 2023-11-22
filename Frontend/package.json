@@ -23,7 +23,6 @@
     "react-native-maps": "1.7.1",
     "react-dom": "18.2.0",
     "@expo/webpack-config": "^19.0.0",
-    "react-native-webview": "13.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

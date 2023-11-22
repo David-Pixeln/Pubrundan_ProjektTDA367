@@ -1,4 +1,3 @@
-
 import { Icon } from "@components/icon";
 import * as VectorIcons from '@expo/vector-icons';
 import { SearchBar} from "./SearchBar";
@@ -15,7 +14,7 @@ export function SearchBarWithFilter() {
   return (
     <View style={styles.viewContainer}>
       <SearchBar />
-      <Icon Icon={VectorIcons.FontAwesome} name='filter' />
+      <Icon iconType={VectorIcons.FontAwesome} name='filter' />
     </View>
   );
 }
