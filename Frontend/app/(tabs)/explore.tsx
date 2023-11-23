@@ -1,11 +1,14 @@
 import { ThemeContext } from "@constants/themes";
 
-import { useContext, useState } from "react";
-import { View, Pressable, StyleSheet } from "react-native";
+import { useContext } from "react";
+import { View, Pressable } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { ExplorePageStyles } from "@styles/explore.style";
+import { PubCrawlCreateBar } from "@components/pubCrawlCreateBar";
 import { Icon } from "@components/icon";
 import * as VectorIcons from '@expo/vector-icons';
+import { Button } from "@components/buttons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 const mapStyle = [
@@ -202,7 +205,7 @@ export default function Explore() {
   
   return (
     <View style={styles.container}>
-      <MapView 
+      <MapView
         style={styles.map}
         provider={PROVIDER_GOOGLE}
         customMapStyle={mapStyle}
@@ -211,6 +214,18 @@ export default function Explore() {
         followsUserLocation={true}
         userLocationCalloutEnabled={true}>
       </MapView>
+
+      <SafeAreaView pointerEvents="box-none" style={styles.topButtonsContainer}>
+        <Button style={styles.button} pressedStyle={styles.buttonPressed}>
+          <Icon iconType={VectorIcons.Feather} name='layers'></Icon>
+        </Button >
+        
+        <Button style={styles.button} pressedStyle={styles.buttonPressed}>
+          <Icon style={styles.searchIcon} iconType={VectorIcons.Ionicons} name='search'></Icon>
+        </Button>
+      </SafeAreaView>
+     
+      <PubCrawlCreateBar />
     </View>
   );
 }

@@ -11,38 +11,42 @@ export const ExplorePageStyles = (theme: CustomTheme) => StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  button1: {
-    width: 52,
-    height: 52, 
-    transform: [{translateX: 10}, {translateY: -650}],
-    elevation: 3,
-    justifyContent: 'center',
-    borderRadius: 100,
-    backgroundColor: "#414361",
+  topButtonsContainer: {
+    width: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    paddingHorizontal: 16,
+
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  button2: {
+  button: {
     width: 52,
-    height: 52, 
-    transform: [{translateX: 300}, {translateY: -702}],
-    elevation: 3,
+    aspectRatio: 1,
+    
+    display: 'flex',
     justifyContent: 'center',
-    borderRadius: 100,
-    backgroundColor: "#414361",
+    alignItems: 'center',
+
+    borderRadius: 50,
+    backgroundColor: theme.colors.background.s600,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.00,
+    
+    elevation: 24,
   },
-  icon: {
-    postition: "relative",
-    transform: [{translateX: 11.5}, {translateY:0}],
-    justifyContent: 'center',
-    opacity: 1,
-    bottom: 0,
-    elevation: 3,
+  buttonPressed: {
+    backgroundColor: theme.colors.background.s200,
   },
   searchIcon: {
-    postition: "relative",
-    transform: [{translateX: 0}, {translateY:11}, {rotate: '90deg'}],
-    justifyContent: 'center',
-    opacity: 1,
-    bottom: 0,
-    elevation: 3,
+    transform: [{rotate: '90deg'}],
   },
 });

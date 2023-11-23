@@ -18,11 +18,12 @@ export default function TabsLayout() {
       screenOptions={{
         headerShown: false,
         headerStyle: {
-          backgroundColor: colors.background.s600,
+          backgroundColor: colors.background.brand,
         },
         
         tabBarStyle: {
-          backgroundColor: colors.background.s600,
+          backgroundColor: colors.background.brand,
+          borderTopWidth: 0,
         },
         tabBarShowLabel: false,
         tabBarActiveTintColor: colors.primary,
