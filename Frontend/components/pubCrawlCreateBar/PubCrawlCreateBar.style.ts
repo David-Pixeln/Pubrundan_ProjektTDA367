@@ -5,11 +5,10 @@ import {CustomTheme, DarkTheme} from '@constants/themes';
 export const styles = (theme: CustomTheme) => StyleSheet.create({
   container: {
     width: "80%",
-    bottom: 16,
-    
     position: "absolute",
     alignSelf: "center",
-
+    bottom: 16,
+    
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -19,6 +18,17 @@ export const styles = (theme: CustomTheme) => StyleSheet.create({
     paddingHorizontal: 20,
 
     backgroundColor: theme.colors.background.brand,
+
+    // https://ethercreative.github.io/react-native-shadow-generator/
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.00,
+    
+    elevation: 24,
   },
   button: {
     display: 'flex',
