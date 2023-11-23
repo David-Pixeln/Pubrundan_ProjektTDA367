@@ -6,12 +6,12 @@ import { ThemeContext } from '@constants/themes';
 export function Text({ children, style, ...props }: TextProps) {
   const theme = useContext(ThemeContext);
   
-  if (!style || !("color" in style)) {
-    style = { ...(style as object), color: theme.colors.text };
-  }
+  const defaultStyle = {
+    color: theme.colors.text,
+  };
 
   return (
-    <RNText style={style} {...props}>
+    <RNText style={[defaultStyle, style]} {...props}>
       {children}
     </RNText>
   );

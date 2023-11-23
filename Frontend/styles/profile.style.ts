@@ -3,26 +3,7 @@ import { StyleSheet } from 'react-native';
 
 
 
-export const ProfilePageStyles = (theme: CustomTheme) => StyleSheet.create({
-  pageContainer: {
-    flex: 1,
-    backgroundColor: theme.colors.background.s200,
-  },
-  profilePictureContainer: {
-    height: 128,
-    width: 128,
-    borderRadius: 100,
-  },
-  profilePicture: {
-    height: 128,
-    width: 128,
-    size: 100,
-    
-  },
-
-  
-  
-  /*
+export const ProfilePageStyles = (theme: CustomTheme) => StyleSheet.create({ 
   pageContainer: {
     flex: 1,
     backgroundColor: theme.colors.background.s200,
@@ -62,5 +43,4 @@ export const ProfilePageStyles = (theme: CustomTheme) => StyleSheet.create({
     width: '100%',
     height: '100%',
   }
-  */
 });
