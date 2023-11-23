@@ -1,7 +1,8 @@
-package controller;
+/*
+package com.Pubrunda.controllers;
 
-import com.Pubrunda.PubCrawl;
-import repository.PubCrawlRepository;
+import com.Pubrunda.models.PubCrawl;
+import com.Pubrunda.repositories.PubCrawlRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,3 +30,4 @@ public class PubCrawlController {
     }
 
 }
+*/

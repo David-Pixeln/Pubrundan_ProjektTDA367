@@ -1,4 +1,4 @@
-package com.Pubrunda;
+package com.Pubrunda.models;
 
 
 import jakarta.persistence.Entity;
@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import com.Pubrunda.exception.MethodNotImplementedException;
+
 
 @Entity
 public class Pub {
@@ -20,9 +20,9 @@ public class Pub {
     private LocalTime closingTime;
     private LocalDateTime lastUpdatedTime;
 
-    Pub() {}
+    public Pub() {}
 
-    Pub(String name, LocalTime openingTime, LocalTime closingTime) {
+    public Pub(String name, LocalTime openingTime, LocalTime closingTime) {
         this.name = name;
         this.openingTime = openingTime;
         this.closingTime = closingTime;
@@ -37,6 +37,5 @@ public class Pub {
     public LocalTime getClosingTime(){
         return closingTime;
     }
-
 
 }

@@ -1,4 +1,5 @@
-package com.Pubrunda;
+/*
+package com.Pubrunda.models;
 
 
 import com.Pubrunda.exception.MethodNotImplementedException;
@@ -24,7 +25,10 @@ public class PubCrawl {
     private LocalDateTime lastUpdatedTime;
     private User creator;
 
-    PubCrawl(String name, LocalTime earliestOpeningTime, LocalTime latestClosingTime, User creator) {
+
+    public PubCrawl() {}
+
+    public PubCrawl(String name, LocalTime earliestOpeningTime, LocalTime latestClosingTime, User creator) {
         this.name = name;
         this.earliestOpeningTime = earliestOpeningTime;
         this.latestClosingTime = latestClosingTime;
@@ -55,6 +59,7 @@ public class PubCrawl {
                 latest = pub.getClosingTime();
             }
         }
+
         return name;
     }
 
@@ -73,3 +78,4 @@ public class PubCrawl {
     }
 
 }
+*/

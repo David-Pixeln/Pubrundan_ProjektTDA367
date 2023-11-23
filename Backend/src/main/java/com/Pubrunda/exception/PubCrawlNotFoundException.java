@@ -5,4 +5,3 @@ public class PubCrawlNotFoundException extends RuntimeException {
         super("Could not find pubcrawl " + id);
     }
 }
-

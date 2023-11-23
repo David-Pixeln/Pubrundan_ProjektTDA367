@@ -1,13 +1,16 @@
-package com.Pubrunda;
+/*
+package com.Pubrunda.models;
 
+import com.Pubrunda.models.PubCrawl;
 import jakarta.persistence.Entity;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+import java.awt.Image;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import com.Pubrunda.exception.MethodNotImplementedException;
-
+import java.util.ArrayList;
 
 
 @Entity
@@ -23,7 +26,9 @@ public class User {
     private ArrayList<PubCrawl> finishedPubCrawls;
     private ArrayList<PubCrawl> favouritePubCrawls;
 
-    User(String name, String username, String description, Image profileImage) {
+    public User() {}
+
+    public User(String name, String username, String description, Image profileImage) {
         this.name = name;
         this.username = username;
         this.description = description;
@@ -31,6 +36,7 @@ public class User {
         this.finishedPubCrawls = new ArrayList<PubCrawl>();
         this.favouritePubCrawls = new ArrayList<PubCrawl>();
     }
+
     // write gettters and setters for these
     public String getName(){
         return name;
@@ -70,6 +76,5 @@ public class User {
         favouritePubCrawls.remove(pubCrawl);
     }
 
-    
-
 }
+*/

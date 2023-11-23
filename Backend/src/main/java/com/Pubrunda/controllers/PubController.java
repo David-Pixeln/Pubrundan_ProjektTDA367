@@ -1,7 +1,7 @@
-package controller;
+package com.Pubrunda.controllers;
 
-import com.Pubrunda.Pub;
-import repository.PubRepository;
+import com.Pubrunda.models.Pub;
+import com.Pubrunda.repositories.PubRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
