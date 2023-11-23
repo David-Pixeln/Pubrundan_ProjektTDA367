@@ -12,7 +12,7 @@ public class PubCrawlTest {
         PubCrawl myPubCrawl = new PubCrawl("name");
         myPubCrawl.addPub(myPub1);
         myPubCrawl.addPub(myPub2);
-        assertEquals(myPubCrawl,);
+        assertEquals(myPubCrawl);
     }
 
     @Test
@@ -35,4 +35,8 @@ public class PubCrawlTest {
     @Test
     void testGetClosingTime() {}
 
+    @Test
+    void testGetOpeningTime() {
+        
+    }
 }

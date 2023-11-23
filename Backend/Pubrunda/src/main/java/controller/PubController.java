@@ -1,5 +1,7 @@
-package com.Pubrunda;
+package controller;
 
+import com.Pubrunda.Pub;
+import repository.PubRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,22 +10,22 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class PubCrawlController {
+public class PubController {
 
-    private final PubCrawlRepository repository;
+    private final PubRepository repository;
 
-    PubCrawlController(PubCrawlRepository repository) {
+    PubController(PubRepository repository) {
         this.repository = repository;
     }
 
-    @GetMapping("/pubCrawls")
-    List<PubCrawl> all() {
+    @GetMapping("/pubs")
+    List<Pub> all() {
         return repository.findAll();
     }
 
-    @PostMapping("/pubCrawls")
-    PubCrawl newPubCrawl(@RequestBody PubCrawl newPubCrawl) {
-        return repository.save(newPubCrawl);
+    @PostMapping("/pubs")
+    Pub newPub(@RequestBody Pub newPub) {
+        return repository.save(newPub);
     }
 
 }
