@@ -1,10 +1,6 @@
-
 import { StyleSheet } from 'react-native';
 import { DarkTheme, CustomTheme } from '@constants/themes';
 
-
-// Remove the following line since CustomTheme is already imported above
-// import { CustomTheme } from '@constants/themes';
 
 export const SearchBarStyles = (theme: CustomTheme) => StyleSheet.create({
   container: {
