@@ -4,7 +4,6 @@ import { useContext, useState } from "react";
 import { View, Pressable, StyleSheet } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { ExplorePageStyles } from "@styles/explore.style";
-import { PubcrawlCreateBar } from "@components/pubcrawlCreateBar";
 import { Icon } from "@components/icon";
 import * as VectorIcons from '@expo/vector-icons';
 
@@ -212,30 +211,6 @@ export default function Explore() {
         followsUserLocation={true}
         userLocationCalloutEnabled={true}>
       </MapView>
-    
-
-      
-      <Pressable style={styles.button1}
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}>
-        <Icon style={styles.icon} iconType={VectorIcons.Feather} name='layers'></Icon>
-      </Pressable >
-  
-      <Pressable style={styles.button2}>
-        <Icon style={styles.searchIcon} iconType={VectorIcons.Ionicons} name='search'></Icon>
-      </Pressable>
-      
-      <PubcrawlCreateBar></PubcrawlCreateBar>
     </View>
   );
 }
-
-const handlePressIn = () => {
-  
-};
-
-const handlePressOut = () => {
-  
-  
-};
-
