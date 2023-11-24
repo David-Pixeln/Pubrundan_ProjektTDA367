@@ -21,7 +21,6 @@ public class Pub {
     private String name;
 
     @Setter
-    @Column
     private LocalTime openingTime;
 
     @Setter
