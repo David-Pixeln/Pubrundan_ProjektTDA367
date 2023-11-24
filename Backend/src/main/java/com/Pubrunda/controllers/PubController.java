@@ -1,15 +1,16 @@
 package com.Pubrunda.controllers;
 
+import com.Pubrunda.exception.ResourceNotFoundException;
 import com.Pubrunda.models.Pub;
 import com.Pubrunda.repositories.PubRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/pubs")
 public class PubController {
 
     private final PubRepository repository;
@@ -18,14 +19,39 @@ public class PubController {
         this.repository = repository;
     }
 
-    @GetMapping("/pubs")
-    List<Pub> all() {
+    @GetMapping
+    public List<Pub> getAllPubs() {
         return repository.findAll();
     }
 
+    // READ
+    @GetMapping("/{pubId}")
+    public Pub getPubById(@PathVariable long pubId) {
+        return repository.findById(pubId).orElseThrow(() -> new ResourceNotFoundException(pubId));
+    }
+
+    // CREATE
     @PostMapping("/pubs")
-    Pub newPub(@RequestBody Pub newPub) {
+    public Pub createPub(@RequestBody Pub newPub) {
         return repository.save(newPub);
+    }
+
+    // UPDATE
+    @PutMapping("/{pubId}")
+    public Pub updatePub(@RequestBody Pub newPub, @PathVariable Long pubId) {
+        Pub existingPub = repository.findById(pubId).orElseThrow(() -> new ResourceNotFoundException(pubId));
+        existingPub.setName(newPub.getName());
+        existingPub.setOpeningTime(newPub.getOpeningTime());
+        existingPub.setClosingTime(newPub.getClosingTime());
+        return repository.save(existingPub);
+    }
+
+    // DELETE
+    @DeleteMapping("/{pubId}")
+    public ResponseEntity<Pub> deleteUser(@PathVariable Long pubId) {
+        Pub existingPub = repository.findById(pubId).orElseThrow(() -> new ResourceNotFoundException(pubId));
+        repository.delete(existingPub);
+        return ResponseEntity.ok().build();
     }
 
 }
