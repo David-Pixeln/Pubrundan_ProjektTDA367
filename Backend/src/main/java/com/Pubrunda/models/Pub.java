@@ -1,24 +1,35 @@
 package com.Pubrunda.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
 @Entity
+@Getter
 public class Pub {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Setter
     private String name;
+
+    @Setter
+    @Column
     private LocalTime openingTime;
+
+    @Setter
     private LocalTime closingTime;
+
+    @Setter
     private LocalDateTime lastUpdatedTime;
+
 
     public Pub() {}
 
@@ -26,16 +37,6 @@ public class Pub {
         this.name = name;
         this.openingTime = openingTime;
         this.closingTime = closingTime;
-    }
-
-    public String getName(){
-        return name;
-    }
-    public LocalTime getOpeningTime(){
-        return openingTime;
-    }
-    public LocalTime getClosingTime(){
-        return closingTime;
     }
 
 }
