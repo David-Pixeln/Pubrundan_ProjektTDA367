@@ -16,11 +16,12 @@ export default function Home() {
       <View style={styles.cardContainer}>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
+            <Image style={styles.profilePicture} source={require('@assets/images/Portrait_Placeholder.png')} />
             <Text>
               User Name
             </Text>
             <Icon iconType={VectorIcons.Feather} name='clock'></Icon>
-            <Text> 
+            <Text>  
               42:06:90
             </Text>
           </View>

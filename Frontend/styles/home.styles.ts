@@ -17,7 +17,7 @@ export const HomePageStyles = (theme: CustomTheme) => StyleSheet.create({
     display: 'flex',
     //justifyContent: 'center',
     alignItems: 'center',
-    gap: 20, 
+    gap: 20,
 
   },
   card: {
@@ -28,8 +28,19 @@ export const HomePageStyles = (theme: CustomTheme) => StyleSheet.create({
     backgroundColor: "green",
   },
   cardHeader: {
+    height: '45%',
+    width: '100%',
     display: "flex",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 10,
   },
+  profilePicture: {
+    width: "16%",
+    height: "26%",
+    borderRadius: 50, 
+  },
+
   button: {
     width: 52,
     aspectRatio: 1,
