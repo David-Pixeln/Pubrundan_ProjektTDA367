@@ -1,8 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="PubrundaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <module name="Backend" />
+    <module name="Pubrunda" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.Pubrunda.PubrundaApplication" />
-    <option name="ALTERNATIVE_JRE_PATH" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
