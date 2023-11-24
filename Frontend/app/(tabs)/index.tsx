@@ -1,38 +1,27 @@
-import { Text, View, ScrollView, Image } from "react-native";
+import { View, ScrollView, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { HomePageStyles } from "@styles/home.styles";
 import React, { useContext } from "react";
 import { ThemeContext } from "@constants/themes";
-import { Icon } from "@components/icon";
-import * as VectorIcons from '@expo/vector-icons';
+import { PostCard } from "@components/postCard";
 
 
 export default function Home() {
   const theme = useContext(ThemeContext);
   const styles = HomePageStyles(theme);
   
+  const posts = [];
+
+  {
+    for (let index = 0; index < 10; index++)
+      posts.push(<PostCard />)
+  }
+
   return (
     <SafeAreaView style={styles.pageContainer}>
-      <View style={styles.cardContainer}>
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Image style={styles.profilePicture} source={require('@assets/images/Portrait_Placeholder.png')} />
-            <Text>
-              User Name
-            </Text>
-            <Icon iconType={VectorIcons.Feather} name='clock'></Icon>
-            <Text>  
-              42:06:90
-            </Text>
-          </View>
-         
-          
-        </View>
-          
-        <View style={styles.card}>
-            
-        </View>
-      </View>
+      <ScrollView contentContainerStyle={{rowGap: 16}} style={styles.cardContainer}>
+        { posts }
+      </ScrollView>
     </SafeAreaView>
   );
 }

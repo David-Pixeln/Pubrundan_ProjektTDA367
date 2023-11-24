@@ -9,38 +9,12 @@ export const HomePageStyles = (theme: CustomTheme) => StyleSheet.create({
     backgroundColor: theme.colors.background.s200,
   },
   cardContainer: {
-    top: "10%",
-    left: 0,
-    width: '100%',
-    height: '90%',
-
-    display: 'flex',
-    //justifyContent: 'center',
-    alignItems: 'center',
-    gap: 20,
-
-  },
-  card: {
-    width: "90%",
-    height: "85%",
+    paddingHorizontal: 20,
     
-    borderRadius: 20,
-    backgroundColor: "green",
+    display: 'flex',
+    flex: 1,
+    gap: 20,
   },
-  cardHeader: {
-    height: '45%',
-    width: '100%',
-    display: "flex",
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 10,
-  },
-  profilePicture: {
-    width: "16%",
-    height: "26%",
-    borderRadius: 50, 
-  },
-
   button: {
     width: 52,
     aspectRatio: 1,
