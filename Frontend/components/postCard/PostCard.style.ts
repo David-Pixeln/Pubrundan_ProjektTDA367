@@ -25,7 +25,10 @@ export const style = (theme: CustomTheme) => StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 5,
+  },
+  authorText: {
+    fontWeight: 'bold',
   },
   profilePictureContainer: {
     width: 40,

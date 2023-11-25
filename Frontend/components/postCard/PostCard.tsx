@@ -1,6 +1,6 @@
 import { Icon } from "@components/icon";
 import { style } from "./PostCard.style";
-import { View, Image } from "react-native";
+import { View, Image, ImageSourcePropType } from "react-native";
 import { useContext } from "react";
 import { ThemeContext } from "@constants/themes";
 import { Text } from "@components";
@@ -8,11 +8,11 @@ import * as VectorIcons from '@expo/vector-icons';
 
 
 export type PostCardProps = {
-  userName: string,
-  postTimestamp: DateTime,
-  profileImagePath: string,
-  postImagePath: string,
-  postText: string,
+  author: string,
+  timestamp: string,
+  profileImage: ImageSourcePropType,
+  postImage: ImageSourcePropType,
+  description: string,
 }
 
 export function PostCard(props: PostCardProps) {
@@ -24,24 +24,22 @@ export function PostCard(props: PostCardProps) {
       <View style={styles.cardHeader}>
         <View style={styles.headerItemContainer}>
           <View style={styles.profilePictureContainer}>
-            <Image style={styles.profilePicture} source={require({props.profileImagePath})} />
-            {/* '@assets/images/Portrait_Placeholder.png' */}
+            <Image style={styles.profilePicture} source={props.profileImage} />
           </View>
-          <Text>{props.userName}</Text>
+          <Text style={styles.authorText}>{props.author}</Text>
         </View>
         <View style={styles.headerItemContainer}>
           <Icon iconType={VectorIcons.Feather} name='clock' />
-          <Text>42:06:90</Text>
+          <Text>{props.timestamp}</Text>
         </View>
       </View>
       
       <View style={styles.postImageContainer}>
-        <Image style={styles.postImage} source={require({props.postImagePath})} />
-        {/* '@assets/images/cocktail.jpg' */}
+        <Image style={styles.postImage} source={props.postImage} />
       </View>
 
       <View>
-        <Text>{props.postText}</Text>
+        <Text><Text style={styles.authorText}>{props.author}</Text> {props.description}</Text>
       </View>
     </View>
   )
