@@ -24,4 +24,6 @@ public class Comment {
 
     //TODO add user/author
 
+    public Comment() {}
+
 }
