@@ -5,12 +5,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@RequiredArgsConstructor
 public class Review {
 
     @Id
@@ -18,18 +21,21 @@ public class Review {
     private long id;
 
     //TODO insert user
+    @NonNull
     @Setter
     private String user;
 
     @Setter
     private String mediaPath;
 
+    @NonNull
     @Setter
     private Integer rating;
 
+    @NonNull
     @Setter
     private LocalDateTime publishTime;
 
     public Review () {}
-    
+
 }
