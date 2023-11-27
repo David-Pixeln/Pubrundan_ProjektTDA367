@@ -2,12 +2,9 @@ package com.Pubrunda.controllers;
 
 import com.Pubrunda.exception.ResourceNotFoundException;
 import com.Pubrunda.models.Comment;
-import com.Pubrunda.models.Pub;
 import com.Pubrunda.repositories.CommentRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/comments")
