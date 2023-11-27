@@ -32,7 +32,4 @@ public class Post {
     private long numberOfLikes;
     @Setter
     private String content;
-
-
-
 }
