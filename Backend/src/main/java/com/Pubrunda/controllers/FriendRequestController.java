@@ -26,7 +26,7 @@ public class FriendRequestController {
     }
 
     // CREATE
-    @PostMapping("/friendRequests")
+    @PostMapping
     public FriendRequest createFriendRequest(@RequestBody FriendRequest newFriendRequest) {
         return repository.save(newFriendRequest);
     }
