@@ -18,10 +18,10 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    //TODO insert user
+
     @NonNull
     @Setter
-    private String user;
+    private String user; //TODO insert user
 
     @Setter
     private String mediaPath;
