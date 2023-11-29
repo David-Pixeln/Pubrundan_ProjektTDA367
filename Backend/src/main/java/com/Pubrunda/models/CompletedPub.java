@@ -7,12 +7,15 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+
+@RequiredArgsConstructor
 @NoArgsConstructor
 public class CompletedPub {
 
