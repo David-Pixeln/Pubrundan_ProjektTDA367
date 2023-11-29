@@ -1,14 +1,11 @@
 package com.Pubrunda.models;
 
-import jakarta.persistence.Entity;
-import lombok.Getter;
-import lombok.Setter;
+public interface AchievementStep {
 
-@Entity
-@Getter
-public abstract class AchievementStep {
+    float progress = 0;
 
-    @Setter
-    private Boolean completed;
+
+
+    float getProgress();
 
 }
