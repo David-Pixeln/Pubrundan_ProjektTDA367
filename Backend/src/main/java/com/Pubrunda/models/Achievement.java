@@ -16,8 +16,10 @@ public class Achievement {
 
     public float getProgress() {
         if (completed) {return 1;}
-        float progress = steps.getProgress();
-        if (progress >= 1) {completed = true;}
-        return progress;
+        return steps.getProgress();
+    }
+
+    public void updateCompleted(){
+        if (getProgress() >= 1) {completed = true;}
     }
 }
