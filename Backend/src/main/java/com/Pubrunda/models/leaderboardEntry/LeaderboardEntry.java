@@ -2,12 +2,12 @@ package com.Pubrunda.models.leaderboardEntry;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class LeaderboardEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,7 +18,6 @@ public class LeaderboardEntry {
     private String contestant; //TODO change from String type to User type
 
     //TODO add CompletedPubCrawl attribute
-
     @NonNull
     private Integer score;
 
