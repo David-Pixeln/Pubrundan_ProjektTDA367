@@ -14,7 +14,7 @@ import java.time.LocalTime;
 
 @Entity
 @Getter
-@RequiredArgsConstructor''
+@RequiredArgsConstructor
 @NoArgsConstructor
 public class Pub {
 
