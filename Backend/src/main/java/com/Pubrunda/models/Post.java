@@ -29,7 +29,7 @@ public class Post {
     @NonNull
     private String imagePath;
     @Setter
-    private long numberOfLikes;
+    private int numberOfLikes;
     @Setter
     private String content;
 

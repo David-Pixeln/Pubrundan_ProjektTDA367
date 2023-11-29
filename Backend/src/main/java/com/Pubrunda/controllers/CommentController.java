@@ -25,7 +25,7 @@ public class CommentController {
         return repository.save(newComment);
     }
     // DELETE
-    @DeleteMapping("/{pubId}")
+    @DeleteMapping("/{commentId}")
     public ResponseEntity<Comment> deleteComment(@PathVariable Long commentId) {
         Comment existingComment = repository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException(commentId));
         repository.delete(existingComment);
