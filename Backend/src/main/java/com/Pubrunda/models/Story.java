@@ -23,6 +23,7 @@ public class Story {
     @NonNull
     private String mediaPath;
 
+    @NonNull
     @Setter
     private LocalDateTime time;
 
