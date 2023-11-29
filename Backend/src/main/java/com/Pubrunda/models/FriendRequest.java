@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,9 @@ import java.time.LocalTime;
 
 @Entity
 @Getter
+
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class FriendRequest {
 
     @Id
@@ -30,6 +33,4 @@ public class FriendRequest {
     @Setter
     @NonNull
     private String sentTo; //TODO change type String to User
-
-    public FriendRequest() {}
 }

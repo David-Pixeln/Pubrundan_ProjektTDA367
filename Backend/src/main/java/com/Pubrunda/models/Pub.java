@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.time.LocalTime;
 @Entity
 @Getter
 @RequiredArgsConstructor''
+@NoArgsConstructor
 public class Pub {
 
     @Id
@@ -31,9 +33,6 @@ public class Pub {
 
     @Setter
     private LocalDateTime lastUpdatedTime;
-
-
-    public Pub() {}
 
     public Pub(String name, LocalTime openingTime, LocalTime closingTime) {
         this.name = name;

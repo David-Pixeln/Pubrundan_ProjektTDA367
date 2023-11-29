@@ -10,6 +10,11 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @Entity
 @RequiredArgsConstructor
+import lombok.NoArgsConstructor;
+
+@Getter
+@Entity
+@NoArgsConstructor
 public class History {
 
     @Id

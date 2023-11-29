@@ -12,6 +12,7 @@ import java.time.LocalTime;
 @Entity
 @Getter
 //@RequiredArgsConstructor
+@NoArgsConstructor
 public class Leaderboard {
 
     @Id
@@ -19,6 +20,4 @@ public class Leaderboard {
     private long id;
 
     //TODO attribute for list of LeaderboardEntry
-
-    public Leaderboard() {}
 }

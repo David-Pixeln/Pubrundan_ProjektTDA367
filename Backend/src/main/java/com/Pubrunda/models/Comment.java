@@ -5,14 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Comment {
 
     @Id
@@ -23,7 +21,4 @@ public class Comment {
     private String content;
 
     //TODO add user/author
-
-    public Comment() {}
-
 }

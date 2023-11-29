@@ -1,10 +1,7 @@
 package com.Pubrunda.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,6 +9,7 @@ import java.time.LocalTime;
 @Entity
 @Getter
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Post {
 
     @Id
@@ -31,6 +29,4 @@ public class Post {
     private int numberOfLikes;
     @Setter
     private String content;
-
-    public Post() {}
 }
