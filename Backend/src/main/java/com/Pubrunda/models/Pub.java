@@ -3,6 +3,7 @@ package com.Pubrunda.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalTime;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Pub {
 
     @Id
@@ -28,9 +30,6 @@ public class Pub {
 
     @Setter
     private LocalDateTime lastUpdatedTime;
-
-
-    public Pub() {}
 
     public Pub(String name, LocalTime openingTime, LocalTime closingTime) {
         this.name = name;

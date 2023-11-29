@@ -2,6 +2,7 @@ package com.Pubrunda.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.time.LocalTime;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class FriendRequest {
 
     @Id
@@ -23,6 +25,4 @@ public class FriendRequest {
 
     @Setter
     private String sentTo; //TODO change type String to User
-
-    public FriendRequest() {}
 }
