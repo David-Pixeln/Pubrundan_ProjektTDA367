@@ -1,4 +1,3 @@
-/*
 package com.Pubrunda.models;
 
 
@@ -23,12 +22,12 @@ public class PubCrawl {
     private LocalTime earliestOpeningTime;
     private LocalTime latestClosingTime;
     private LocalDateTime lastUpdatedTime;
-    private User creator;
+    //private User creator;
 
 
     public PubCrawl() {}
 
-    public PubCrawl(String name, LocalTime earliestOpeningTime, LocalTime latestClosingTime, User creator) {
+    public PubCrawl(String name, LocalTime earliestOpeningTime, LocalTime latestClosingTime /* User creator */) {
         this.name = name;
         this.earliestOpeningTime = earliestOpeningTime;
         this.latestClosingTime = latestClosingTime;
@@ -42,7 +41,7 @@ public class PubCrawl {
         LocalTime earliest = pubs.get(0).getOpeningTime();
 
         for(Pub pub: pubs) {
-            if (pub.getOpeningTime() < earliest){
+            if (pub.getOpeningTime().compareTo(earliest) < 0){
                 earliest = pub.getOpeningTime();
             }
         }
@@ -60,7 +59,7 @@ public class PubCrawl {
             }
         }
 
-        return name;
+        return latest;
     }
 
 
@@ -78,4 +77,3 @@ public class PubCrawl {
     }
 
 }
-*/
