@@ -18,7 +18,7 @@ public class LeaderboardEntryController {
     }
 
     // READ
-    @GetMapping("/{pubId}")
+    @GetMapping("/{leaderboardId}")
     public LeaderboardEntry getLeaderboardById(@PathVariable long leaderboardId) {
         return repository.findById(leaderboardId).orElseThrow(() -> new ResourceNotFoundException(leaderboardId));
     }
@@ -30,7 +30,7 @@ public class LeaderboardEntryController {
     }
 
     // UPDATE
-    @PutMapping("/{pubId}")
+    @PutMapping("/{leaderboardId}")
     public LeaderboardEntry updateLeaderboardEntry(@RequestBody ScoreStrategy scoreStrategy, @PathVariable Long leaderboardEntryId) {
         LeaderboardEntry existingLeaderboardEntry = repository.findById(leaderboardEntryId).orElseThrow(() -> new ResourceNotFoundException(leaderboardEntryId));
         existingLeaderboardEntry.setScore(scoreStrategy);
@@ -38,7 +38,7 @@ public class LeaderboardEntryController {
     }
 
     // DELETE
-    @DeleteMapping("/{pubId}")
+    @DeleteMapping("/{leaderboardId}")
     public ResponseEntity<LeaderboardEntry> deleteLeaderboardEntry(@PathVariable Long leaderboardEntryId) {
         LeaderboardEntry existingLeaderboardEntry = repository.findById(leaderboardEntryId).orElseThrow(() -> new ResourceNotFoundException(leaderboardEntryId));
         repository.delete(existingLeaderboardEntry);
