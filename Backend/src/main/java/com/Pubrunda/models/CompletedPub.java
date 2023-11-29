@@ -27,5 +27,5 @@ public class CompletedPub {
 
     @NonNull
     @Setter
-    private LocalDateTime timeAtCompletedPub;
+    private LocalDateTime timestamp;
 }
