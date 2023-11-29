@@ -3,6 +3,7 @@ package com.Pubrunda.models.leaderboardEntry;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
@@ -12,19 +13,18 @@ public class LeaderboardEntry {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NonNull
     @Setter
     private String contestant; //TODO change from String type to User type
 
     //TODO add CompletedPubCrawl attribute
 
-    @Setter
+    @NonNull
     private Integer score;
 
-    private ScoreStrategy scoreStrategy;
-
-
-
-    public LeaderboardEntry(ScoreStrategy scoreStrategy) {
-        this.scoreStrategy = scoreStrategy;
+    private void setScore(ScoreStrategy scoreStrategy) {
+        score = scoreStrategy.calculateScore();
     }
+
+    public LeaderboardEntry(ScoreStrategy scoreStrategy) {}
 }
