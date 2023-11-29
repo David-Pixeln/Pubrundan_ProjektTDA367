@@ -4,16 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Story {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +25,4 @@ public class Story {
     private LocalDateTime time;
 
     //TODO add user
-
-    public Story() {}
 }
