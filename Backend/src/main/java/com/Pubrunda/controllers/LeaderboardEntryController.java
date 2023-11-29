@@ -2,6 +2,7 @@ package com.Pubrunda.controllers;
 
 import com.Pubrunda.exception.ResourceNotFoundException;
 import com.Pubrunda.models.leaderboardEntry.LeaderboardEntry;
+import com.Pubrunda.models.leaderboardEntry.ScoreStrategy;
 import com.Pubrunda.repositories.LeaderboardEntryRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +31,9 @@ public class LeaderboardEntryController {
 
     // UPDATE
     @PutMapping("/{pubId}")
-    public LeaderboardEntry updateLeaderboardEntry(@RequestBody LeaderboardEntry newLeaderboardEntry, @PathVariable Long leaderboardEntryId) {
+    public LeaderboardEntry updateLeaderboardEntry(@RequestBody ScoreStrategy scoreStrategy, @PathVariable Long leaderboardEntryId) {
         LeaderboardEntry existingLeaderboardEntry = repository.findById(leaderboardEntryId).orElseThrow(() -> new ResourceNotFoundException(leaderboardEntryId));
-        existingLeaderboardEntry.setScore(newLeaderboardEntry.getScore());
+        existingLeaderboardEntry.setScore(scoreStrategy);
         return repository.save(existingLeaderboardEntry);
     }
 

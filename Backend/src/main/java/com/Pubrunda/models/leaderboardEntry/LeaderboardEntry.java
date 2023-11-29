@@ -22,8 +22,8 @@ public class LeaderboardEntry {
     @NonNull
     private Integer score;
 
-    private void setScore(ScoreStrategy scoreStrategy) {
-        score = scoreStrategy.calculateScore();
+    public void setScore(ScoreStrategy scoreStrategy) {
+        score = scoreStrategy.calculateScore( /* Insert argument of CompletedPubCrawl type */);
     }
 
     public LeaderboardEntry(ScoreStrategy scoreStrategy) {}
