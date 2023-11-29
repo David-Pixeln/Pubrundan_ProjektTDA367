@@ -1,9 +1,6 @@
 package com.Pubrunda.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -14,7 +11,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class CompletedPub {
@@ -25,7 +21,9 @@ public class CompletedPub {
 
     @NonNull
     @Setter
-    private String completedPubName;
+    @OneToOne
+    @JoinColumn(name = "pub_id")
+    private Pub pub;
 
     @NonNull
     @Setter
