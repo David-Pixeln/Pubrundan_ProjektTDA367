@@ -38,7 +38,7 @@ public class LeaderboardEntryController {
 
     // DELETE
     @DeleteMapping("/{pubId}")
-    public ResponseEntity<LeaderboardEntry> deleteUser(@PathVariable Long leaderboardEntryId) {
+    public ResponseEntity<LeaderboardEntry> deleteLeaderboardEntry(@PathVariable Long leaderboardEntryId) {
         LeaderboardEntry existingLeaderboardEntry = repository.findById(leaderboardEntryId).orElseThrow(() -> new ResourceNotFoundException(leaderboardEntryId));
         repository.delete(existingLeaderboardEntry);
         return ResponseEntity.ok().build();
