@@ -16,7 +16,7 @@ public class FriendRequest {
     private long id;
 
     @Setter
-    private LocalDateTime sentTime;
+    private LocalDateTime timestamp;
 
     @Setter
     private String sentFrom; //TODO change type String to User
