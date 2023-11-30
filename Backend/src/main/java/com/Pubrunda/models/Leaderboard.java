@@ -20,7 +20,7 @@ public class Leaderboard {
 
     @Setter
     @NonNull
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToMany
     @JoinColumn(name = "leaderboard_entry_id")
     private List<LeaderboardEntry> leaderboardEntryList;
 }
