@@ -6,8 +6,6 @@ import com.Pubrunda.repositories.HistoryRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/histories")
 public class HistoryController {
@@ -43,6 +41,7 @@ public class HistoryController {
         //existingHistory.setName(newHistory.getAllCompletedPubCrawls());
         return repository.save(existingHistory);
     }
+
     // DELETE
     @DeleteMapping("/{historyId}")
     public ResponseEntity<History> deleteHistory(@PathVariable Long historyId) {
