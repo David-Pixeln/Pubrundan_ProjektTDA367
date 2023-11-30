@@ -17,6 +17,6 @@ public class Leaderboard {
     @Setter(AccessLevel.NONE)
     private long id;
 
-    //TODO attribute for list of LeaderboardEntry
+    // TODO: attribute for list of LeaderboardEntry
 
 }

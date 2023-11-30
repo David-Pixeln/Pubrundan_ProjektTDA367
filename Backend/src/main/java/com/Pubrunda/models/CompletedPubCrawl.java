@@ -19,9 +19,9 @@ public class CompletedPubCrawl {
     @Setter(AccessLevel.NONE)
     private long id;
 
-    // TODO list of completedPubs
+    // TODO: list of completedPubs
 
-    // TODO PubCrawl
+    // TODO: PubCrawl
 
     @NonNull
     private LocalDateTime completedAt;

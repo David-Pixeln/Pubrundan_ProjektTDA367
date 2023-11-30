@@ -17,7 +17,7 @@ public class Comment {
     @Setter(AccessLevel.NONE)
     private long id;
 
-    //TODO add user/author
+    // TODO: add user/author
 
     @NonNull
     private String content;

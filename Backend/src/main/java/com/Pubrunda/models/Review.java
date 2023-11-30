@@ -19,7 +19,7 @@ public class Review {
     @Setter(AccessLevel.NONE)
     private long id;
 
-    //TODO insert user
+    // TODO: insert user
     @NonNull
     private String user;
 

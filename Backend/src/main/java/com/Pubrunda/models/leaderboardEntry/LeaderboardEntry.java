@@ -20,7 +20,7 @@ public class LeaderboardEntry {
     @NonNull
     private String contestant; // FIXME: change from String type to User type
 
-    // TODO add CompletedPubCrawl attribute
+    // TODO: add CompletedPubCrawl attribute
 
     @NonNull
     private Integer score;

@@ -25,5 +25,5 @@ public class Story {
     @NonNull
     private LocalDateTime createdAt;
 
-    //TODO add user
+    // TODO: add user
 }
