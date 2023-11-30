@@ -1,6 +1,6 @@
 package com.Pubrunda.models.leaderboardEntry;
 
-
+import com.Pubrunda.models.CompletedPubCrawl;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +17,11 @@ public class LeaderboardEntry {
     @Setter
     private String contestant; //TODO change from String type to User type
 
-    //TODO add CompletedPubCrawl attribute
+    @NonNull
+    @Setter
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private CompletedPubCrawl completedPubCrawl;
     @NonNull
     private Integer score;
 

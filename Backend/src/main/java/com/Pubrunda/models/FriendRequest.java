@@ -12,7 +12,6 @@ import java.time.LocalTime;
 
 @Entity
 @Getter
-
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class FriendRequest {
@@ -20,7 +19,6 @@ public class FriendRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
 
     @Setter
     @NonNull

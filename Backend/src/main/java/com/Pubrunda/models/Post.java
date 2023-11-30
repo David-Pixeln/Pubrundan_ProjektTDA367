@@ -17,8 +17,7 @@ public class Post {
     private long id;
     @Setter
     @NonNull
-    private String author;
-    //TODO add user/author
+    private String author;  //TODO add user/author
     @Setter
     @NonNull
     private LocalTime lastUpdatedTime;
