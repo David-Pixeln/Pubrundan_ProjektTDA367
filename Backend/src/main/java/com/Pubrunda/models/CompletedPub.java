@@ -1,7 +1,8 @@
 package com.Pubrunda.models;
 
-import lombok.*;
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,5 +23,5 @@ public class CompletedPub {
 
     @NonNull
     private LocalDateTime completedAt;
-  
+
 }

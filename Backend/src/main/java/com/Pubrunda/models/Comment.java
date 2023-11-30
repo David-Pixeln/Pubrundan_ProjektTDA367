@@ -1,9 +1,6 @@
 package com.Pubrunda.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -17,7 +14,11 @@ public class Comment {
     @Setter(AccessLevel.NONE)
     private long id;
 
-    // TODO: add user/author
+    @NonNull
+    @Setter
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User author;
 
     @NonNull
     private String content;

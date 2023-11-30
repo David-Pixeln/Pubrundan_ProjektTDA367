@@ -1,6 +1,7 @@
 package com.Pubrunda.models.leaderboardEntry;
 
 import com.Pubrunda.models.CompletedPubCrawl;
+import com.Pubrunda.models.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,11 +17,14 @@ public class LeaderboardEntry {
     private long id;
 
     @NonNull
-    private String contestant; // FIXME: change from String type to User type
+    @Setter
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User contestant;
 
     @NonNull
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "completed_pub_crawl_id")
     private CompletedPubCrawl completedPubCrawl;
 
     @NonNull
