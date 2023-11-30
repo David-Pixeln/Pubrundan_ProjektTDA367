@@ -21,7 +21,7 @@ public class CompletedPub {
 
     @NonNull
     @Setter
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pub_id")
     private Pub pub;
 

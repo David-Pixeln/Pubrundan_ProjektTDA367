@@ -2,6 +2,7 @@ package com.Pubrunda.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.util.Lazy;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +19,7 @@ public class CompletedPubCrawl {
 
     @NonNull
     @Setter
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pub_crawl_id")
     private PubCrawl pubcrawl;
 

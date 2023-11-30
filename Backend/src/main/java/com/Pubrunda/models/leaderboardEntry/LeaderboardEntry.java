@@ -19,7 +19,7 @@ public class LeaderboardEntry {
 
     @NonNull
     @Setter
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private CompletedPubCrawl completedPubCrawl;
     @NonNull
