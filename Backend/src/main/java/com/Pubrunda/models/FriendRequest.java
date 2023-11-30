@@ -9,25 +9,23 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class FriendRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
 
-
-    @Setter
     @NonNull
-    private LocalDateTime timestamp;
+    private LocalDateTime createdAt;
 
-    @Setter
     @NonNull
-    private String sentFrom; //TODO change type String to User
+    private String from; // FIXME: change type String to User
 
-    @Setter
     @NonNull
-    private String sentTo; //TODO change type String to User
+    private String to; // FIXME: change type String to User
+
 }

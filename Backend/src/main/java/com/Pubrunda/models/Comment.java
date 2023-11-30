@@ -7,17 +7,19 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 @Entity
-@Getter
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
-    @NonNull
-    @Setter
-    private String content;
 
     //TODO add user/author
+
+    @NonNull
+    private String content;
+
 }

@@ -10,31 +10,26 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
-@Getter
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class Pub {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
+
     @NonNull
-    @Setter
     private String name;
 
-    @Setter
+    @NonNull
     private LocalTime openingTime;
 
-    @Setter
+    @NonNull
     private LocalTime closingTime;
 
-    @Setter
+    @NonNull
     private LocalDateTime lastUpdatedTime;
-
-    public Pub(String name, LocalTime openingTime, LocalTime closingTime) {
-        this.name = name;
-        this.openingTime = openingTime;
-        this.closingTime = closingTime;
-    }
 
 }

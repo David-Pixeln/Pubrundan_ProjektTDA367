@@ -7,19 +7,21 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 @Entity
-@Getter
+@Data
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class LeaderboardEntry {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
 
     @NonNull
-    @Setter
-    private String contestant; //TODO change from String type to User type
+    private String contestant; // FIXME: change from String type to User type
 
-    //TODO add CompletedPubCrawl attribute
+    // TODO add CompletedPubCrawl attribute
+
     @NonNull
     private Integer score;
 
@@ -29,4 +31,5 @@ public class LeaderboardEntry {
     public void setScore(ScoreStrategy scoreStrategy) {
         score = scoreStrategy.calculateScore( /* Insert argument of CompletedPubCrawl type */);
     }
+
 }

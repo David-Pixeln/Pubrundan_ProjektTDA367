@@ -9,20 +9,19 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class CompletedPub {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
 
-    @NonNull
-    @Setter
-    private String completedPubName;
+    // TODO: Pub (one to one)
 
     @NonNull
-    @Setter
-    private LocalDateTime timeAtCompletedPub;
+    private LocalDateTime completedAt;
+
 }
