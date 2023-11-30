@@ -1,9 +1,7 @@
 package com.Pubrunda.models.leaderboardEntry;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.Pubrunda.models.CompletedPubCrawl;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -20,7 +18,10 @@ public class LeaderboardEntry {
     @NonNull
     private String contestant; // FIXME: change from String type to User type
 
-    // TODO: add CompletedPubCrawl attribute
+    @NonNull
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private CompletedPubCrawl completedPubCrawl;
 
     @NonNull
     private Integer score;

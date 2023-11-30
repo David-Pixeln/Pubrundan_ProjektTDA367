@@ -19,7 +19,6 @@ public class Post {
     @Setter(AccessLevel.NONE)
     private long id;
 
-    @Setter
     @NonNull
     private String author; // FIXME: add user/author
 

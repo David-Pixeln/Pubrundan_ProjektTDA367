@@ -1,12 +1,9 @@
 package com.Pubrunda.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Entity
@@ -18,8 +15,9 @@ public class History {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    //TODO CompletedPubCrawls
-
-    //TODO Pubs
-
+    @Setter
+    @NonNull
+    @OneToMany
+    @JoinColumn(name = "completed_pub_crawl_id")
+    private List<CompletedPubCrawl> completedPubCrawlList;
 }

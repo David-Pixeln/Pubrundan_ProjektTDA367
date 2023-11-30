@@ -1,6 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="PubrundaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <module name="Pubrunda" />
+    <selectedOptions>
+      <option name="environmentVariables" />
+    </selectedOptions>
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.Pubrunda.PubrundaApplication" />
     <method v="2">
       <option name="Make" enabled="true" />

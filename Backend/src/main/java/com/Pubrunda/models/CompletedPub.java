@@ -1,11 +1,7 @@
 package com.Pubrunda.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.*;
-
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,9 +15,12 @@ public class CompletedPub {
     @Setter(AccessLevel.NONE)
     private long id;
 
-    // TODO: Pub (one to one)
+    @NonNull
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pub_id")
+    private Pub pub;
 
     @NonNull
     private LocalDateTime completedAt;
-
+  
 }

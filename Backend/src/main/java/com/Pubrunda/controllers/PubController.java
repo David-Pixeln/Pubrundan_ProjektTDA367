@@ -30,7 +30,7 @@ public class PubController {
     }
 
     // CREATE
-    @PostMapping("/pubs")
+    @PostMapping("")
     public Pub createPub(@RequestBody Pub newPub) {
         return repository.save(newPub);
     }
@@ -47,7 +47,7 @@ public class PubController {
 
     // DELETE
     @DeleteMapping("/{pubId}")
-    public ResponseEntity<Pub> deleteUser(@PathVariable Long pubId) {
+    public ResponseEntity<Pub> deletePub(@PathVariable Long pubId) {
         Pub existingPub = repository.findById(pubId).orElseThrow(() -> new ResourceNotFoundException(pubId));
         repository.delete(existingPub);
         return ResponseEntity.ok().build();

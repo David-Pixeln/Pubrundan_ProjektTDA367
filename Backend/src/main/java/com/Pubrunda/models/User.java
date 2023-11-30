@@ -1,80 +1,60 @@
-/*
 package com.Pubrunda.models;
 
-import com.Pubrunda.models.PubCrawl;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-
-import java.awt.Image;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 @Entity
-public class User {
-    
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
+public class User implements UserDetails {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private long id;
-    private String name;
+
+    @NonNull
     private String username;
-    private String description;
-    private Image profileImage;
-    private ArrayList<PubCrawl> finishedPubCrawls;
-    private ArrayList<PubCrawl> favouritePubCrawls;
 
-    public User() {}
+    @NonNull
+    private String password;
 
-    public User(String name, String username, String description, Image profileImage) {
-        this.name = name;
-        this.username = username;
-        this.description = description;
-        this.profileImage = profileImage;
-        this.finishedPubCrawls = new ArrayList<PubCrawl>();
-        this.favouritePubCrawls = new ArrayList<PubCrawl>();
+    @NonNull
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
-    // write gettters and setters for these
-    public String getName(){
-        return name;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
-    public String getUsername(){
-        return username;
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
-    public String getDescription(){
-        return description;
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
-    public Image getProfileImage(){
-        return profileImage;
-    }
-    public ArrayList<PubCrawl> getFinishedPubCrawls(){
-        return finishedPubCrawls;
-    }
-    public ArrayList<PubCrawl> getFavouritePubCrawls(){
-        return favouritePubCrawls;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
-    public void setUsername(String username){
-        this.username = username;
-    }
-    public void setDescription(String description){
-        this.description = description;
-    }
-    public void setProfileImage(Image profileImage){
-        this.profileImage = profileImage;
-    }
-    
-    public void addPubCrawlToFavourites(PubCrawl pubCrawl){
-        favouritePubCrawls.add(pubCrawl);
-    }
-    public void removePubCrawlFromFavourites(PubCrawl pubCrawl){
-        favouritePubCrawls.remove(pubCrawl);
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
 }
-*/

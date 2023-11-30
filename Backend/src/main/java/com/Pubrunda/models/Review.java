@@ -19,9 +19,9 @@ public class Review {
     @Setter(AccessLevel.NONE)
     private long id;
 
-    // TODO: insert user
     @NonNull
-    private String user;
+    @Setter
+    private String user; // FIXME: insert user
 
     @Setter
     private String mediaPath;

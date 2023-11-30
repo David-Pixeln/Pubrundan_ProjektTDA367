@@ -1,10 +1,12 @@
 package com.Pubrunda.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.Pubrunda.models.leaderboardEntry.LeaderboardEntry;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,6 +19,9 @@ public class Leaderboard {
     @Setter(AccessLevel.NONE)
     private long id;
 
-    // TODO: attribute for list of LeaderboardEntry
-
+    @NonNull
+    @OneToMany
+    @JoinColumn(name = "leaderboard_entry_id")
+    private List<LeaderboardEntry> leaderboardEntryList;
+    
 }
