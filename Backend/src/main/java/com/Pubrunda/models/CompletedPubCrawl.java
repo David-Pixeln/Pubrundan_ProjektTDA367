@@ -2,7 +2,6 @@ package com.Pubrunda.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.util.Lazy;
 
 import java.time.LocalDateTime;
 import java.util.List;

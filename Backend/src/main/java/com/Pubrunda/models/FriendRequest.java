@@ -1,9 +1,6 @@
 package com.Pubrunda.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -23,9 +20,15 @@ public class FriendRequest {
     private LocalDateTime createdAt;
 
     @NonNull
-    private String from; // FIXME: change type String to User
+    @Setter
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User fromUser;
 
     @NonNull
-    private String to; // FIXME: change type String to User
+    @Setter
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User toUser;
 
 }

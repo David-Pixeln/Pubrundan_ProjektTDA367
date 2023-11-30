@@ -15,6 +15,12 @@ public class History {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NonNull
+    @Setter
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Setter
     @NonNull
     @OneToMany

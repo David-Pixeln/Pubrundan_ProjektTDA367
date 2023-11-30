@@ -4,8 +4,6 @@ import com.Pubrunda.models.leaderboardEntry.LeaderboardEntry;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -23,5 +21,5 @@ public class Leaderboard {
     @OneToMany
     @JoinColumn(name = "leaderboard_entry_id")
     private List<LeaderboardEntry> leaderboardEntryList;
-    
+
 }

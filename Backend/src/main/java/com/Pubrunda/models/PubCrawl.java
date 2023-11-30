@@ -25,7 +25,8 @@ public class PubCrawl {
     //private User creator;
 
 
-    public PubCrawl() {}
+    public PubCrawl() {
+    }
 
     public PubCrawl(String name, LocalTime earliestOpeningTime, LocalTime latestClosingTime /* User creator */) {
         this.name = name;
@@ -33,28 +34,35 @@ public class PubCrawl {
         this.latestClosingTime = latestClosingTime;
     }
 
-    public String getName(){
+    private static int compareTimesFromNoon(LocalTime time1, LocalTime time2) {
+        int minutes1 = time1.getHour() * 60 + time1.getMinute();
+        int minutes2 = time2.getHour() * 60 + time2.getMinute();
+
+        return Integer.compare(minutes1, minutes2);
+    }
+
+    public String getName() {
         return name;
     }
 
-    public LocalTime getEarliestOpeningTime(){
+    public LocalTime getEarliestOpeningTime() {
         LocalTime earliest = pubs.get(0).getOpeningTime();
 
-        for(Pub pub: pubs) {
-            if (pub.getOpeningTime().compareTo(earliest) < 0){
+        for (Pub pub : pubs) {
+            if (pub.getOpeningTime().isBefore(earliest)) {
                 earliest = pub.getOpeningTime();
             }
         }
         return earliest;
     }
 
-    public LocalTime getLatestClosingTime(){
+    public LocalTime getLatestClosingTime() {
         LocalTime latest = pubs.get(0).getClosingTime();
 
-        for (Pub pub: pubs){
+        for (Pub pub : pubs) {
             LocalTime pubTime = pub.getOpeningTime();
             int result = compareTimesFromNoon(pubTime, latest);
-            if (result > 0){
+            if (result > 0) {
                 latest = pub.getClosingTime();
             }
         }
@@ -62,18 +70,8 @@ public class PubCrawl {
         return latest;
     }
 
-
-    public float getLength(){
+    public float getLength() {
         throw new MethodNotImplementedException();
-    }
-
-
-
-    private static int compareTimesFromNoon(LocalTime time1, LocalTime time2) {
-        int minutes1 = time1.getHour() * 60 + time1.getMinute();
-        int minutes2 = time2.getHour() * 60 + time2.getMinute();
-
-        return Integer.compare(minutes1, minutes2);
     }
 
 }
