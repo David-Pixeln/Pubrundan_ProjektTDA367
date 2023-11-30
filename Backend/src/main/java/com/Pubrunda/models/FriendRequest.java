@@ -1,6 +1,5 @@
 package com.Pubrunda.models;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
@@ -11,33 +10,27 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-
 @Entity
 @Getter
+
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Pub {
+public class FriendRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+
+    @Setter
     @NonNull
-    @Setter
-    private String name;
+    private LocalDateTime timestamp;
 
     @Setter
-    private LocalTime openingTime;
+    @NonNull
+    private String sentFrom; //TODO change type String to User
 
     @Setter
-    private LocalTime closingTime;
-
-    @Setter
-    private LocalDateTime lastUpdatedTime;
-
-    public Pub(String name, LocalTime openingTime, LocalTime closingTime) {
-        this.name = name;
-        this.openingTime = openingTime;
-        this.closingTime = closingTime;
-    }
-
+    @NonNull
+    private String sentTo; //TODO change type String to User
 }
