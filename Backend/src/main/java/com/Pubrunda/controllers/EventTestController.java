@@ -1,8 +1,10 @@
 package com.Pubrunda.controllers;
 
 import jakarta.annotation.PostConstruct;
+import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +19,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@RequestMapping("${api.base-path}/event")
+@RequestMapping("${api.baseurl}/event")
 public class EventTestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
@@ -35,7 +37,7 @@ public class EventTestController {
             }
         }));
     }
-
+    
     @GetMapping("/time")
     @CrossOrigin
     public SseEmitter streamDateTime() {
