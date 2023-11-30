@@ -2,7 +2,7 @@ package com.Pubrunda.controllers;
 
 import com.Pubrunda.dto.request.AuthenticationRequest;
 import com.Pubrunda.dto.request.RegisterUserRequest;
-import com.Pubrunda.dto.response.JwtAuthenticationResponse;
+import com.Pubrunda.dto.response.TokenAuthenticationResponse;
 import com.Pubrunda.services.JwtAuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +17,12 @@ public class JwtAuthenticationController {
     private final JwtAuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<JwtAuthenticationResponse> register(@RequestBody RegisterUserRequest request) {
+    public ResponseEntity<TokenAuthenticationResponse> register(@RequestBody RegisterUserRequest request) {
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<JwtAuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<TokenAuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
