@@ -34,6 +34,7 @@ public class Pub {
     @Setter
     private LocalDateTime lastUpdatedTime;
 
+
     public Pub(String name, LocalTime openingTime, LocalTime closingTime) {
         this.name = name;
         this.openingTime = openingTime;

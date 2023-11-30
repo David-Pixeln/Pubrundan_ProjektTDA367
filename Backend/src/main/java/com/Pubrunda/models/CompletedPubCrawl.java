@@ -1,12 +1,10 @@
 package com.Pubrunda.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,9 +16,17 @@ public class CompletedPubCrawl {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    //TODO list of completedPubs
+    @NonNull
+    @Setter
+    @OneToOne
+    @JoinColumn(name = "pub_crawl_id")
+    private PubCrawl pubcrawl;
 
-    //TODO PubCrawl
+    @NonNull
+    @Setter
+    @OneToMany
+    @JoinColumn(name = "completed_pub_id")
+    private List<CompletedPub> completedPubList;
 
     @NonNull
     @Setter
