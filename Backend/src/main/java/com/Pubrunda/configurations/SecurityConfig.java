@@ -1,7 +1,6 @@
 package com.Pubrunda.configurations;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,11 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -38,7 +33,7 @@ public class SecurityConfig {
         // Disable CSRF (not required for state-less session)
         http.csrf(AbstractHttpConfigurer::disable);
 
-        //
+        // Set authentication provider
         http.authenticationProvider(authenticationProvider);
 
         // Validate JWT
@@ -53,23 +48,12 @@ public class SecurityConfig {
         // Unauthorized path
         http.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler));
 
+        // Use SSL if enabled
         if (serverProperties.getSsl() != null && serverProperties.getSsl().isEnabled()) {
             http.requiresChannel(channel -> channel.anyRequest().requiresSecure());
         }
 
         return http.build();
-    }
-
-    private UrlBasedCorsConfigurationSource corsConfigurationSource(String[] origins) {
-        final var configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(origins));
-        configuration.setAllowedMethods(List.of("*"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setExposedHeaders(List.of("*"));
-
-        final var source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
     }
 
 }
