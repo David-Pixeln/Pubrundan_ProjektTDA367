@@ -15,11 +15,15 @@ public class Achievement {
     private AchievementStep steps;
 
     public float getProgress() {
-        if (completed) {return 1;}
+        if (completed) {
+            return 1;
+        }
         return steps.getProgress();
     }
 
-    public void updateCompleted(){
-        if (getProgress() >= 1) {completed = true;}
+    public void updateCompleted() {
+        if (getProgress() >= 1) {
+            completed = true;
+        }
     }
 }

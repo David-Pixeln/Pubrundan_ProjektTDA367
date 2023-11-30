@@ -4,11 +4,7 @@ import com.Pubrunda.exception.ResourceNotFoundException;
 import com.Pubrunda.models.AchievementSet;
 import com.Pubrunda.repositories.AchievementSetRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/achievementSet")
@@ -16,7 +12,9 @@ public class AchievementSetController {
 
     private final AchievementSetRepository repository;
 
-    AchievementSetController(AchievementSetRepository repository) {this.repository = repository;}
+    AchievementSetController(AchievementSetRepository repository) {
+        this.repository = repository;
+    }
 
     // READ
     @GetMapping("/{achievementSetId}")

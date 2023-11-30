@@ -13,7 +13,7 @@ public class AchievementSet {
     @Setter
     private Boolean complete;
 
-    public Boolean isComplete(){
+    public Boolean isComplete() {
         if (complete) {
             return true;
         } else {
@@ -23,11 +23,10 @@ public class AchievementSet {
         }
     }
 
-    public double getCompletionPercentage(){
+    public double getProgress() {
         //TODO iterate through list and get percentage of completed
         return 1.1;
     }
-
 
 
 }

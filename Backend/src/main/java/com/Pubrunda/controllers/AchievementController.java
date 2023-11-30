@@ -1,12 +1,10 @@
 package com.Pubrunda.controllers;
 
-import com.Pubrunda.models.AchievementSet;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.Pubrunda.exception.ResourceNotFoundException;
+import com.Pubrunda.models.AchievementSet;
+import com.Pubrunda.repositories.AchievementRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.Pubrunda.repositories.AchievementRepository;
 
 @RestController
 @RequestMapping("/api/achievements")
@@ -14,7 +12,9 @@ public class AchievementController {
 
     private final AchievementRepository repository;
 
-    AchievementController(AchievementRepository repository) {this.repository = repository;}
+    AchievementController(AchievementRepository repository) {
+        this.repository = repository;
+    }
 
     // READ
     @GetMapping("/{achievementId}")
