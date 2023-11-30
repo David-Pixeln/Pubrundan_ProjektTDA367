@@ -10,7 +10,7 @@ import lombok.*;
 public class Achievement {
     @Setter
     @NonNull
-    private Boolean completed = false;
+    private boolean completed = false;
     @NonNull
     private AchievementStep steps;
 
