@@ -1,34 +1,31 @@
 package com.Pubrunda.models;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
-@Getter
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class FriendRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
 
-    @Setter
     @NonNull
-    private LocalDateTime timestamp;
+    private LocalDateTime createdAt;
 
-    @Setter
     @NonNull
-    private String sentFrom; //TODO change type String to User
+    private String from; // FIXME: change type String to User
 
-    @Setter
     @NonNull
-    private String sentTo; //TODO change type String to User
+    private String to; // FIXME: change type String to User
+
 }

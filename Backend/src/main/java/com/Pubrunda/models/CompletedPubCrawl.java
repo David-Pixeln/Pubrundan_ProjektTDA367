@@ -8,28 +8,27 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Getter
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class CompletedPubCrawl {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
 
     @NonNull
-    @Setter
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pub_crawl_id")
     private PubCrawl pubcrawl;
 
     @NonNull
-    @Setter
     @OneToMany
     @JoinColumn(name = "completed_pub_id")
     private List<CompletedPub> completedPubList;
 
     @NonNull
-    @Setter
-    private LocalDateTime timeStamp;
+    private LocalDateTime completedAt;
+
 }

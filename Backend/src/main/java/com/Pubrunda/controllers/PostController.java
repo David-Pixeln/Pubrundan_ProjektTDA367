@@ -6,12 +6,11 @@ import com.Pubrunda.repositories.PostRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("api/posts")
 public class PostController {
     private final PostRepository repository;
+
     PostController(PostRepository repository) {
         this.repository = repository;
     }

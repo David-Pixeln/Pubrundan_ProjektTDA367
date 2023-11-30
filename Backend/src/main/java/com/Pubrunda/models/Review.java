@@ -9,28 +9,27 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
-
 
     @NonNull
     @Setter
-    private String user; //TODO insert user
+    private String user; // FIXME: insert user
 
     @Setter
     private String mediaPath;
 
     @NonNull
-    @Setter
     private Integer rating;
 
     @NonNull
-    @Setter
-    private LocalDateTime publishTime;
+    private LocalDateTime createdAt;
+
 }

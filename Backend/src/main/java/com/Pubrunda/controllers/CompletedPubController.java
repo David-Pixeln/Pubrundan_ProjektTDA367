@@ -37,9 +37,9 @@ public class CompletedPubController {
     // UPDATE
     @PutMapping("/{completedPubId}")
     public CompletedPub updateCompletedPubs(@RequestBody CompletedPub newCompletedPub, @PathVariable Long completedPubId) {
+        // FIXME: Add all fields
         CompletedPub existingCompletedPubs = repository.findById(completedPubId).orElseThrow(() -> new ResourceNotFoundException(completedPubId));
-        existingCompletedPubs.setCompletedPubName(newCompletedPub.getCompletedPubName());
-        existingCompletedPubs.setTimeAtCompletedPub(newCompletedPub.getTimeAtCompletedPub());
+        existingCompletedPubs.setCompletedAt(newCompletedPub.getCompletedAt());
         return repository.save(existingCompletedPubs);
     }
 

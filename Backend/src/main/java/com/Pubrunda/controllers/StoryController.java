@@ -16,6 +16,7 @@ public class StoryController {
     StoryController(StoryRepository repository) {
         this.repository = repository;
     }
+
     // READ
     @GetMapping("/{storyId}")
     public Story getStoryById(@PathVariable long storyId) {

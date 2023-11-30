@@ -9,21 +9,21 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class Story {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
 
-    @Setter
     @NonNull
     private String mediaPath;
 
     @NonNull
-    @Setter
-    private LocalDateTime time;
+    private LocalDateTime createdAt;
 
-    //TODO add user
+    // TODO: add user
 }

@@ -1,44 +1,35 @@
 package com.Pubrunda.models;
 
-
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-
 @Entity
-@Getter
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class Pub {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
+
     @NonNull
-    @Setter
     private String name;
 
-    @Setter
+    @NonNull
     private LocalTime openingTime;
 
-    @Setter
+    @NonNull
     private LocalTime closingTime;
 
-    @Setter
+    @NonNull
     private LocalDateTime lastUpdatedTime;
-
-
-    public Pub(String name, LocalTime openingTime, LocalTime closingTime) {
-        this.name = name;
-        this.openingTime = openingTime;
-        this.closingTime = closingTime;
-    }
 
 }

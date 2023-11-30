@@ -1,14 +1,10 @@
 package com.Pubrunda.controllers;
 
-
 import com.Pubrunda.exception.ResourceNotFoundException;
 import com.Pubrunda.models.Leaderboard;
 import com.Pubrunda.repositories.LeaderboardRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/leaderboards")
@@ -16,7 +12,9 @@ public class LeaderboardController {
 
     private final LeaderboardRepository repository;
 
-    LeaderboardController(LeaderboardRepository repository) {this.repository = repository;}
+    LeaderboardController(LeaderboardRepository repository) {
+        this.repository = repository;
+    }
 
     // READ
     @GetMapping("/{leaderboardId}")

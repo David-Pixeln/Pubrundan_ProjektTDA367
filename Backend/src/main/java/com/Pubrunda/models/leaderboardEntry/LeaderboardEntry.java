@@ -5,29 +5,32 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Getter
+@Data
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class LeaderboardEntry {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
 
     @NonNull
-    @Setter
-    private String contestant; //TODO change from String type to User type
+    private String contestant; // FIXME: change from String type to User type
 
     @NonNull
-    @Setter
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private CompletedPubCrawl completedPubCrawl;
+
     @NonNull
     private Integer score;
+
+    public LeaderboardEntry(ScoreStrategy scoreStrategy) {
+    }
 
     public void setScore(ScoreStrategy scoreStrategy) {
         score = scoreStrategy.calculateScore( /* Insert argument of CompletedPubCrawl type */);
     }
 
-    public LeaderboardEntry(ScoreStrategy scoreStrategy) {}
 }

@@ -1,31 +1,26 @@
 package com.Pubrunda.models;
 
+import lombok.*;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class CompletedPub {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private long id;
 
     @NonNull
-    @Setter
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pub_id")
     private Pub pub;
 
     @NonNull
-    @Setter
-    private LocalDateTime timestamp;
+    private LocalDateTime completedAt;
+  
 }
