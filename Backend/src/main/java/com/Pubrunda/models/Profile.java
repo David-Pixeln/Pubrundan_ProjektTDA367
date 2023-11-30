@@ -9,13 +9,13 @@ import java.io.File;
 import java.io.IOException;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Profile {
 
     @Id
+    @Setter(AccessLevel.NONE)
     private long id;
 
     private String name;
