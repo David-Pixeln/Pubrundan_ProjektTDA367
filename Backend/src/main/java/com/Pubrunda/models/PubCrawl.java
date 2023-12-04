@@ -1,48 +1,39 @@
 package com.Pubrunda.models;
 
+import jakarta.persistence.*;
+import lombok.*;
 
-import com.Pubrunda.exception.MethodNotImplementedException;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
 @Entity
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class PubCrawl {
 
     @Id
     @GeneratedValue
+    @Setter(AccessLevel.NONE)
     private long id;
+
     private String name;
 
+    @NonNull
+    @OneToMany
+    @JoinColumn(name = "pub_id")
     private ArrayList<Pub> pubs;
-    private LocalTime earliestOpeningTime;
-    private LocalTime latestClosingTime;
-    private LocalDateTime lastUpdatedTime;
-    //private User creator;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public PubCrawl() {
-    }
-
-    public PubCrawl(String name, LocalTime earliestOpeningTime, LocalTime latestClosingTime /* User creator */) {
-        this.name = name;
-        this.earliestOpeningTime = earliestOpeningTime;
-        this.latestClosingTime = latestClosingTime;
-    }
 
     private static int compareTimesFromNoon(LocalTime time1, LocalTime time2) {
         int minutes1 = time1.getHour() * 60 + time1.getMinute();
         int minutes2 = time2.getHour() * 60 + time2.getMinute();
 
         return Integer.compare(minutes1, minutes2);
-    }
-
-    public String getName() {
-        return name;
     }
 
     public LocalTime getEarliestOpeningTime() {
@@ -68,10 +59,6 @@ public class PubCrawl {
         }
 
         return latest;
-    }
-
-    public float getLength() {
-        throw new MethodNotImplementedException();
     }
 
 }
