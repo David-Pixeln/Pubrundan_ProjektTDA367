@@ -20,15 +20,13 @@ public class FriendRequest {
     private LocalDateTime createdAt;
 
     @NonNull
-    @Setter
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User fromUser;
+    @JoinColumn(name = "from_user_id")
+    private User from;
 
     @NonNull
-    @Setter
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User toUser;
+    @JoinColumn(name = "to_user_id")
+    private User to;
 
 }
