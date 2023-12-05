@@ -23,7 +23,7 @@ public abstract class EntitySpecifications<T> implements Specification<T> {
     }
 
     // PARENT
-    private <T> Specification<T> combine(Collection<Specification<T>> specifications) {
+    private Specification<T> combine(Collection<Specification<T>> specifications) {
         Specification<T> combinedSpecification = Specification.where(null);
 
         for (Specification<T> specification : specifications) {
