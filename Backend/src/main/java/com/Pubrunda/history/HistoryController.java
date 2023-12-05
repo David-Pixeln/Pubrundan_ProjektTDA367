@@ -1,4 +1,4 @@
-package com.Pubrunda.History;
+package com.Pubrunda.history;
 
 import com.Pubrunda.exception.ResourceNotFoundException;
 import com.Pubrunda.repositories.HistoryRepository;

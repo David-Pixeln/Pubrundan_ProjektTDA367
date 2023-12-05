@@ -1,4 +1,4 @@
-package com.Pubrunda.History;
+package com.Pubrunda.history;
 
 import com.Pubrunda.completedPubCrawls.CompletedPubCrawl;
 import com.Pubrunda.users.User;
