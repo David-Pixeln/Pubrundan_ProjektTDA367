@@ -1,6 +1,6 @@
 package com.Pubrunda.configurations;
 
-import com.Pubrunda.repositories.UserRepository;
+import com.Pubrunda.entities.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
