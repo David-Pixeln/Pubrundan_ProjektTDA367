@@ -1,5 +1,7 @@
 package com.Pubrunda.configurations;
 
+import com.Pubrunda.auth.JwtAuthFilter;
+import com.Pubrunda.auth.UserAuthEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
