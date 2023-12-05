@@ -1,7 +1,6 @@
-package com.Pubrunda.controllers;
+package com.Pubrunda.friendRequest;
 
 import com.Pubrunda.exception.ResourceNotFoundException;
-import com.Pubrunda.models.FriendRequest;
 import com.Pubrunda.repositories.FriendRequestRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

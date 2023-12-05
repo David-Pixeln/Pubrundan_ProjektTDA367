@@ -1,6 +1,6 @@
-package com.Pubrunda.models;
+package com.Pubrunda.leaderboard;
 
-import com.Pubrunda.models.leaderboardEntry.LeaderboardEntry;
+import com.Pubrunda.leaderboardEntry.LeaderboardEntry;
 import jakarta.persistence.*;
 import lombok.*;
 

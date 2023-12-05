@@ -1,4 +1,4 @@
-package com.Pubrunda.models.leaderboardEntry;
+package com.Pubrunda.leaderboardEntry;
 
 import com.Pubrunda.completedPubCrawl.CompletedPubCrawl;
 import com.Pubrunda.user.User;

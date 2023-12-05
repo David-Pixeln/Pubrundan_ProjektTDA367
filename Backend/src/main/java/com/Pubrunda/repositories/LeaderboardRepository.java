@@ -1,6 +1,6 @@
 package com.Pubrunda.repositories;
 
-import com.Pubrunda.models.Leaderboard;
+import com.Pubrunda.leaderboard.Leaderboard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

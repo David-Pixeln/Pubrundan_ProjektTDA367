@@ -1,8 +1,6 @@
-package com.Pubrunda.controllers;
+package com.Pubrunda.leaderboardEntry;
 
 import com.Pubrunda.exception.ResourceNotFoundException;
-import com.Pubrunda.models.leaderboardEntry.LeaderboardEntry;
-import com.Pubrunda.models.leaderboardEntry.ScoreStrategy;
 import com.Pubrunda.repositories.LeaderboardEntryRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

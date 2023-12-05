@@ -1,4 +1,4 @@
-package com.Pubrunda.models.leaderboardEntry;
+package com.Pubrunda.leaderboardEntry;
 
 public interface ScoreStrategy {
 

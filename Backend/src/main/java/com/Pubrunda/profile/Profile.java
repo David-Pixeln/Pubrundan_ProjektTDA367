@@ -1,4 +1,4 @@
-package com.Pubrunda.models;
+package com.Pubrunda.profile;
 
 import com.Pubrunda.user.User;
 import jakarta.persistence.*;
