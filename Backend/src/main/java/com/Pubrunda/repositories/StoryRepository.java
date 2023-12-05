@@ -1,6 +1,6 @@
 package com.Pubrunda.repositories;
 
-import com.Pubrunda.models.Story;
+import com.Pubrunda.story.Story;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
