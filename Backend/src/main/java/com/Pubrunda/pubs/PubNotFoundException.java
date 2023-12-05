@@ -1,4 +1,4 @@
-package com.Pubrunda.exception;
+package com.Pubrunda.pubs;
 
 public class PubNotFoundException extends RuntimeException {
     PubNotFoundException(Long id) {
