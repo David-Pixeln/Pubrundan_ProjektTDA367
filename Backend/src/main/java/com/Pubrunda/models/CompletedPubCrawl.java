@@ -1,5 +1,6 @@
 package com.Pubrunda.models;
 
+import com.Pubrunda.pubcrawls.PubCrawl;
 import jakarta.persistence.*;
 import lombok.*;
 
