@@ -1,7 +1,6 @@
 package com.Pubrunda.entities.user;
 
 import com.Pubrunda.entities.user.dto.UserQueryParams;
-import com.Pubrunda.entities.user.specifications.UserSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,7 @@ public class UserService {
 
 
     public List<User> findAll(UserQueryParams params) {
-        UserSpecification userSpecification = new UserSpecification(params);
+        UserSpecifications userSpecification = new UserSpecifications(params);
         return userRepository.findAll(userSpecification);
     }
 

@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Collection;
 
-public abstract class EntitySpecification<T> implements Specification<T> {
+public abstract class EntitySpecifications<T> implements Specification<T> {
 
     protected abstract Collection<Specification<T>> getSpecifications();
 
@@ -23,7 +23,7 @@ public abstract class EntitySpecification<T> implements Specification<T> {
     }
 
     // PARENT
-    private <T> Specification<T> combine(Collection<Specification<T>> specifications) {
+    private Specification<T> combine(Collection<Specification<T>> specifications) {
         Specification<T> combinedSpecification = Specification.where(null);
 
         for (Specification<T> specification : specifications) {
