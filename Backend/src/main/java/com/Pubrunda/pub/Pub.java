@@ -1,4 +1,4 @@
-package com.Pubrunda.pubs;
+package com.Pubrunda.pub;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

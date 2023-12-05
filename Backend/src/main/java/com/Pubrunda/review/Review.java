@@ -1,6 +1,6 @@
-package com.Pubrunda.completedPubs;
+package com.Pubrunda.review;
 
-import com.Pubrunda.pubs.Pub;
+import com.Pubrunda.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class CompletedPub {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,11 +18,18 @@ public class CompletedPub {
     private long id;
 
     @NonNull
+    @Setter
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pub_id")
-    private Pub pub;
+    @JoinColumn(name = "user_id")
+    private User author;
+
+    @Setter
+    private String mediaPath;
 
     @NonNull
-    private LocalDateTime completedAt;
+    private Integer rating;
+
+    @NonNull
+    private LocalDateTime createdAt;
 
 }

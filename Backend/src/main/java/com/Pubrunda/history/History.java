@@ -1,7 +1,7 @@
 package com.Pubrunda.history;
 
-import com.Pubrunda.completedPubCrawls.CompletedPubCrawl;
-import com.Pubrunda.users.User;
+import com.Pubrunda.completedPubCrawl.CompletedPubCrawl;
+import com.Pubrunda.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 

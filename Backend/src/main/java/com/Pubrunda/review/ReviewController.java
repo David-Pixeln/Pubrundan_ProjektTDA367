@@ -1,4 +1,4 @@
-package com.Pubrunda.reviews;
+package com.Pubrunda.review;
 
 import com.Pubrunda.exception.ResourceNotFoundException;
 import com.Pubrunda.repositories.ReviewRepository;

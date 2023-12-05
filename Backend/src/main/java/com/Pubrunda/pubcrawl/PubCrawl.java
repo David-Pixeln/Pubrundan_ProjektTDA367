@@ -1,7 +1,7 @@
-package com.Pubrunda.pubcrawls;
+package com.Pubrunda.pubcrawl;
 
-import com.Pubrunda.pubs.Pub;
-import com.Pubrunda.users.User;
+import com.Pubrunda.pub.Pub;
+import com.Pubrunda.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 

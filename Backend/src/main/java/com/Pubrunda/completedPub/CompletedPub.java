@@ -1,14 +1,16 @@
-package com.Pubrunda.comments;
+package com.Pubrunda.completedPub;
 
-import com.Pubrunda.users.User;
+import com.Pubrunda.pub.Pub;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Comment {
+public class CompletedPub {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,12 +18,11 @@ public class Comment {
     private long id;
 
     @NonNull
-    @Setter
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User author;
+    @JoinColumn(name = "pub_id")
+    private Pub pub;
 
     @NonNull
-    private String content;
+    private LocalDateTime completedAt;
 
 }

@@ -1,7 +1,7 @@
-package com.Pubrunda.completedPubCrawls;
+package com.Pubrunda.completedPubCrawl;
 
-import com.Pubrunda.completedPubs.CompletedPub;
-import com.Pubrunda.pubcrawls.PubCrawl;
+import com.Pubrunda.completedPub.CompletedPub;
+import com.Pubrunda.pubcrawl.PubCrawl;
 import jakarta.persistence.*;
 import lombok.*;
 

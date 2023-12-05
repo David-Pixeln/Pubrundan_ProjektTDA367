@@ -1,16 +1,14 @@
-package com.Pubrunda.reviews;
+package com.Pubrunda.comment;
 
-import com.Pubrunda.users.User;
+import com.Pubrunda.user.User;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Review {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,13 +21,7 @@ public class Review {
     @JoinColumn(name = "user_id")
     private User author;
 
-    @Setter
-    private String mediaPath;
-
     @NonNull
-    private Integer rating;
-
-    @NonNull
-    private LocalDateTime createdAt;
+    private String content;
 
 }

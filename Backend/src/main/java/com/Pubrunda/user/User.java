@@ -1,4 +1,4 @@
-package com.Pubrunda.users;
+package com.Pubrunda.user;
 
 import jakarta.persistence.*;
 import lombok.*;
