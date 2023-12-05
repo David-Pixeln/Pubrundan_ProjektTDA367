@@ -2,7 +2,7 @@ package com.Pubrunda.controllers;
 
 import com.Pubrunda.exception.ResourceNotFoundException;
 import com.Pubrunda.models.CompletedPub;
-import com.Pubrunda.models.Pub;
+import com.Pubrunda.pubs.Pub;
 import com.Pubrunda.repositories.CompletedPubRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
