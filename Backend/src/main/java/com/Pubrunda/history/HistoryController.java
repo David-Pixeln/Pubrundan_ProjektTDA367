@@ -1,7 +1,6 @@
 package com.Pubrunda.history;
 
 import com.Pubrunda.exception.ResourceNotFoundException;
-import com.Pubrunda.repositories.HistoryRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

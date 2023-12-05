@@ -1,4 +1,4 @@
-package com.Pubrunda.repositories;
+package com.Pubrunda.history;
 
 import com.Pubrunda.history.History;
 import org.springframework.data.jpa.repository.JpaRepository;

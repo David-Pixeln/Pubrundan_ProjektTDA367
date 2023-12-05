@@ -2,7 +2,6 @@ package com.Pubrunda.story;
 
 import com.Pubrunda.exception.ResourceNotFoundException;
 import com.Pubrunda.pub.Pub;
-import com.Pubrunda.repositories.StoryRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

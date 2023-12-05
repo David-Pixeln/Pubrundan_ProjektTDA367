@@ -1,7 +1,6 @@
 package com.Pubrunda.leaderboard;
 
 import com.Pubrunda.exception.ResourceNotFoundException;
-import com.Pubrunda.repositories.LeaderboardRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

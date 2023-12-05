@@ -1,4 +1,4 @@
-package com.Pubrunda.repositories;
+package com.Pubrunda.pub;
 
 import com.Pubrunda.pub.Pub;
 import org.springframework.data.jpa.repository.JpaRepository;

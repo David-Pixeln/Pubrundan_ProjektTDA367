@@ -1,4 +1,4 @@
-package com.Pubrunda.repositories;
+package com.Pubrunda.review;
 
 import com.Pubrunda.review.Review;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,7 +1,6 @@
 package com.Pubrunda.review;
 
 import com.Pubrunda.exception.ResourceNotFoundException;
-import com.Pubrunda.repositories.ReviewRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,6 @@
 package com.Pubrunda.comment;
 
 import com.Pubrunda.exception.ResourceNotFoundException;
-import com.Pubrunda.repositories.CommentRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

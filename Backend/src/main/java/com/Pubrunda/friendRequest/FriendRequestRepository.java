@@ -1,4 +1,4 @@
-package com.Pubrunda.repositories;
+package com.Pubrunda.friendRequest;
 
 import com.Pubrunda.friendRequest.FriendRequest;
 import org.springframework.data.jpa.repository.JpaRepository;

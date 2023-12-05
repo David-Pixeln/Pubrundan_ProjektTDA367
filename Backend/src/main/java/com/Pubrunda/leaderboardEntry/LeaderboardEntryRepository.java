@@ -1,4 +1,4 @@
-package com.Pubrunda.repositories;
+package com.Pubrunda.leaderboardEntry;
 
 import com.Pubrunda.leaderboardEntry.LeaderboardEntry;
 import org.springframework.data.jpa.repository.JpaRepository;
