@@ -1,17 +1,19 @@
 package com.Pubrunda.entities.post;
 
 import com.Pubrunda.exception.ResourceNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/posts")
+@RequestMapping("${api.baseurl}/posts")
+@RequiredArgsConstructor
 public class PostController {
-    private final PostRepository repository;
 
-    PostController(PostRepository repository) {
-        this.repository = repository;
-    }
+    private final ModelMapper modelMapper;
+    private final PostService postService;
+    private final PostRepository repository;
 
     // READ
     @GetMapping("/{postId}")
