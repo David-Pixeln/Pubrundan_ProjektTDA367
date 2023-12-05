@@ -1,6 +1,6 @@
 package com.Pubrunda.story;
 
-import com.Pubrunda.users.User;
+import com.Pubrunda.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
