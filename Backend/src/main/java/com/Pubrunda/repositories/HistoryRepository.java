@@ -1,6 +1,6 @@
 package com.Pubrunda.repositories;
 
-import com.Pubrunda.models.History;
+import com.Pubrunda.History.History;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
