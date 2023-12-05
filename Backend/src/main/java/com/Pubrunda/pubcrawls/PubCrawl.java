@@ -1,4 +1,4 @@
-package com.Pubrunda.models;
+package com.Pubrunda.pubcrawls;
 
 import com.Pubrunda.pubs.Pub;
 import com.Pubrunda.users.User;

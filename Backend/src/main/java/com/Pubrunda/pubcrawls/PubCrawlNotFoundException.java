@@ -1,4 +1,4 @@
-package com.Pubrunda.exception;
+package com.Pubrunda.pubcrawls;
 
 public class PubCrawlNotFoundException extends RuntimeException {
     PubCrawlNotFoundException(Long id) {

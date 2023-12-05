@@ -1,7 +1,7 @@
 /*
 package com.Pubrunda.controllers;
 
-import com.Pubrunda.models.PubCrawl;
+import com.Pubrunda.pubcrawls.PubCrawl;
 import com.Pubrunda.repositories.PubCrawlRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
