@@ -1,4 +1,4 @@
-package com.Pubrunda.models;
+package com.Pubrunda.completedPubs;
 
 import com.Pubrunda.pubs.Pub;
 import jakarta.persistence.*;
