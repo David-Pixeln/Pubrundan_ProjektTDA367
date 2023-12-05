@@ -23,7 +23,6 @@ public class UserController {
         // TODO: Add filtering
         // TODO: Add pagination
         // TODO: Add sorting
-        // FIXME: Add username searching
 
         return userService.findAll(params).stream().map(user -> modelMapper.map(user, UserDTO.class)).toList();
     }
