@@ -1,7 +1,7 @@
-package com.Pubrunda.controllers;
+package com.Pubrunda.completedPubCrawls;
 
 import com.Pubrunda.exception.ResourceNotFoundException;
-import com.Pubrunda.models.CompletedPubCrawl;
+import com.Pubrunda.completedPubCrawls.CompletedPubCrawl;
 import com.Pubrunda.models.Leaderboard;
 import com.Pubrunda.repositories.CompletedPubCrawlRepository;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.Pubrunda.models;
+package com.Pubrunda.completedPubCrawls;
 
 import com.Pubrunda.completedPubs.CompletedPub;
 import com.Pubrunda.pubcrawls.PubCrawl;

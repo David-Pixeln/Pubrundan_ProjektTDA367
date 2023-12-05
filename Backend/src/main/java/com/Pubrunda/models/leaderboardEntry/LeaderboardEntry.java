@@ -1,6 +1,6 @@
 package com.Pubrunda.models.leaderboardEntry;
 
-import com.Pubrunda.models.CompletedPubCrawl;
+import com.Pubrunda.completedPubCrawls.CompletedPubCrawl;
 import com.Pubrunda.users.User;
 import jakarta.persistence.*;
 import lombok.*;
