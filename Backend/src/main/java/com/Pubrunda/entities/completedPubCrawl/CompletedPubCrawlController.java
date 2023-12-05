@@ -1,7 +1,7 @@
 package com.Pubrunda.entities.completedPubCrawl;
 
-import com.Pubrunda.exception.ResourceNotFoundException;
 import com.Pubrunda.entities.leaderboard.Leaderboard;
+import com.Pubrunda.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
