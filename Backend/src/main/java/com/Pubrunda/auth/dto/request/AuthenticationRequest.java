@@ -1,4 +1,4 @@
-package com.Pubrunda.dto.request;
+package com.Pubrunda.auth.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

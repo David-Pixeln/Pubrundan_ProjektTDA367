@@ -1,4 +1,4 @@
-package com.Pubrunda.services;
+package com.Pubrunda.auth.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

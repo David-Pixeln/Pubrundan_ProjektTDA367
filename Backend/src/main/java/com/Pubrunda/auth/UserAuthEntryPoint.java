@@ -1,4 +1,4 @@
-package com.Pubrunda.configurations;
+package com.Pubrunda.auth;
 
 import com.Pubrunda.dto.response.MessageResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;

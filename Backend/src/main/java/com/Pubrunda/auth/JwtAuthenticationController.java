@@ -1,9 +1,9 @@
-package com.Pubrunda.controllers;
+package com.Pubrunda.auth;
 
-import com.Pubrunda.dto.request.AuthenticationRequest;
-import com.Pubrunda.dto.request.RegisterUserRequest;
-import com.Pubrunda.dto.response.TokenAuthenticationResponse;
-import com.Pubrunda.services.JwtAuthenticationService;
+import com.Pubrunda.auth.dto.request.AuthenticationRequest;
+import com.Pubrunda.auth.dto.request.RegisterUserRequest;
+import com.Pubrunda.auth.dto.response.TokenAuthenticationResponse;
+import com.Pubrunda.auth.services.JwtAuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

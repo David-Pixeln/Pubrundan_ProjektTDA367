@@ -1,6 +1,6 @@
-package com.Pubrunda.configurations;
+package com.Pubrunda.auth;
 
-import com.Pubrunda.services.JwtService;
+import com.Pubrunda.auth.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.Pubrunda.dto.response;
+package com.Pubrunda.auth.dto.response;
 
 import lombok.*;
 

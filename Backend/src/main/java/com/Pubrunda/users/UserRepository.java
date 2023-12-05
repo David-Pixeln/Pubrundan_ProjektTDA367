@@ -1,6 +1,6 @@
-package com.Pubrunda.repositories;
+package com.Pubrunda.users;
 
-import com.Pubrunda.models.User;
+import com.Pubrunda.users.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

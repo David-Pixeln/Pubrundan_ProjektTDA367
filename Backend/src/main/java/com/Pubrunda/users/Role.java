@@ -1,4 +1,4 @@
-package com.Pubrunda.models;
+package com.Pubrunda.users;
 
 
 public enum Role {

@@ -1,11 +1,11 @@
-package com.Pubrunda.services;
+package com.Pubrunda.auth.services;
 
-import com.Pubrunda.dto.request.AuthenticationRequest;
-import com.Pubrunda.dto.request.RegisterUserRequest;
-import com.Pubrunda.dto.response.TokenAuthenticationResponse;
-import com.Pubrunda.models.Role;
-import com.Pubrunda.models.User;
-import com.Pubrunda.repositories.UserRepository;
+import com.Pubrunda.auth.dto.request.AuthenticationRequest;
+import com.Pubrunda.auth.dto.request.RegisterUserRequest;
+import com.Pubrunda.auth.dto.response.TokenAuthenticationResponse;
+import com.Pubrunda.users.Role;
+import com.Pubrunda.users.User;
+import com.Pubrunda.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
