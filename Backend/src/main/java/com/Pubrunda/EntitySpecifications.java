@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Collection;
 
-public abstract class EntitySpecification<T> implements Specification<T> {
+public abstract class EntitySpecifications<T> implements Specification<T> {
 
     protected abstract Collection<Specification<T>> getSpecifications();
 

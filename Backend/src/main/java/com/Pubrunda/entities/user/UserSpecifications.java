@@ -1,8 +1,7 @@
-package com.Pubrunda.entities.user.specifications;
+package com.Pubrunda.entities.user;
 
-import com.Pubrunda.EntitySpecification;
+import com.Pubrunda.EntitySpecifications;
 import com.Pubrunda.entities.user.dto.UserQueryParams;
-import com.Pubrunda.entities.user.User;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
@@ -12,7 +11,7 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
-public class UserSpecification extends EntitySpecification<User> {
+public class UserSpecifications extends EntitySpecifications<User> {
 
     private final UserQueryParams userParams;
 
