@@ -18,13 +18,12 @@ public class Post {
     private long id;
 
     @NonNull
-    @Setter
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User author;
 
     @NonNull
-    private LocalDateTime createdAt;
+    private LocalDateTime timestamp;
 
     @NonNull
     private String imagePath;
