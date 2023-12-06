@@ -50,8 +50,7 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public MessageResponse deleteUser(
             @AuthenticationPrincipal User authenticatedUser,
-            @PathVariable long userId
-    ) {
+            @PathVariable long userId) {
         userService.deleteUser(authenticatedUser, userId);
         return new MessageResponse("User deleted successfully");
     }
