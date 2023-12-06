@@ -28,7 +28,7 @@ public class UserService {
     public User updateUser(User authenticatedUser, UpdateUserParams newUser, long userId) {
         User existingUser = userRepository.findById(userId).orElseThrow();
 
-        if (hasAuthorityOfUser(authenticatedUser, existingUser)) {
+        if (!hasAuthorityOfUser(authenticatedUser, existingUser)) {
             throw new RuntimeException("You are not allowed to update this user");
         }
 
@@ -46,7 +46,7 @@ public class UserService {
     public void deleteUser(User authenticatedUser, long userId) {
         User existingUser = userRepository.findById(userId).orElseThrow();
 
-        if (hasAuthorityOfUser(authenticatedUser, existingUser)) {
+        if (!hasAuthorityOfUser(authenticatedUser, existingUser)) {
             throw new RuntimeException("You are not allowed to delete this user");
         }
 
