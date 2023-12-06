@@ -32,8 +32,13 @@ public class UserService {
             throw new RuntimeException("You are not allowed to update this user");
         }
 
-        existingUser.setUsername(newUser.getUsername());
-        existingUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        if (newUser.getUsername() != null) {
+            existingUser.setUsername(newUser.getUsername());
+        }
+
+        if (newUser.getPassword() != null) {
+            existingUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        }
 
         return userRepository.save(existingUser);
     }
