@@ -1,5 +1,6 @@
 package com.Pubrunda.entities.user;
 
+import com.Pubrunda.dto.response.MessageResponse;
 import com.Pubrunda.entities.pub.Pub;
 import com.Pubrunda.entities.user.dto.request.UpdateUserParams;
 import com.Pubrunda.entities.user.dto.response.UserDTO;
@@ -41,16 +42,22 @@ public class UserController {
 
     // UPDATE
     @PutMapping("/{userId}")
-    public UserDTO updateUser(@AuthenticationPrincipal User authenticatedUser, @RequestBody UpdateUserParams newUserDetails, @PathVariable long userId) {
+    public UserDTO updateUser(
+            @AuthenticationPrincipal User authenticatedUser,
+            @RequestBody UpdateUserParams newUserDetails,
+            @PathVariable long userId) {
         User updatedUser = userService.updateUser(authenticatedUser, newUserDetails, userId);
         return convertToDto(updatedUser);
     }
 
     // DELETE
     @DeleteMapping("/{userId}")
-    public ResponseEntity<String> deleteUser(@AuthenticationPrincipal User authenticatedUser, @PathVariable long userId) {
+    public MessageResponse deleteUser(
+            @AuthenticationPrincipal User authenticatedUser,
+            @PathVariable long userId
+    ) {
         userService.deleteUser(authenticatedUser, userId);
-        return ResponseEntity.ok("User deleted successfully");
+        return new MessageResponse("User deleted successfully");
     }
 
     private UserDTO convertToDto(User user) {
