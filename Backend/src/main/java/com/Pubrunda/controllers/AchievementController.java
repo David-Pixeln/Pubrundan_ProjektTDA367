@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/achievements")
+@RequestMapping("${api.baseurl}/achievements")
 public class AchievementController {
 
     private final AchievementRepository repository;
