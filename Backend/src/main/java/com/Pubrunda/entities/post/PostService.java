@@ -12,7 +12,7 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public Post getPostById(long postId) {
+    public Post getById(long postId) {
         return postRepository.findById(postId).orElseThrow();
     }
 
@@ -24,7 +24,7 @@ public class PostService {
         postRepository.deleteById(postId);
     }
 
-    public List<Post> findAll(PostQueryParams params) {
+    public List<Post> getAll(PostQueryParams params) {
         PostSpecifications postSpecifications = new PostSpecifications(params);
         return postRepository.findAll(postSpecifications);
     }

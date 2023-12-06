@@ -23,7 +23,7 @@ public class Post {
     private User author;
 
     @NonNull
-    private LocalDateTime timestamp;
+    private LocalDateTime createdAt;
 
     @NonNull
     private String imagePath;

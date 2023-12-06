@@ -20,7 +20,7 @@ public class PostController {
     // READ
     @GetMapping("/{postId}")
     public Post getPostById(@PathVariable long postId) {
-        return postService.getPostById(postId);
+        return postService.getById(postId);
     }
 
     // CREATE
@@ -38,6 +38,6 @@ public class PostController {
 
     @GetMapping("/{postId}")
     public List<PostDTO> getAllPosts(PostQueryParams params) {
-        return postService.findAll(params).stream().map(post -> modelMapper.map(post, PostDTO.class)).toList();
+        return postService.getAll(params).stream().map(post -> modelMapper.map(post, PostDTO.class)).toList();
     }
 }
