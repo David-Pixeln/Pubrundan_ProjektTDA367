@@ -1,15 +1,11 @@
 package com.Pubrunda.entities.user;
 
 import com.Pubrunda.dto.response.MessageResponse;
-import com.Pubrunda.entities.pub.Pub;
 import com.Pubrunda.entities.user.dto.request.UpdateUserParams;
-import com.Pubrunda.entities.user.dto.response.UserDTO;
 import com.Pubrunda.entities.user.dto.request.UserQueryParams;
-import com.Pubrunda.exception.ResourceNotFoundException;
+import com.Pubrunda.entities.user.dto.response.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 

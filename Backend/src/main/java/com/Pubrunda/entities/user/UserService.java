@@ -1,7 +1,7 @@
 package com.Pubrunda.entities.user;
 
-import com.Pubrunda.entities.user.dto.request.UserQueryParams;
 import com.Pubrunda.entities.user.dto.request.UpdateUserParams;
+import com.Pubrunda.entities.user.dto.request.UserQueryParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
