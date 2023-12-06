@@ -29,7 +29,7 @@ public class UserService {
         User existingUser = getUser(userId);
 
         if (!hasAuthorityOfUser(authenticatedUser, existingUser)) {
-            throw new RuntimeException("You are not allowed to update this user");
+            throw new RuntimeException("You are not allowed to update this user"); // FIXME: User better exception
         }
 
         if (newUser.getUsername() != null) {
@@ -47,7 +47,7 @@ public class UserService {
         User existingUser = getUser(userId);
 
         if (!hasAuthorityOfUser(authenticatedUser, existingUser)) {
-            throw new RuntimeException("You are not allowed to delete this user");
+            throw new RuntimeException("You are not allowed to delete this user"); // FIXME: User better exception
         }
 
         userRepository.delete(existingUser);
@@ -57,6 +57,7 @@ public class UserService {
         return userRepository.findById(userId).orElseThrow();
     }
 
+    // TODO: Move this to a separate class (refactor in some way)
     private boolean hasAuthorityOfUser(User authenticatedUser, User user) {
         return authenticatedUser.getId() == user.getId();
     }
