@@ -1,10 +1,13 @@
 package com.Pubrunda.entities.post;
 
-import com.Pubrunda.exception.ResourceNotFoundException;
+import com.Pubrunda.dto.response.MessageResponse;
+import com.Pubrunda.entities.post.dto.PostDTO;
+import com.Pubrunda.entities.post.dto.PostQueryParams;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("${api.baseurl}/posts")
@@ -13,29 +16,28 @@ public class PostController {
 
     private final ModelMapper modelMapper;
     private final PostService postService;
-    private final PostRepository repository;
 
     // READ
     @GetMapping("/{postId}")
     public Post getPostById(@PathVariable long postId) {
-        return repository.findById(postId).orElseThrow(() -> new ResourceNotFoundException(postId));
+        return postService.getPostById(postId);
     }
 
     // CREATE
     @PostMapping()
     public Post createPost(@RequestBody Post newPost) {
-        return repository.save(newPost);
+        return postService.createPost(newPost);
     }
 
     // DELETE
     @DeleteMapping("/{postId}")
-    public ResponseEntity<Post> deleteUser(@PathVariable Long postId) {
-        Post existingPost = repository.findById(postId).orElseThrow(() -> new ResourceNotFoundException(postId));
-        repository.delete(existingPost);
-        return ResponseEntity.ok().build();
+    public MessageResponse deletePost(@PathVariable long postId) {
+        postService.deletePost(postId);
+        return new MessageResponse("Post Deleted Successfully");
     }
 
-    // TODO get user function
-
-    // TODO get comments (all) function
+    @GetMapping("/{postId}")
+    public List<PostDTO> getAllPosts(PostQueryParams params) {
+        return postService.findAll(params).stream().map(post -> modelMapper.map(post, PostDTO.class)).toList();
+    }
 }

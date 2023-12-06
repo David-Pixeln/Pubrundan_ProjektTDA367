@@ -7,5 +7,5 @@ import lombok.Data;
 public class PostDTO {
     private long id;
     private User author;
-    
+
 }

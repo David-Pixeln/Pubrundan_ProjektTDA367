@@ -21,6 +21,7 @@ public class PostSpecifications extends EntitySpecifications<Post> {
     protected Collection<Specification<Post>> getSpecifications() {
         return Stream.of(byAuthor(postParams.getAuthor()), byTimeAfter((postParams.getTimestamp())), byTimeBefore(postParams.getTimestamp())).toList();
     }
+
     public Specification<Post> byAuthor(User author) {
         return (root, query, builder) -> {
             Predicate predicate = builder.conjunction();

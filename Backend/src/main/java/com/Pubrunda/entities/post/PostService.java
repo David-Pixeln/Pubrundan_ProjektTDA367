@@ -16,6 +16,14 @@ public class PostService {
         return postRepository.findById(postId).orElseThrow();
     }
 
+    public Post createPost(Post newPost) {
+        return postRepository.save(newPost);
+    }
+
+    public void deletePost(long postId) {
+        postRepository.deleteById(postId);
+    }
+
     public List<Post> findAll(PostQueryParams params) {
         PostSpecifications postSpecifications = new PostSpecifications(params);
         return postRepository.findAll(postSpecifications);
