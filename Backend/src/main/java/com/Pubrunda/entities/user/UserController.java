@@ -41,7 +41,8 @@ public class UserController {
     public UserDTO updateUser(
             @AuthenticationPrincipal User authenticatedUser,
             @RequestBody UpdateUserParams newUserDetails,
-            @PathVariable long userId) {
+            @PathVariable long userId
+    ) {
         User updatedUser = userService.updateUser(authenticatedUser, newUserDetails, userId);
         return convertToDto(updatedUser);
     }
@@ -50,7 +51,8 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public MessageResponse deleteUser(
             @AuthenticationPrincipal User authenticatedUser,
-            @PathVariable long userId) {
+            @PathVariable long userId
+    ) {
         userService.deleteUser(authenticatedUser, userId);
         return new MessageResponse("User deleted successfully");
     }
