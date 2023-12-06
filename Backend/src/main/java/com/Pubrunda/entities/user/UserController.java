@@ -39,7 +39,6 @@ public class UserController {
         return convertToDto(user);
     }
 
-
     // UPDATE
     @PutMapping("/{userId}")
     public UserDTO updateUser(@AuthenticationPrincipal User authenticatedUser, @RequestBody UpdateUserParams newUserDetails, @PathVariable long userId) {
