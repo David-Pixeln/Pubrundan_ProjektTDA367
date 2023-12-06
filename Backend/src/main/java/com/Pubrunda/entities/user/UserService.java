@@ -22,11 +22,11 @@ public class UserService {
     }
 
     public User getUserById(long userId) {
-        return userRepository.findById(userId).orElseThrow();
+        return getUser(userId);
     }
 
     public User updateUser(User authenticatedUser, UpdateUserParams newUser, long userId) {
-        User existingUser = userRepository.findById(userId).orElseThrow();
+        User existingUser = getUser(userId);
 
         if (!hasAuthorityOfUser(authenticatedUser, existingUser)) {
             throw new RuntimeException("You are not allowed to update this user");
@@ -44,13 +44,17 @@ public class UserService {
     }
 
     public void deleteUser(User authenticatedUser, long userId) {
-        User existingUser = userRepository.findById(userId).orElseThrow();
+        User existingUser = getUser(userId);
 
         if (!hasAuthorityOfUser(authenticatedUser, existingUser)) {
             throw new RuntimeException("You are not allowed to delete this user");
         }
 
         userRepository.delete(existingUser);
+    }
+
+    private User getUser(long userId) {
+        return userRepository.findById(userId).orElseThrow();
     }
 
     private boolean hasAuthorityOfUser(User authenticatedUser, User user) {
