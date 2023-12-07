@@ -16,7 +16,11 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
 
-    public List<User> findAll(UserQueryParams params) {
+    public List<User> getAllUsers() {
+        return getAllUsers(new UserQueryParams());
+    }
+
+    public List<User> getAllUsers(UserQueryParams params) {
         UserSpecifications userSpecification = new UserSpecifications(params);
         return userRepository.findAll(userSpecification);
     }
