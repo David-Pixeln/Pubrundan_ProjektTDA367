@@ -27,7 +27,7 @@ public class UserController {
         // TODO: Add pagination
         // TODO: Add sorting
 
-        return userService.findAll(params).stream().map(this::convertToDto).toList();
+        return userService.getAllUsers(params).stream().map(this::convertToDto).toList();
     }
 
     @GetMapping("/{userId}")
