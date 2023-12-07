@@ -1,8 +1,8 @@
 package com.Pubrunda.entities.post;
 
 import com.Pubrunda.dto.response.MessageResponse;
-import com.Pubrunda.entities.post.dto.PostDTO;
-import com.Pubrunda.entities.post.dto.PostQueryParams;
+import com.Pubrunda.entities.post.dto.response.PostDTO;
+import com.Pubrunda.entities.post.dto.request.PostQueryParams;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
 package com.Pubrunda.entities.post;
 
-import com.Pubrunda.entities.post.dto.PostQueryParams;
+import com.Pubrunda.entities.post.dto.request.PostQueryParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

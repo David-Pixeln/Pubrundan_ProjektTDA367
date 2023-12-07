@@ -1,7 +1,7 @@
 package com.Pubrunda.entities.post;
 
 import com.Pubrunda.EntitySpecifications;
-import com.Pubrunda.entities.post.dto.PostQueryParams;
+import com.Pubrunda.entities.post.dto.request.PostQueryParams;
 import com.Pubrunda.entities.user.User;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
