@@ -1,18 +1,19 @@
 package com.Pubrunda.entities.history;
 
+import com.Pubrunda.dto.response.MessageResponse;
 import com.Pubrunda.exception.ResourceNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/histories")
+@RequestMapping("${api.baseurl}/histories")
+@RequiredArgsConstructor
 public class HistoryController {
 
-    private final HistoryRepository repository;
-
-    HistoryController(HistoryRepository repository) {
-        this.repository = repository;
-    }
+    private final ModelMapper modelMapper;
+    private final HistoryService historyService;
 
     /*
     @GetMapping
@@ -23,28 +24,25 @@ public class HistoryController {
     // READ
     @GetMapping("/{historyId}")
     public History getHistoryById(@PathVariable long historyId) {
-        return repository.findById(historyId).orElseThrow(() -> new ResourceNotFoundException(historyId));
+        return historyService.getHistoryById(historyId);
     }
 
     // CREATE
     @PostMapping
     public History createHistory(@RequestBody History newHistory) {
-        return repository.save(newHistory);
+        return historyService.createHistory(newHistory);
     }
 
     // UPDATE
     @PutMapping("/{historyId}")
     public History updateHistory(@RequestBody History newHistory, @PathVariable Long historyId) {
-        History existingHistory = repository.findById(historyId).orElseThrow(() -> new ResourceNotFoundException(historyId));
-        //existingHistory.setName(newHistory.getAllCompletedPubCrawls());
-        return repository.save(existingHistory);
+        return historyService.updateHistory(historyId, newHistory);
     }
 
     // DELETE
     @DeleteMapping("/{historyId}")
-    public ResponseEntity<History> deleteHistory(@PathVariable Long historyId) {
-        History existingHistory = repository.findById(historyId).orElseThrow(() -> new ResourceNotFoundException(historyId));
-        repository.delete(existingHistory);
-        return ResponseEntity.ok().build();
+    public MessageResponse deleteHistory(@PathVariable Long historyId) {
+        historyService.deleteHistory(historyId);
+        return new MessageResponse("History deleted successfully");
     }
 }
