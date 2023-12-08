@@ -41,7 +41,7 @@ public class UserServiceIntegrationTest {
     }
 
     @Test
-    public void testGetAllUsers() {
+    public void testGetAllUsersShouldReturnThreeUsers() {
         List<User> users = userService.findAll(new UserQueryParams());
 
         assertThat(users).isNotEmpty();
@@ -52,7 +52,7 @@ public class UserServiceIntegrationTest {
     }
 
     @Test
-    public void testGetUserById() {
+    public void testGetUserByIdShouldReturnOneUser() {
         long userId = userRepository.findAll().get(0).getId();
 
         User user = userService.getUserById(userId);
@@ -62,7 +62,7 @@ public class UserServiceIntegrationTest {
     }
 
     @Test
-    public void testGetUserByUsername() {
+    public void testGetUserByUsernameShouldReturnTest1User() {
         List<User> users = userService.findAll(new UserQueryParams("test1"));
 
         assertThat(users).isNotNull();
