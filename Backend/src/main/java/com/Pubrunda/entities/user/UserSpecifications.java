@@ -1,7 +1,7 @@
 package com.Pubrunda.entities.user;
 
 import com.Pubrunda.EntitySpecifications;
-import com.Pubrunda.entities.user.dto.UserQueryParams;
+import com.Pubrunda.entities.user.dto.request.UserQueryParams;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
