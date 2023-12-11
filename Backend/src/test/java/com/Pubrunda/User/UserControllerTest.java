@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.JsonPathResultMatchers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -65,6 +64,18 @@ public class UserControllerTest extends ControllerTest {
             response.andExpect(jsonPath("$[" + i + "].password").doesNotExist());
             response.andExpect(jsonPath("$[" + i + "].role").exists());
         }
+    }
+
+    @Test
+    public void getUserByIdShouldReturnOneUser() throws Exception {
+        long userId = userRepository.findByUsername("test2").orElseThrow().getId();
+        ResultActions response = mockMvc.perform(get(getBaseUrl() + "/users/" + userId));
+
+        response.andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(userId))
+                .andExpect(jsonPath("$.username").value("test2"))
+                .andExpect(jsonPath("$.password").doesNotExist())
+                .andExpect(jsonPath("$.role").exists());
     }
 
 }
