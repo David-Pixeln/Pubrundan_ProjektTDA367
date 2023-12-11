@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class UserServiceIntegrationTest {
+public class UserServiceTest {
 
     @Autowired
     private UserRepository userRepository;
@@ -33,6 +33,7 @@ public class UserServiceIntegrationTest {
         userRepository.save(new User("test1", "test1", Role.APP_ADMIN));
         userRepository.save(new User("test2", "test2", Role.PUB_ADMIN));
         userRepository.save(new User("test3", "test3", Role.USER));
+        userRepository.save(new User("test1", "test1", Role.USER));
     }
 
     @After
@@ -45,15 +46,16 @@ public class UserServiceIntegrationTest {
         List<User> users = userService.findAll(new UserQueryParams());
 
         assertThat(users).isNotEmpty();
-        assertThat(users).hasSize(3);
+        assertThat(users).hasSize(4);
         assertThat(users.get(0).getUsername()).isEqualTo("test1");
         assertThat(users.get(1).getUsername()).isEqualTo("test2");
         assertThat(users.get(2).getUsername()).isEqualTo("test3");
+        assertThat(users.get(3).getUsername()).isEqualTo("test1");
     }
 
     @Test
     public void testGetUserByIdShouldReturnOneUser() {
-        long userId = userRepository.findAll().get(0).getId();
+        long userId = userRepository.findAll().getFirst().getId();
 
         User user = userService.getUserById(userId);
 
@@ -66,8 +68,9 @@ public class UserServiceIntegrationTest {
         List<User> users = userService.findAll(new UserQueryParams("test1"));
 
         assertThat(users).isNotNull();
-        assertThat(users).hasSize(1);
-        assertThat(users.get(0).getUsername()).isEqualTo("test1");
+        assertThat(users).hasSize(2);
+        assertThat(users.getFirst().getUsername()).isEqualTo("test1");
+        assertThat(users.getLast().getUsername()).isEqualTo("test1");
     }
 
 }
