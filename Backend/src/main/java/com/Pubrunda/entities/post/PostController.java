@@ -36,7 +36,7 @@ public class PostController {
         return new MessageResponse("Post Deleted Successfully");
     }
 
-    @GetMapping("/{postId}")
+    @GetMapping
     public List<PostDTO> getAllPosts(PostQueryParams params) {
         return postService.getAll(params).stream().map(post -> modelMapper.map(post, PostDTO.class)).toList();
     }

@@ -43,7 +43,7 @@ public class UserServiceTest {
 
     @Test
     public void testGetAllUsersShouldReturnThreeUsers() {
-        List<User> users = userService.findAll(new UserQueryParams());
+        List<User> users = userService.getAllUsers(new UserQueryParams());
 
         assertThat(users).isNotEmpty();
         assertThat(users).hasSize(4);
@@ -65,7 +65,7 @@ public class UserServiceTest {
 
     @Test
     public void testGetUserByUsernameShouldReturnTest1User() {
-        List<User> users = userService.findAll(new UserQueryParams("test1"));
+        List<User> users = userService.getAllUsers(new UserQueryParams("test1"));
 
         assertThat(users).isNotNull();
         assertThat(users).hasSize(2);
