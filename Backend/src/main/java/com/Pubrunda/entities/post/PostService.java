@@ -16,7 +16,7 @@ public class PostService {
         return postRepository.findById(postId).orElseThrow();
     }
 
-    public List<Post> getAll(PostQueryParams params) {
+    public List<Post> getAllPosts(PostQueryParams params) {
 
         PostSpecifications postSpecifications = new PostSpecifications(params);
         return postRepository.findAll(postSpecifications);
