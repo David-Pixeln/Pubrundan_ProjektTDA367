@@ -1,6 +1,5 @@
 package com.Pubrunda.entities.review;
 
-import com.Pubrunda.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,7 @@ public class ReviewController {
     // READ
     @GetMapping("/{reviewId}")
     public Review getReviewById(@PathVariable long reviewId) {
-        return repository.findById(reviewId).orElseThrow(() -> new ResourceNotFoundException(reviewId));
+        return repository.findById(reviewId).orElseThrow();
     }
 
     // CREATE
@@ -29,7 +28,7 @@ public class ReviewController {
     // DELETE
     @DeleteMapping("/{reviewId}")
     public ResponseEntity<Review> deleteReview(@PathVariable Long reviewId) {
-        Review existingReview = repository.findById(reviewId).orElseThrow(() -> new ResourceNotFoundException(reviewId));
+        Review existingReview = repository.findById(reviewId).orElseThrow();
         repository.delete(existingReview);
         return ResponseEntity.ok().build();
     }

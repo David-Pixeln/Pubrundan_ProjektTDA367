@@ -1,6 +1,5 @@
 package com.Pubrunda.entities.post;
 
-import com.Pubrunda.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +15,7 @@ public class PostController {
     // READ
     @GetMapping("/{postId}")
     public Post getPostById(@PathVariable long postId) {
-        return repository.findById(postId).orElseThrow(() -> new ResourceNotFoundException(postId));
+        return repository.findById(postId).orElseThrow();
     }
 
     // CREATE
@@ -28,7 +27,7 @@ public class PostController {
     // DELETE
     @DeleteMapping("/{postId}")
     public ResponseEntity<Post> deleteUser(@PathVariable Long postId) {
-        Post existingPost = repository.findById(postId).orElseThrow(() -> new ResourceNotFoundException(postId));
+        Post existingPost = repository.findById(postId).orElseThrow();
         repository.delete(existingPost);
         return ResponseEntity.ok().build();
     }

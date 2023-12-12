@@ -1,6 +1,5 @@
 package com.Pubrunda.entities.leaderboardEntry;
 
-import com.Pubrunda.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,7 @@ public class LeaderboardEntryController {
     // READ
     @GetMapping("/{leaderboardId}")
     public LeaderboardEntry getLeaderboardById(@PathVariable long leaderboardId) {
-        return repository.findById(leaderboardId).orElseThrow(() -> new ResourceNotFoundException(leaderboardId));
+        return repository.findById(leaderboardId).orElseThrow();
     }
 
     // CREATE
@@ -29,7 +28,7 @@ public class LeaderboardEntryController {
     // UPDATE
     @PutMapping("/{leaderboardId}")
     public LeaderboardEntry updateLeaderboardEntry(@RequestBody ScoreStrategy scoreStrategy, @PathVariable Long leaderboardEntryId) {
-        LeaderboardEntry existingLeaderboardEntry = repository.findById(leaderboardEntryId).orElseThrow(() -> new ResourceNotFoundException(leaderboardEntryId));
+        LeaderboardEntry existingLeaderboardEntry = repository.findById(leaderboardEntryId).orElseThrow();
         existingLeaderboardEntry.setScore(scoreStrategy);
         return repository.save(existingLeaderboardEntry);
     }
@@ -37,7 +36,7 @@ public class LeaderboardEntryController {
     // DELETE
     @DeleteMapping("/{leaderboardId}")
     public ResponseEntity<LeaderboardEntry> deleteLeaderboardEntry(@PathVariable Long leaderboardEntryId) {
-        LeaderboardEntry existingLeaderboardEntry = repository.findById(leaderboardEntryId).orElseThrow(() -> new ResourceNotFoundException(leaderboardEntryId));
+        LeaderboardEntry existingLeaderboardEntry = repository.findById(leaderboardEntryId).orElseThrow();
         repository.delete(existingLeaderboardEntry);
         return ResponseEntity.ok().build();
     }

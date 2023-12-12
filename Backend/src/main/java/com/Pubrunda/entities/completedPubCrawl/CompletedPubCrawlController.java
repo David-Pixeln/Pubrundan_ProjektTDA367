@@ -1,7 +1,6 @@
 package com.Pubrunda.entities.completedPubCrawl;
 
 import com.Pubrunda.entities.leaderboard.Leaderboard;
-import com.Pubrunda.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,7 @@ public class CompletedPubCrawlController {
     // READ
     @GetMapping("/{completedPubCrawlId}")
     public CompletedPubCrawl getCompletedPubCrawlById(@PathVariable long completedPubCrawlId) {
-        return repository.findById(completedPubCrawlId).orElseThrow(() -> new ResourceNotFoundException(completedPubCrawlId));
+        return repository.findById(completedPubCrawlId).orElseThrow();
     }
 
     // CREATE
@@ -30,14 +29,14 @@ public class CompletedPubCrawlController {
     // UPDATE
     @PutMapping("/{completedPubCrawlId}")
     public CompletedPubCrawl updateCompletedPubCrawl(@RequestBody Leaderboard newCompletedPubCrawl, @PathVariable Long completedPubCrawlId) {
-        CompletedPubCrawl existingCompletedPubCrawl = repository.findById(completedPubCrawlId).orElseThrow(() -> new ResourceNotFoundException(completedPubCrawlId));
+        CompletedPubCrawl existingCompletedPubCrawl = repository.findById(completedPubCrawlId).orElseThrow();
         return repository.save(existingCompletedPubCrawl);
     }
 
     // DELETE
     @DeleteMapping("/{completedPubCrawlId}")
     public ResponseEntity<CompletedPubCrawl> deleteCompletedPubCrawl(@PathVariable Long completedPubCrawlId) {
-        CompletedPubCrawl existingCompletedPubCrawl = repository.findById(completedPubCrawlId).orElseThrow(() -> new ResourceNotFoundException(completedPubCrawlId));
+        CompletedPubCrawl existingCompletedPubCrawl = repository.findById(completedPubCrawlId).orElseThrow();
         repository.delete(existingCompletedPubCrawl);
         return ResponseEntity.ok().build();
     }
