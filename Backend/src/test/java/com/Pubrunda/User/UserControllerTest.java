@@ -78,4 +78,11 @@ public class UserControllerTest extends ControllerTest {
                 .andExpect(jsonPath("$.role").exists());
     }
 
+    @Test
+    public void getUserByIdShouldReturnNotFoundIfUserDoesNotExist() throws Exception {
+        ResultActions response = mockMvc.perform(get(getBaseUrl() + "/users/999"));
+
+        response.andExpect(status().isNotFound());
+    }
+
 }
