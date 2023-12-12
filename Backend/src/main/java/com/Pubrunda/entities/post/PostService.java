@@ -12,7 +12,7 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public Post getById(long postId) {
+    public Post getPostById(long postId) {
         return postRepository.findById(postId).orElseThrow();
     }
 

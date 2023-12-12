@@ -69,7 +69,7 @@ public class PostServiceTest {
     public void testGetPostByIdShouldReturnOnePostWithCorrectId() {
         long postId = postRepository.findAll().getFirst().getId();
 
-        Post post = postService.getById(postId);
+        Post post = postService.getPostById(postId);
 
         assertThat(post).isNotNull();
         assertThat(post.getId()).isEqualTo(postId);

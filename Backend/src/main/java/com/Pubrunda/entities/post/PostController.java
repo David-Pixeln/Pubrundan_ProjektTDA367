@@ -20,7 +20,7 @@ public class PostController {
     // READ
     @GetMapping("/{postId}")
     public Post getPostById(@PathVariable long postId) {
-        return postService.getById(postId);
+        return postService.getPostById(postId);
     }
 
     // CREATE
