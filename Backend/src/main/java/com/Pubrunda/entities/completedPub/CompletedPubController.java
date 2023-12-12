@@ -1,7 +1,6 @@
 package com.Pubrunda.entities.completedPub;
 
 import com.Pubrunda.entities.pub.Pub;
-import com.Pubrunda.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +22,7 @@ public class CompletedPubController {
     // READ
     @GetMapping("/{completedPubId}")
     public CompletedPub getCompletedPubById(@PathVariable long completedPubId) {
-        return repository.findById(completedPubId).orElseThrow(() -> new ResourceNotFoundException(completedPubId));
+        return repository.findById(completedPubId).orElseThrow();
     }
 
     // CREATE
@@ -36,7 +35,7 @@ public class CompletedPubController {
     @PutMapping("/{completedPubId}")
     public CompletedPub updateCompletedPubs(@RequestBody CompletedPub newCompletedPub, @PathVariable Long completedPubId) {
         // FIXME: Add all fields
-        CompletedPub existingCompletedPubs = repository.findById(completedPubId).orElseThrow(() -> new ResourceNotFoundException(completedPubId));
+        CompletedPub existingCompletedPubs = repository.findById(completedPubId).orElseThrow();
         existingCompletedPubs.setCompletedAt(newCompletedPub.getCompletedAt());
         return repository.save(existingCompletedPubs);
     }
@@ -44,7 +43,7 @@ public class CompletedPubController {
     // DELETE
     @DeleteMapping("/{completedPubId}")
     public ResponseEntity<Pub> deleteCompletedPub(@PathVariable Long completedPubId) {
-        CompletedPub existingCompletedPubs = repository.findById(completedPubId).orElseThrow(() -> new ResourceNotFoundException(completedPubId));
+        CompletedPub existingCompletedPubs = repository.findById(completedPubId).orElseThrow();
         repository.delete(existingCompletedPubs);
         return ResponseEntity.ok().build();
     }
