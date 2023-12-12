@@ -7,6 +7,7 @@ import com.Pubrunda.entities.post.dto.request.PostQueryParams;
 import com.Pubrunda.entities.user.Role;
 import com.Pubrunda.entities.user.User;
 import com.Pubrunda.entities.user.UserRepository;
+import jakarta.transaction.Transactional;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.beans.Transient;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
@@ -52,12 +54,13 @@ public class PostServiceTest {
 
     @After
     public final void cleanDB() {
+        userRepository.deleteAll();
         postRepository.deleteAll();
     }
 
     @Test
-    public void testGetAllPostsShouldReturnTwoPostsWithCorrectId() {
-        List<Post> posts = postService.getAll(new PostQueryParams());
+    public void getAllPostsShouldReturnTwoPostsWithCorrectId() {
+        List<Post> posts = postService.getAllPosts(new PostQueryParams());
 
         assertThat(posts).isNotEmpty();
         assertThat(posts).hasSize(2);
@@ -66,7 +69,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void testGetPostByIdShouldReturnOnePostWithCorrectId() {
+    public void getPostByIdShouldReturnOnePostWithCorrectId() {
         long postId = postRepository.findAll().getFirst().getId();
 
         Post post = postService.getPostById(postId);
@@ -76,7 +79,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void testCreatePostShouldAddPostToDatabase() {
+    public void createPostShouldAddPostToDatabase() {
         User testUser = userRepository.findAll().getFirst();
         LocalDateTime dateTime = LocalDateTime.of(2015, Month.AUGUST, 29, 19, 30, 40);
         Post post = new Post(testUser, dateTime, "imagePlaceholder");
@@ -90,17 +93,41 @@ public class PostServiceTest {
     }
 
     @Test
-    public void testDeletePostShouldRemovePostFromDatabase() {
-        User testUser = userRepository.findAll().getFirst();
-        LocalDateTime dateTime = LocalDateTime.of(2015, Month.AUGUST, 29, 19, 30, 40);
-        Post post = new Post(testUser, dateTime, "imagePlaceholder");
+    @Transactional
+    public void deletePostShouldRemovePostFromDatabase() {
+        List<Post> posts = postRepository.findAll();
 
+        System.out.println(posts);
+
+        User testUser = userRepository.findAll().getFirst();
+        Post post = new Post(testUser, LocalDateTime.now(), "imagePlaceholder");
         postRepository.save(post);
-        long postId = post.getId();
-        postService.deletePost(post.getId());
+
+        System.out.println(postRepository.findAll());
+
+        long postId = postRepository.findAll().getLast().getId();
+        postService.deletePost(postId);
 
         assertThat(postRepository.findAll()).isNotEmpty();
         assertThat(postRepository.findAll()).hasSize(2);
         assertThat(postRepository.findAll().stream().allMatch(postArgument -> post.getId() != postId)).isTrue();
     }
+
+    @Test
+    public void removePostShouldNotRemoveUser() {
+        postRepository.deleteAll();
+
+        assertThat(postRepository.findAll()).isEmpty();
+        assertThat(userRepository.findAll()).isNotEmpty();
+        assertThat(userRepository.findAll()).hasSize(2);
+    }
+
+    @Test
+    public void removeUserShouldRemoveAllUserPosts() {
+        userRepository.deleteAll();
+
+        assertThat(userRepository.findAll()).isEmpty();
+        assertThat(postRepository.findAll()).isEmpty();
+    }
+
 }

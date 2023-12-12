@@ -23,13 +23,13 @@ public class PostController {
         return postService.getPostById(postId);
     }
 
-    @GetMapping("/{postId}")
+    @GetMapping
     public List<PostDTO> getAllPosts(PostQueryParams params) {
         return postService.getAllPosts(params).stream().map(post -> modelMapper.map(post, PostDTO.class)).toList();
     }
 
     // CREATE
-    @PostMapping()
+    @PostMapping
     public Post createPost(@RequestBody Post newPost) {
         return postService.createPost(newPost);
     }
