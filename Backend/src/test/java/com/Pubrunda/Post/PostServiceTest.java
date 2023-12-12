@@ -77,33 +77,30 @@ public class PostServiceTest {
 
     @Test
     public void testCreatePostShouldAddPostToDatabase() {
-        User testUser3 = new User("test3", "test3", Role.USER);
-        LocalDateTime time3 = LocalDateTime.of(2015, Month.AUGUST, 29, 19, 30, 40);
-        Post post3 = new Post(testUser3, time3, "imagePlaceholder");
+        User testUser = userRepository.findAll().getFirst();
+        LocalDateTime dateTime = LocalDateTime.of(2015, Month.AUGUST, 29, 19, 30, 40);
+        Post post = new Post(testUser, dateTime, "imagePlaceholder");
 
-        userRepository.save(testUser3);
-        postService.createPost(post3);
+        postService.createPost(post);
 
         assertThat(postRepository.findAll()).isNotEmpty();
         assertThat(postRepository.findAll()).hasSize(3);
-        assertThat(post3.getId()).isEqualTo(postRepository.findAll().get(2).getId());
+        assertThat(post.getId()).isEqualTo(postRepository.findAll().get(2).getId());
 
     }
 
     @Test
     public void testDeletePostShouldRemovePostFromDatabase() {
-        User testUser3 = new User("test3", "test3", Role.USER);
-        LocalDateTime time3 = LocalDateTime.of(2015, Month.AUGUST, 29, 19, 30, 40);
-        Post post3 = new Post(testUser3, time3, "imagePlaceholder");
+        User testUser = userRepository.findAll().getFirst();
+        LocalDateTime dateTime = LocalDateTime.of(2015, Month.AUGUST, 29, 19, 30, 40);
+        Post post = new Post(testUser, dateTime, "imagePlaceholder");
 
-        userRepository.save(testUser3);
-        postRepository.save(post3);
-        long post3Id = post3.getId();
-
-        postService.deletePost(post3.getId());
+        postRepository.save(post);
+        long postId = post.getId();
+        postService.deletePost(post.getId());
 
         assertThat(postRepository.findAll()).isNotEmpty();
         assertThat(postRepository.findAll()).hasSize(2);
-        assertThat(postRepository.findAll().stream().allMatch(post -> post.getId() != post3Id)).isTrue();
+        assertThat(postRepository.findAll().stream().allMatch(postArgument -> post.getId() != postId)).isTrue();
     }
 }
