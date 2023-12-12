@@ -1,5 +1,6 @@
 package com.Pubrunda.entities.user;
 
+import com.Pubrunda.DTOMapper;
 import com.Pubrunda.dto.response.MessageResponse;
 import com.Pubrunda.entities.user.dto.request.UpdateUserParams;
 import com.Pubrunda.entities.user.dto.request.UserQueryParams;
@@ -16,8 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final ModelMapper modelMapper;
-
     private final UserService userService;
 
 
@@ -27,13 +26,13 @@ public class UserController {
         // TODO: Add pagination
         // TODO: Add sorting
 
-        return userService.getAllUsers(params).stream().map(this::convertToDto).toList();
+        return DTOMapper.convertToDto(userService.getAllUsers(params), UserDTO.class);
     }
 
     @GetMapping("/{userId}")
     public UserDTO getUserById(@PathVariable long userId) {
         User user = userService.getUserById(userId);
-        return convertToDto(user);
+        return DTOMapper.convertToDto(user, UserDTO.class);
     }
 
     // UPDATE
@@ -44,7 +43,7 @@ public class UserController {
             @PathVariable long userId
     ) {
         User updatedUser = userService.updateUser(authenticatedUser, newUserDetails, userId);
-        return convertToDto(updatedUser);
+        return DTOMapper.convertToDto(updatedUser, UserDTO.class);
     }
 
     // DELETE
@@ -55,10 +54,6 @@ public class UserController {
     ) {
         userService.deleteUser(authenticatedUser, userId);
         return new MessageResponse("User deleted successfully");
-    }
-
-    private UserDTO convertToDto(User user) {
-        return modelMapper.map(user, UserDTO.class);
     }
 
 }
