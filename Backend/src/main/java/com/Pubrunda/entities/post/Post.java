@@ -18,7 +18,6 @@ public class Post {
     private long id;
 
     @NonNull
-    @Setter
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User author;

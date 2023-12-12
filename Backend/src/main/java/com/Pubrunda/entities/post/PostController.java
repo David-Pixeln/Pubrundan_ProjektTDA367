@@ -1,38 +1,44 @@
 package com.Pubrunda.entities.post;
 
-import org.springframework.http.ResponseEntity;
+import com.Pubrunda.dto.response.MessageResponse;
+import com.Pubrunda.entities.post.dto.request.PostQueryParams;
+import com.Pubrunda.entities.post.dto.response.PostDTO;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("api/posts")
-public class PostController {
-    private final PostRepository repository;
+import java.util.List;
 
-    PostController(PostRepository repository) {
-        this.repository = repository;
-    }
+@RestController
+@RequestMapping("${api.baseurl}/posts")
+@RequiredArgsConstructor
+public class PostController {
+
+    private final ModelMapper modelMapper;
+    private final PostService postService;
 
     // READ
     @GetMapping("/{postId}")
     public Post getPostById(@PathVariable long postId) {
-        return repository.findById(postId).orElseThrow();
+        return postService.getPostById(postId);
+    }
+
+    @GetMapping("/{postId}")
+    public List<PostDTO> getAllPosts(PostQueryParams params) {
+        return postService.getAllPosts(params).stream().map(post -> modelMapper.map(post, PostDTO.class)).toList();
     }
 
     // CREATE
     @PostMapping()
     public Post createPost(@RequestBody Post newPost) {
-        return repository.save(newPost);
+        return postService.createPost(newPost);
     }
 
     // DELETE
     @DeleteMapping("/{postId}")
-    public ResponseEntity<Post> deleteUser(@PathVariable Long postId) {
-        Post existingPost = repository.findById(postId).orElseThrow();
-        repository.delete(existingPost);
-        return ResponseEntity.ok().build();
+    public MessageResponse deletePost(@PathVariable long postId) {
+        postService.deletePost(postId);
+        return new MessageResponse("Post Deleted Successfully");
     }
-
-    // TODO get user function
-
-    // TODO get comments (all) function
+  
 }
