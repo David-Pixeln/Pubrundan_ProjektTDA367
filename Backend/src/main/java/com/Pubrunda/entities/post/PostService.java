@@ -29,4 +29,5 @@ public class PostService {
     public void deletePost(long postId) {
         postRepository.deleteById(postId);
     }
+
 }
