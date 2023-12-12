@@ -1,7 +1,9 @@
 package com.Pubrunda.entities.user;
 
-import com.Pubrunda.entities.user.dto.UserQueryParams;
+import com.Pubrunda.entities.user.dto.request.UpdateUserParams;
+import com.Pubrunda.entities.user.dto.request.UserQueryParams;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,15 +13,57 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
-    public List<User> findAll(UserQueryParams params) {
+    public List<User> getAllUsers() {
+        return getAllUsers(new UserQueryParams());
+    }
+
+    public List<User> getAllUsers(UserQueryParams params) {
         UserSpecifications userSpecification = new UserSpecifications(params);
         return userRepository.findAll(userSpecification);
     }
 
     public User getUserById(long userId) {
+        return getUser(userId);
+    }
+
+    public User updateUser(User authenticatedUser, UpdateUserParams newUser, long userId) {
+        User existingUser = getUser(userId);
+
+        if (!hasAuthorityOfUser(authenticatedUser, existingUser)) {
+            throw new RuntimeException("You are not allowed to update this user"); // FIXME: User better exception
+        }
+
+        if (newUser.getUsername() != null) {
+            existingUser.setUsername(newUser.getUsername());
+        }
+
+        if (newUser.getPassword() != null) {
+            existingUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        }
+
+        return userRepository.save(existingUser);
+    }
+
+    public void deleteUser(User authenticatedUser, long userId) {
+        User existingUser = getUser(userId);
+
+        if (!hasAuthorityOfUser(authenticatedUser, existingUser)) {
+            throw new RuntimeException("You are not allowed to delete this user"); // FIXME: User better exception
+        }
+
+        userRepository.delete(existingUser);
+    }
+
+    private User getUser(long userId) {
         return userRepository.findById(userId).orElseThrow();
+    }
+
+    // TODO: Move this to a separate class (refactor in some way)
+    private boolean hasAuthorityOfUser(User authenticatedUser, User user) {
+        return authenticatedUser.getId() == user.getId();
     }
 
 }

@@ -1,4 +1,4 @@
-package com.Pubrunda.entities.user.dto;
+package com.Pubrunda.entities.user.dto.response;
 
 import lombok.Data;
 
