@@ -16,6 +16,12 @@ public class PostService {
         return postRepository.findById(postId).orElseThrow();
     }
 
+    public List<Post> getAllPosts(PostQueryParams params) {
+
+        PostSpecifications postSpecifications = new PostSpecifications(params);
+        return postRepository.findAll(postSpecifications);
+    }
+
     public Post createPost(Post newPost) {
         return postRepository.save(newPost);
     }
@@ -24,8 +30,4 @@ public class PostService {
         postRepository.deleteById(postId);
     }
 
-    public List<Post> getAll(PostQueryParams params) {
-        PostSpecifications postSpecifications = new PostSpecifications(params);
-        return postRepository.findAll(postSpecifications);
-    }
 }
