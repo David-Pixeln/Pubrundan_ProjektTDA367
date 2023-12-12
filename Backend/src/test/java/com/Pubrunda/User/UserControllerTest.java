@@ -8,8 +8,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -19,20 +17,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class UserControllerTest extends ControllerTest {
 
-    @LocalServerPort
-    private int port;
-
-    @Autowired
-    protected MockMvc mockMvc;
-
-    protected String getBaseUrl() {
-        return "http://localhost:" + port + "/api";
-    }
-
-
     @Autowired
     private UserRepository userRepository;
 
+
+    protected String getBaseUrl() {
+        return super.getBaseUrl() + "/users";
+    }
 
     @Before
     public final void preloadDB() {
