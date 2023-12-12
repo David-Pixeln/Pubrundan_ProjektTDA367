@@ -21,6 +21,7 @@ public class PostService {
         PostSpecifications postSpecifications = new PostSpecifications(params);
         return postRepository.findAll(postSpecifications);
     }
+
     public Post createPost(Post newPost) {
         return postRepository.save(newPost);
     }

@@ -1,6 +1,5 @@
 package com.Pubrunda.entities.post.dto.response;
 
-import com.Pubrunda.entities.user.User;
 import com.Pubrunda.entities.user.dto.UserDTO;
 import lombok.Data;
 
