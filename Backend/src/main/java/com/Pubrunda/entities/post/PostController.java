@@ -23,6 +23,11 @@ public class PostController {
         return postService.getById(postId);
     }
 
+    @GetMapping("/{postId}")
+    public List<PostDTO> getAllPosts(PostQueryParams params) {
+        return postService.getAll(params).stream().map(post -> modelMapper.map(post, PostDTO.class)).toList();
+    }
+
     // CREATE
     @PostMapping()
     public Post createPost(@RequestBody Post newPost) {
@@ -34,10 +39,5 @@ public class PostController {
     public MessageResponse deletePost(@PathVariable long postId) {
         postService.deletePost(postId);
         return new MessageResponse("Post Deleted Successfully");
-    }
-
-    @GetMapping("/{postId}")
-    public List<PostDTO> getAllPosts(PostQueryParams params) {
-        return postService.getAll(params).stream().map(post -> modelMapper.map(post, PostDTO.class)).toList();
     }
 }
