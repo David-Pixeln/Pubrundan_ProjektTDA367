@@ -1,6 +1,5 @@
 package com.Pubrunda.entities.friendRequest;
 
-import com.Pubrunda.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,7 @@ public class FriendRequestController {
     // READ
     @GetMapping("/{friendRequestId}")
     public FriendRequest getFriendRequestById(@PathVariable long friendRequestId) {
-        return repository.findById(friendRequestId).orElseThrow(() -> new ResourceNotFoundException(friendRequestId));
+        return repository.findById(friendRequestId).orElseThrow();
     }
 
     // CREATE
@@ -29,7 +28,7 @@ public class FriendRequestController {
     // DELETE
     @DeleteMapping("/{friendRequestId}")
     public ResponseEntity<FriendRequest> deleteUser(@PathVariable Long friendRequestId) {
-        FriendRequest existingFriendRequest = repository.findById(friendRequestId).orElseThrow(() -> new ResourceNotFoundException(friendRequestId));
+        FriendRequest existingFriendRequest = repository.findById(friendRequestId).orElseThrow();
         repository.delete(existingFriendRequest);
         return ResponseEntity.ok().build();
     }

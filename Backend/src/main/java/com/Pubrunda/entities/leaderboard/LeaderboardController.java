@@ -1,6 +1,5 @@
 package com.Pubrunda.entities.leaderboard;
 
-import com.Pubrunda.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,7 @@ public class LeaderboardController {
     // READ
     @GetMapping("/{leaderboardId}")
     public Leaderboard getLeaderboardById(@PathVariable long leaderboardId) {
-        return repository.findById(leaderboardId).orElseThrow(() -> new ResourceNotFoundException(leaderboardId));
+        return repository.findById(leaderboardId).orElseThrow();
     }
 
     // CREATE
@@ -29,14 +28,14 @@ public class LeaderboardController {
     // UPDATE
     @PutMapping("/{leaderboardId}")
     public Leaderboard updateLeaderboard(@RequestBody Leaderboard newLeaderboard, @PathVariable Long leaderboardId) {
-        Leaderboard existingLeaderboard = repository.findById(leaderboardId).orElseThrow(() -> new ResourceNotFoundException(leaderboardId));
+        Leaderboard existingLeaderboard = repository.findById(leaderboardId).orElseThrow();
         return repository.save(existingLeaderboard);
     }
 
     // DELETE
     @DeleteMapping("/{leaderboardId}")
     public ResponseEntity<Leaderboard> deleteUser(@PathVariable Long leaderboardId) {
-        Leaderboard existingLeaderboard = repository.findById(leaderboardId).orElseThrow(() -> new ResourceNotFoundException(leaderboardId));
+        Leaderboard existingLeaderboard = repository.findById(leaderboardId).orElseThrow();
         repository.delete(existingLeaderboard);
         return ResponseEntity.ok().build();
     }
