@@ -1,6 +1,5 @@
 package com.Pubrunda.entities.history;
 
-import com.Pubrunda.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +22,7 @@ public class HistoryController {
     // READ
     @GetMapping("/{historyId}")
     public History getHistoryById(@PathVariable long historyId) {
-        return repository.findById(historyId).orElseThrow(() -> new ResourceNotFoundException(historyId));
+        return repository.findById(historyId).orElseThrow();
     }
 
     // CREATE
@@ -35,7 +34,7 @@ public class HistoryController {
     // UPDATE
     @PutMapping("/{historyId}")
     public History updateHistory(@RequestBody History newHistory, @PathVariable Long historyId) {
-        History existingHistory = repository.findById(historyId).orElseThrow(() -> new ResourceNotFoundException(historyId));
+        History existingHistory = repository.findById(historyId).orElseThrow();
         //existingHistory.setName(newHistory.getAllCompletedPubCrawls());
         return repository.save(existingHistory);
     }
@@ -43,7 +42,7 @@ public class HistoryController {
     // DELETE
     @DeleteMapping("/{historyId}")
     public ResponseEntity<History> deleteHistory(@PathVariable Long historyId) {
-        History existingHistory = repository.findById(historyId).orElseThrow(() -> new ResourceNotFoundException(historyId));
+        History existingHistory = repository.findById(historyId).orElseThrow();
         repository.delete(existingHistory);
         return ResponseEntity.ok().build();
     }
