@@ -5,6 +5,7 @@ import com.Pubrunda.entities.post.dto.response.PostDTO;
 import com.Pubrunda.entities.post.dto.request.PostQueryParams;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,4 +41,5 @@ public class PostController {
     public List<PostDTO> getAllPosts(PostQueryParams params) {
         return postService.getAll(params).stream().map(post -> modelMapper.map(post, PostDTO.class)).toList();
     }
+  
 }

@@ -1,6 +1,5 @@
 package com.Pubrunda.entities.comment;
 
-import com.Pubrunda.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,7 @@ public class CommentController {
     // READ
     @GetMapping("/{commentId}")
     public Comment getCommentById(@PathVariable long commentId) {
-        return repository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException(commentId));
+        return repository.findById(commentId).orElseThrow();
     }
 
     // CREATE
@@ -29,7 +28,7 @@ public class CommentController {
     // DELETE
     @DeleteMapping("/{commentId}")
     public ResponseEntity<Comment> deleteComment(@PathVariable long commentId) {
-        Comment existingComment = repository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException(commentId));
+        Comment existingComment = repository.findById(commentId).orElseThrow();
         repository.delete(existingComment);
         return ResponseEntity.ok().build();
     }
