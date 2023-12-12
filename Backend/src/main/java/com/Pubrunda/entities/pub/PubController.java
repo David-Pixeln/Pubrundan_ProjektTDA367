@@ -1,6 +1,5 @@
 package com.Pubrunda.entities.pub;
 
-import com.Pubrunda.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +23,7 @@ public class PubController {
     // READ
     @GetMapping("/{pubId}")
     public Pub getPubById(@PathVariable long pubId) {
-        return repository.findById(pubId).orElseThrow(() -> new ResourceNotFoundException(pubId));
+        return repository.findById(pubId).orElseThrow();
     }
 
     // CREATE
@@ -36,7 +35,7 @@ public class PubController {
     // UPDATE
     @PutMapping("/{pubId}")
     public Pub updatePub(@RequestBody Pub newPub, @PathVariable Long pubId) {
-        Pub existingPub = repository.findById(pubId).orElseThrow(() -> new ResourceNotFoundException(pubId));
+        Pub existingPub = repository.findById(pubId).orElseThrow();
         existingPub.setName(newPub.getName());
         existingPub.setOpeningTime(newPub.getOpeningTime());
         existingPub.setClosingTime(newPub.getClosingTime());
@@ -46,7 +45,7 @@ public class PubController {
     // DELETE
     @DeleteMapping("/{pubId}")
     public ResponseEntity<Pub> deletePub(@PathVariable Long pubId) {
-        Pub existingPub = repository.findById(pubId).orElseThrow(() -> new ResourceNotFoundException(pubId));
+        Pub existingPub = repository.findById(pubId).orElseThrow();
         repository.delete(existingPub);
         return ResponseEntity.ok().build();
     }

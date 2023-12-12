@@ -40,4 +40,5 @@ public class PostController {
         postService.deletePost(postId);
         return new MessageResponse("Post Deleted Successfully");
     }
+  
 }

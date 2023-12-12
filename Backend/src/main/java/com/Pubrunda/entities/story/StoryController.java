@@ -1,7 +1,6 @@
 package com.Pubrunda.entities.story;
 
 import com.Pubrunda.entities.pub.Pub;
-import com.Pubrunda.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,7 @@ public class StoryController {
     // READ
     @GetMapping("/{storyId}")
     public Story getStoryById(@PathVariable long storyId) {
-        return repository.findById(storyId).orElseThrow(() -> new ResourceNotFoundException(storyId));
+        return repository.findById(storyId).orElseThrow();
     }
 
     // CREATE
@@ -30,7 +29,7 @@ public class StoryController {
     // DELETE
     @DeleteMapping("/{storyId}")
     public ResponseEntity<Pub> deleteStory(@PathVariable Long storyId) {
-        Story existingStory = repository.findById(storyId).orElseThrow(() -> new ResourceNotFoundException(storyId));
+        Story existingStory = repository.findById(storyId).orElseThrow();
         repository.delete(existingStory);
         return ResponseEntity.ok().build();
     }
