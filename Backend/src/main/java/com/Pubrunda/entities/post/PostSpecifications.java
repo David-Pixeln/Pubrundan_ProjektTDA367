@@ -19,7 +19,11 @@ public class PostSpecifications extends EntitySpecifications<Post> {
 
     @Override
     protected Collection<Specification<Post>> getSpecifications() {
-        return Stream.of(byAuthor(postParams.getAuthor()), byTimeAfter((postParams.getTimestamp())), byTimeBefore(postParams.getTimestamp())).toList();
+        return Stream.of(
+                byAuthor(postParams.getAuthor()),
+                byTimeAfter((postParams.getAfter())),
+                byTimeBefore(postParams.getBefore())
+        ).toList();
     }
 
     public Specification<Post> byAuthor(User author) {
@@ -34,24 +38,24 @@ public class PostSpecifications extends EntitySpecifications<Post> {
         };
     }
 
-    public Specification<Post> byTimeBefore(LocalDateTime timestamp) {
+    public Specification<Post> byTimeBefore(LocalDateTime before) {
         return (root, query, builder) -> {
             Predicate predicate = builder.conjunction();
 
-            if (timestamp != null) {
-                predicate = builder.and(predicate, builder.lessThanOrEqualTo(root.get("timestamp"), timestamp));
+            if (before != null) {
+                predicate = builder.and(predicate, builder.lessThanOrEqualTo(root.get("createdAt"), before));
             }
 
             return predicate;
         };
     }
 
-    public Specification<Post> byTimeAfter(LocalDateTime timestamp) {
+    public Specification<Post> byTimeAfter(LocalDateTime after) {
         return (root, query, builder) -> {
             Predicate predicate = builder.conjunction();
 
-            if (timestamp != null) {
-                predicate = builder.and(predicate, builder.greaterThanOrEqualTo(root.get("timestamp"), timestamp));
+            if (after != null) {
+                predicate = builder.and(predicate, builder.greaterThanOrEqualTo(root.get("createdAt"), after));
             }
 
             return predicate;
