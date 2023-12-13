@@ -1,12 +1,16 @@
 package com.Pubrunda.entities.post;
 
 import com.Pubrunda.AuthorizationManager;
+import com.Pubrunda.entities.post.dto.request.CreatePostDTO;
 import com.Pubrunda.entities.post.dto.request.PostQueryParams;
+import com.Pubrunda.entities.post.dto.response.PostDTO;
 import com.Pubrunda.entities.user.User;
 import com.Pubrunda.exception.AuthorizationException;
+import com.Pubrunda.exception.MissingRequiredAttributeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,18 +28,23 @@ public class PostService {
     }
 
     public List<Post> getAllPosts(PostQueryParams params) {
-
         PostSpecifications postSpecifications = new PostSpecifications(params);
         return postRepository.findAll(postSpecifications);
     }
 
-    public Post createPost(User authenticatedUser, Post newPost) {
-        User existingUser = newPost.getAuthor();
+    public Post createPost(User authenticatedUser, CreatePostDTO newPost) {
+        try {
+            Post post = Post.builder()
+                    .author(authenticatedUser)
+                    .content(newPost.getContent())
+                    .imagePath(newPost.getImagePath())
+                    .createdAt(LocalDateTime.now())
+                    .build();
 
-        if (!AuthorizationManager.hasAuthorityOfUser(authenticatedUser, existingUser)) {
-            throw new AuthorizationException("You are not allowed to create this post");
+            return postRepository.save(post);
+        } catch(NullPointerException e) {
+            throw new MissingRequiredAttributeException();
         }
-        return postRepository.save(newPost);
     }
 
     public void deletePost(User authenticatedUser, long postId) {
@@ -44,6 +53,7 @@ public class PostService {
         if (!AuthorizationManager.hasAuthorityOfUser(authenticatedUser, existingUser)) {
             throw new AuthorizationException("You are not allowed to delete this post");
         }
+
         postRepository.deleteById(postId);
     }
 
