@@ -1,5 +1,6 @@
 package com.Pubrunda.entities.post;
 
+import com.Pubrunda.DTOMapper;
 import com.Pubrunda.dto.response.MessageResponse;
 import com.Pubrunda.entities.post.dto.request.PostQueryParams;
 import com.Pubrunda.entities.post.dto.response.PostDTO;
@@ -21,13 +22,13 @@ public class PostController {
 
     // READ
     @GetMapping("/{postId}")
-    public Post getPostById(@PathVariable long postId) {
-        return postService.getPostById(postId);
+    public PostDTO getPostById(@PathVariable long postId) {
+        return DTOMapper.convertToDto(postService.getPostById(postId), PostDTO.class);
     }
 
     @GetMapping
     public List<PostDTO> getAllPosts(PostQueryParams params) {
-        return postService.getAllPosts(params).stream().map(post -> modelMapper.map(post, PostDTO.class)).toList();
+        return DTOMapper.convertToDto(postService.getAllPosts(params), PostDTO.class);
     }
 
     // CREATE
