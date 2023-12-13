@@ -1,8 +1,10 @@
 package com.Pubrunda.Post;
 
+import com.Pubrunda.ServiceTest;
 import com.Pubrunda.entities.post.Post;
 import com.Pubrunda.entities.post.PostRepository;
 import com.Pubrunda.entities.post.PostService;
+import com.Pubrunda.entities.post.dto.request.CreatePostDTO;
 import com.Pubrunda.entities.post.dto.request.PostQueryParams;
 import com.Pubrunda.entities.user.Role;
 import com.Pubrunda.entities.user.User;
@@ -11,10 +13,7 @@ import com.Pubrunda.exception.AuthorizationException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -22,9 +21,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class PostServiceTest {
+public class PostServiceTest extends ServiceTest {
 
     @Autowired
     private PostRepository postRepository;
@@ -59,14 +56,17 @@ public class PostServiceTest {
     }
 
     @Test
-    public void getAllPostsShouldReturnTwoPostsWithCorrectId() {
+    public void getAllPostsShouldReturnThreePostsWithCorrectId() {
+        List<Post> allPosts = postRepository.findAll();
+
         List<Post> posts = postService.getAllPosts();
 
         assertThat(posts).isNotEmpty();
         assertThat(posts).hasSize(3);
-        assertThat(posts.get(0).getId()).isEqualTo(postRepository.findAll().get(0).getId());
-        assertThat(posts.get(1).getId()).isEqualTo(postRepository.findAll().get(1).getId());
-        assertThat(posts.get(2).getId()).isEqualTo(postRepository.findAll().get(2).getId());
+
+        for (int i = 0; i < 3; i++) {
+            assertThat(posts.get(i).getId()).isEqualTo(allPosts.get(i).getId());
+        }
     }
 
     @Test
@@ -74,29 +74,45 @@ public class PostServiceTest {
         Post firstPost = postRepository.findAll().getFirst();
         PostQueryParams postQueryParamForId = PostQueryParams.builder().id(firstPost.getId()).build();
 
-        assertThat(postService.getAllPosts(postQueryParamForId).getFirst()).isEqualTo(firstPost);
+        List<Post> posts = postService.getAllPosts(postQueryParamForId);
+
+        assertThat(posts).isNotEmpty();
+        assertThat(posts).hasSize(1);
+        assertThat(posts.getFirst()).isEqualTo(firstPost);
     }
 
     @Test
-    public void getAllPostsWithPostQueryParameterForAuthorShouldReturnTwoPostsFromAuthor() {
-        Post secondPost = postRepository.findAll().get(1);
-        Post thirdPost = postRepository.findAll().get(2);
+    public void getAllPostsWithPostQueryParameterForAuthorIdShouldReturnTwoPostsFromAuthor() {
+        User author = userRepository.findAll().get(1);
+        List<Post> authorPosts = getPostFromAuthor(author);
 
-        PostQueryParams postQueryParamForAuthor = PostQueryParams.builder().author(secondPost.getAuthor()).build();
+        PostQueryParams postQueryParamForAuthor = PostQueryParams.builder().authorId(author.getId()).build();
+        List<Post> posts = postService.getAllPosts(postQueryParamForAuthor);
 
-        List<Post> AuthorPosts = postService.getAllPosts(postQueryParamForAuthor);
-        assertThat(AuthorPosts).hasSize(2);
-        assertThat(AuthorPosts.getFirst()).isEqualTo(secondPost);
-        assertThat(AuthorPosts.get(1)).isEqualTo(thirdPost);
+        assertThat(posts).isNotEmpty();
+        assertThat(posts).hasSize(2);
+        assertThat(posts).isEqualTo(authorPosts);
     }
 
     @Test
-    public void getAllPostsWithPostQueryParameterForBeforeShouldReturnPosts() {
+    public void getAllPostsWithPostQueryParameterForAuthorUsernameShouldReturnTwoPostsFromAuthor() {
+        User author = userRepository.findAll().get(1);
+        List<Post> authorPosts = getPostFromAuthor(author);
+
+        PostQueryParams postQueryParamForAuthor = PostQueryParams.builder().authorUsername(author.getUsername()).build();
+        List<Post> posts = postService.getAllPosts(postQueryParamForAuthor);
+
+        assertThat(posts).isNotEmpty();
+        assertThat(posts).hasSize(2);
+        assertThat(posts).isEqualTo(authorPosts);
+    }
+
+    @Test
+    public void getAllPostsWithPostQueryParameterForBeforeShouldReturnAllPostsBeforeTime() {
         Post firstPost = postRepository.findAll().getFirst();
         Post secondPost = postRepository.findAll().get(1);
 
         PostQueryParams postQueryParamForBefore = PostQueryParams.builder().before(LocalDateTime.MAX.withYear(2015)).build();
-
         List<Post> posts = postService.getAllPosts(postQueryParamForBefore);
 
         assertThat(posts).isNotEmpty();
@@ -105,13 +121,13 @@ public class PostServiceTest {
         assertThat(posts.getLast()).isEqualTo(secondPost);
     }
 
+
     @Test
-    public void getAllPostsWithPostQueryParameterForAfterShouldReturnPosts() {
+    public void getAllPostsWithPostQueryParameterForAfterShouldReturnAllPostsAfterTime() {
         Post secondPost = postRepository.findAll().get(1);
         Post thirdPost = postRepository.findAll().get(2);
 
         PostQueryParams postQueryParamForAfter = PostQueryParams.builder().after(LocalDateTime.MIN.withYear(2015)).build();
-
         List<Post> posts = postService.getAllPosts(postQueryParamForAfter);
 
         assertThat(posts).isNotEmpty();
@@ -132,57 +148,48 @@ public class PostServiceTest {
 
     @Test
     public void createPostShouldAddPostToDatabase() {
-        User testUser = userRepository.findAll().getFirst();
-        Post post = new Post(testUser, LocalDateTime.now(), "imagePlaceholder");
+        int postCountBefore = postRepository.findAll().size();
+        User author = userRepository.findAll().getFirst();
+        CreatePostDTO newPost = new CreatePostDTO("imagePlaceholder", "contentPlaceholder");
 
-        postService.createPost(testUser, post);
+        Post post = postService.createPost(author, newPost);
 
-        assertThat(postRepository.findAll()).isNotEmpty();
-        assertThat(postRepository.findAll()).hasSize(4);
-        assertThat(post.getId()).isEqualTo(postRepository.findAll().get(3).getId());
-    }
+        List<Post> allPosts = postRepository.findAll();
 
-    @Test
-    public void deletePostShouldRemovePostFromDatabase() {
-        User testUser = userRepository.findAll().getFirst();
-        Post userPost = new Post(testUser, LocalDateTime.now(), "imagePlaceholder");
-        postRepository.save(userPost);
-
-        long postId = userPost.getId();
-        postService.deletePost(postId);
-
-        assertThat(postRepository.findAll()).isNotEmpty();
-        assertThat(postRepository.findAll()).hasSize(3);
-        assertThat(postRepository.findAll().stream().allMatch(post -> post.getId() != postId)).isTrue();
-    }
-
-    @Test
-    public void deletePostShouldNotRemoveUser() {
-        postRepository.deleteAll();
-
-        assertThat(postRepository.findAll()).isEmpty();
-        assertThat(userRepository.findAll()).isNotEmpty();
-        assertThat(userRepository.findAll()).hasSize(2);
-    }
-
-    @Test
-    public void deleteUserShouldRemoveAllUserPosts() {
-        userRepository.deleteAll();
-
-        assertThat(userRepository.findAll()).isEmpty();
-        assertThat(postRepository.findAll()).isEmpty();
+        assertThat(allPosts).isNotEmpty();
+        assertThat(allPosts).hasSize(postCountBefore + 1);
+        assertThat(post.getId()).isEqualTo(allPosts.getLast().getId());
     }
 
     @Test(expected = AuthorizationException.class)
     public void nonAuthorizedUserShouldNotBeAbleToDeleteOtherUsersPosts() {
         User authorizedUser = userRepository.findAll().getFirst();
-        User nonAuthorizedUser = new User("username", "password", Role.USER);
-        LocalDateTime dateTime = LocalDateTime.of(2015, Month.AUGUST, 29, 19, 30, 40);
-        Post post = new Post(authorizedUser, dateTime, "imagePlaceholder");
-        postRepository.save(post);
+        Post postByAuthorizedUser = getPostFromAuthor(authorizedUser).getFirst();
 
-        long postId = postRepository.findAll().getLast().getId();
+        User nonAuthorizedUser = userRepository.findAll().get(1);
 
-        postService.deletePost(nonAuthorizedUser, postId);
+        postService.deletePost(nonAuthorizedUser, postByAuthorizedUser.getId());
     }
+
+    @Test
+    public void deletePostShouldRemovePostFromDatabase() {
+        User user = userRepository.findAll().getFirst();
+        Post existingPost = getPostFromAuthor(user).getFirst();
+
+        long existingPostId = existingPost.getId();
+        int postCountBefore = postRepository.findAll().size();
+
+        postService.deletePost(user, existingPostId);
+
+        List<Post> allPosts = postRepository.findAll();
+
+        assertThat(allPosts).isNotEmpty();
+        assertThat(allPosts).hasSize(postCountBefore - 1);
+        assertThat(allPosts.stream().allMatch(post -> post.getId() != existingPostId)).isTrue();
+    }
+
+    private List<Post> getPostFromAuthor(User author) {
+        return postRepository.findAll().stream().filter(post -> post.getAuthor().equals(author)).toList();
+    }
+
 }
