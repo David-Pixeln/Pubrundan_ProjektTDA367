@@ -14,8 +14,8 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,8 +37,10 @@ public class PostControllerTest extends ControllerTest {
         User testUser1 = new User("test1", "test1", Role.USER);
         User testUser2 = new User("test2", "test2", Role.USER);
 
+        userRepository.saveAll(List.of(testUser1, testUser2));
+
         LocalDateTime dateTime1 = LocalDateTime.of(2015, Month.JULY, 29, 19, 30, 40);
-        LocalDateTime dateTime2 = LocalDateTime.of(2015, Month.JUNE, 29, 19, 30, 40);
+        LocalDateTime dateTime2 = LocalDateTime.of(2016, Month.AUGUST, 14, 5, 5, 33);
 
         postRepository.save(new Post(testUser1, dateTime1, "imagePlaceholder"));
         postRepository.save(new Post(testUser2, dateTime2, "imagePlaceholder"));
@@ -52,9 +54,8 @@ public class PostControllerTest extends ControllerTest {
 
     @Test
     public void getPostsShouldReturnAllPostsWithCorrectAttributes() throws Exception {
-        ResultActions response = mockMvc.perform(get(getBaseUrl()));
-
-        System.out.println(response.andReturn().getResponse().getContentAsString());
+        setAuthUser(userRepository.findAll().getFirst());
+        ResultActions response = mockMvc.perform(getRequest(getBaseUrl()));
 
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
@@ -69,28 +70,26 @@ public class PostControllerTest extends ControllerTest {
         }
     }
 
-
-
-
-    /*
     @Test
-    public void getUserByIdShouldReturnOneUser() throws Exception {
-        long userId = userRepository.findByUsername("test2").orElseThrow().getId();
-        ResultActions response = mockMvc.perform(get(getBaseUrl() + '/' + userId));
+    public void getPostByIdShouldReturnOnePostWithCorrectId() throws Exception {
+        setAuthUser(userRepository.findAll().getFirst());
+
+        long postId = postRepository.findAll().getFirst().getId();
+        ResultActions response = mockMvc.perform(getRequest(getBaseUrl() + '/' + postId));
 
         response.andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(userId))
-                .andExpect(jsonPath("$.username").value("test2"))
-                .andExpect(jsonPath("$.password").doesNotExist())
-                .andExpect(jsonPath("$.role").exists());
+                .andExpect(jsonPath("$.id").value(postId))
+                .andExpect(jsonPath("$.author.id").value(postRepository.findAll().getFirst().getAuthor().getId()))
+                .andExpect(jsonPath("$.createdAt").value(postRepository.findAll().getFirst().getCreatedAt().toString()))
+                .andExpect(jsonPath("$.imagePath").value(postRepository.findAll().getFirst().getImagePath()));
     }
 
     @Test
-    public void getUserByIdShouldReturnNotFoundIfUserDoesNotExist() throws Exception {
-        ResultActions response = mockMvc.perform(get(getBaseUrl() + "/999"));
+    public void getPostByIdShouldReturnNotFoundIfPostDoesNotExist() throws Exception {
+        setAuthUser(userRepository.findAll().getFirst());
+        ResultActions response = mockMvc.perform(getRequest(getBaseUrl() + "/999"));
 
         response.andExpect(status().isNotFound());
     }
-    */
 
 }
