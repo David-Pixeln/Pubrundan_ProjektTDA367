@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 public class PostQueryParams {
 
     private Long id;
-    private User author;
+    private Long authorId;
+    private String authorUsername;
     private LocalDateTime after;
     private LocalDateTime before;
 
