@@ -38,8 +38,7 @@ public class PostServiceTest extends ServiceTest {
         User testUser1 = new User("test1", "test1", Role.USER);
         User testUser2 = new User("test2", "test2", Role.USER);
 
-        userRepository.save(testUser1);
-        userRepository.save(testUser2);
+        userRepository.saveAll(List.of(testUser1, testUser2));
 
         LocalDateTime dateTime1 = LocalDateTime.of(2010, Month.JULY, 29, 19, 30, 40);
         LocalDateTime dateTime2 = LocalDateTime.of(2015, Month.AUGUST, 3, 23, 10, 5);
