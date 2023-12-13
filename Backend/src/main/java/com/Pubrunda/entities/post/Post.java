@@ -15,8 +15,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class Post {
 
     @Id
