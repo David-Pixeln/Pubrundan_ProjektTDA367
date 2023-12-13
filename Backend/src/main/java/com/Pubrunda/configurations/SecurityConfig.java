@@ -50,7 +50,7 @@ public class SecurityConfig {
         // Authorize requests
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
         );
 
         // Unauthorized path
