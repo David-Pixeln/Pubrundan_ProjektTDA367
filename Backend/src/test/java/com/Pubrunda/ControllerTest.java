@@ -1,13 +1,7 @@
 package com.Pubrunda;
 
 import com.Pubrunda.auth.services.JwtService;
-import com.Pubrunda.entities.post.dto.response.PostDTO;
 import com.Pubrunda.entities.user.User;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.After;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +19,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -41,8 +34,6 @@ public abstract class ControllerTest {
 
     @Autowired
     private JwtService jwtService;
-
-    protected ObjectMapper objectMapper = JsonMapper.builder().findAndAddModules().build();
 
     private User authUser;
 
@@ -65,7 +56,21 @@ public abstract class ControllerTest {
     }
 
     protected MockHttpServletRequestBuilder postRequest(String url, Object body) {
-        return post(url).headers(getHeaders()).content(toJsonString(body)).contentType(MediaType.APPLICATION_JSON);
+        return post(url)
+                .headers(getHeaders())
+                .content(JsonObjectMapper.toJsonString(body))
+                .contentType(MediaType.APPLICATION_JSON);
+    }
+
+    protected MockHttpServletRequestBuilder putRequest(String url, Object body) {
+        return put(url)
+                .headers(getHeaders())
+                .content(JsonObjectMapper.toJsonString(body))
+                .contentType(MediaType.APPLICATION_JSON);
+    }
+
+    protected MockHttpServletRequestBuilder deleteRequest(String url) {
+        return delete(url).headers(getHeaders());
     }
 
     private HttpHeaders getHeaders() {
@@ -79,28 +84,21 @@ public abstract class ControllerTest {
         return headers;
     }
 
+    protected <T> T getObjectFromResponse(ResultActions response, Class<T> clazz) throws IOException {
+        return JsonObjectMapper.getObjectFromJson(getResponseContent(response), clazz);
+    }
+
+    protected <T> List<T> getObjectListFromResponse(ResultActions response, Class<T> clazz) throws IOException {
+        return JsonObjectMapper.getObjectListFromJson(getResponseContent(response), clazz);
+    }
+
+    protected String getResponseContent(ResultActions response) throws UnsupportedEncodingException {
+        return response.andReturn().getResponse().getContentAsString();
+
+    }
+
     private String getAuthToken(User user) {
         return jwtService.generateToken(user);
-    }
-
-    public String toJsonString(Object obj) {
-        try {
-            return objectMapper.writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public <T> T getObjectFromJsonResponse(String json, Class<T> clazz) throws IOException {
-        return objectMapper.readValue(json, clazz);
-    }
-
-    public <T> List<T> getObjectListFromJsonResponse(String json, Class<T> clazz) throws IOException {
-        JsonNode rootNode = objectMapper.readTree(json);
-        return objectMapper.readValue(
-                rootNode.traverse(),
-                objectMapper.getTypeFactory().constructCollectionType(List.class, clazz)
-        );
     }
 
 }
