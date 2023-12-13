@@ -84,7 +84,7 @@ public class PostServiceTest {
         LocalDateTime dateTime = LocalDateTime.of(2015, Month.AUGUST, 29, 19, 30, 40);
         Post post = new Post(testUser, dateTime, "imagePlaceholder");
 
-        postService.createPost(post);
+        postService.createPost(testUser, post);
 
         assertThat(postRepository.findAll()).isNotEmpty();
         assertThat(postRepository.findAll()).hasSize(3);
@@ -106,11 +106,11 @@ public class PostServiceTest {
         System.out.println(postRepository.findAll());
 
         long postId = postRepository.findAll().getLast().getId();
-        postService.deletePost(postId);
+        postService.deletePost(testUser, postId);
 
         assertThat(postRepository.findAll()).isNotEmpty();
         assertThat(postRepository.findAll()).hasSize(2);
-        assertThat(postRepository.findAll().stream().allMatch(postArgument -> post.getId() != postId)).isTrue();
+        assertThat(postRepository.findAll().stream().allMatch(postArgument -> postArgument.getId() != postId)).isTrue();
     }
 
     @Test
