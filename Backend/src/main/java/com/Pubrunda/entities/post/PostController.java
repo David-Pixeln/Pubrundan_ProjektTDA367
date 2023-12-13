@@ -3,8 +3,10 @@ package com.Pubrunda.entities.post;
 import com.Pubrunda.dto.response.MessageResponse;
 import com.Pubrunda.entities.post.dto.request.PostQueryParams;
 import com.Pubrunda.entities.post.dto.response.PostDTO;
+import com.Pubrunda.entities.user.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,14 +32,14 @@ public class PostController {
 
     // CREATE
     @PostMapping
-    public Post createPost(@RequestBody Post newPost) {
-        return postService.createPost(newPost);
+    public Post createPost(@AuthenticationPrincipal User authenticatedUser, @RequestBody Post newPost) {
+        return postService.createPost(authenticatedUser, newPost);
     }
 
     // DELETE
     @DeleteMapping("/{postId}")
-    public MessageResponse deletePost(@PathVariable long postId) {
-        postService.deletePost(postId);
+    public MessageResponse deletePost(@AuthenticationPrincipal User authenticatedUser, @PathVariable long postId) {
+        postService.deletePost(authenticatedUser, postId);
         return new MessageResponse("Post Deleted Successfully");
     }
 
