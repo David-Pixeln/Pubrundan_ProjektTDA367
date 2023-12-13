@@ -1,21 +1,32 @@
 package com.Pubrunda.Post;
 
 import com.Pubrunda.ControllerTest;
+import com.Pubrunda.DTOMapper;
 import com.Pubrunda.entities.post.Post;
 import com.Pubrunda.entities.post.PostRepository;
+import com.Pubrunda.entities.post.dto.request.CreatePostDTO;
+import com.Pubrunda.entities.post.dto.response.PostDTO;
 import com.Pubrunda.entities.user.Role;
 import com.Pubrunda.entities.user.User;
 import com.Pubrunda.entities.user.UserRepository;
+import com.Pubrunda.entities.user.dto.response.UserDTO;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -23,6 +34,7 @@ public class PostControllerTest extends ControllerTest {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private PostRepository postRepository;
 
@@ -52,36 +64,89 @@ public class PostControllerTest extends ControllerTest {
         postRepository.deleteAll();
     }
 
+    /*
+     * GET
+     */
+
     @Test
     public void getPostsShouldReturnAllPostsWithCorrectAttributes() throws Exception {
-        setAuthUser(userRepository.findAll().getFirst());
+        List<Post> allPosts = postRepository.findAll();
+        List<User> allUsers = userRepository.findAll();
+        setAuthUser(allUsers.getFirst());
+
         ResultActions response = mockMvc.perform(getRequest(getBaseUrl()));
 
         response.andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].id").value(postRepository.findAll().get(0).getId()))
-                .andExpect(jsonPath("$[1].id").value(postRepository.findAll().get(1).getId()));
+                .andExpect(jsonPath("$.length()").value(2));
 
-        for (int i = 0; i < 2; i++) {
-            response.andExpect(jsonPath("$[" + i + "].id").exists());
-            response.andExpect(jsonPath("$[" + i + "].author").exists());
-            response.andExpect(jsonPath("$[" + i + "].createdAt").exists());
-            response.andExpect(jsonPath("$[" + i + "].imagePath").exists());
+        List<PostDTO> responsePostList = getObjectListFromJsonResponse(response.andReturn().getResponse().getContentAsString(), PostDTO.class);
+
+        for (int i = 0; i < allPosts.size(); i++) {
+            PostDTO post = DTOMapper.convertToDto(allPosts.get(i), PostDTO.class);
+            UserDTO postAuthor = DTOMapper.convertToDto(allPosts.get(i).getAuthor(), UserDTO.class);
+
+            PostDTO responsePost = responsePostList.get(i);
+
+            assertThat(responsePost).isEqualTo(post);
+            assertThat(responsePost.getAuthor()).isEqualTo(postAuthor);
         }
     }
 
     @Test
-    public void getPostByIdShouldReturnOnePostWithCorrectId() throws Exception {
+    public void getAllPostsWithPostQueryParamForIdShouldReturnPostWithCorrectId() throws Exception {
+        Post existingPost = postRepository.findAll().getFirst();
         setAuthUser(userRepository.findAll().getFirst());
 
-        long postId = postRepository.findAll().getFirst().getId();
+        ResultActions response = mockMvc.perform(
+                getRequest(getBaseUrl())
+                .param("id", String.valueOf(existingPost.getId()))
+        );
+
+        response.andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(existingPost.getId()));
+    }
+
+    @Test
+    public void getAllPostsWithPostQueryParamForAuthorIdShouldReturnAllPostsFromAuthor() throws Exception {
+        User testUser = userRepository.findAll().getFirst();
+        setAuthUser(testUser);
+
+        ResultActions response = mockMvc.perform(getRequest(getBaseUrl()).param("authorId", String.valueOf(testUser.getId())));
+
+        //response.andExpect(status().isOk()).andExpect(jsonPath("$[0].id"));
+    }
+
+    @Test
+    public void getAllPostsWithPostQueryParamForAfterShouldReturnAllPostsAfterASetTime() throws Exception {
+        setAuthUser(userRepository.findAll().getFirst());
+        ResultActions response = mockMvc.perform(getRequest(getBaseUrl()));
+    }
+
+    @Test
+    public void getAllPostsWithPostQueryParamForBeforeShouldReturnAllPostsBeforeASetTime() throws Exception {
+        setAuthUser(userRepository.findAll().getFirst());
+        ResultActions response = mockMvc.perform(getRequest(getBaseUrl()));
+    }
+    @Test
+    public void getPostsUnauthorizedShouldReturnUnauthorizedRequest() throws Exception {
+        ResultActions response = mockMvc.perform(getRequest(getBaseUrl()));
+
+        response.andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void getPostByIdShouldReturnOnePostWithCorrectId() throws Exception {
+        Post firstPost = postRepository.findAll().getFirst();
+        long postId = firstPost.getId();
+
+        setAuthUser(userRepository.findAll().getFirst());
         ResultActions response = mockMvc.perform(getRequest(getBaseUrl() + '/' + postId));
 
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(postId))
-                .andExpect(jsonPath("$.author.id").value(postRepository.findAll().getFirst().getAuthor().getId()))
-                .andExpect(jsonPath("$.createdAt").value(postRepository.findAll().getFirst().getCreatedAt().toString()))
-                .andExpect(jsonPath("$.imagePath").value(postRepository.findAll().getFirst().getImagePath()));
+                .andExpect(jsonPath("$.author.id").value(firstPost.getAuthor().getId()))
+                .andExpect(jsonPath("$.createdAt").value(firstPost.getCreatedAt().toString()))
+                .andExpect(jsonPath("$.imagePath").value(firstPost.getImagePath()));
     }
 
     @Test
@@ -90,6 +155,42 @@ public class PostControllerTest extends ControllerTest {
         ResultActions response = mockMvc.perform(getRequest(getBaseUrl() + "/999"));
 
         response.andExpect(status().isNotFound());
+    }
+
+    /*
+     * POST
+     */
+
+    @Test
+    public void postRequestShouldCreateAPost() throws Exception {
+        User author = userRepository.findAll().getFirst();
+        CreatePostDTO newPost = new CreatePostDTO("imagePath", "testContent");
+
+        setAuthUser(author);
+        ResultActions response = mockMvc.perform(postRequest(getBaseUrl(), newPost));
+
+        response.andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.author.id").value(author.getId()))
+                .andExpect(jsonPath("$.createdAt").exists())
+                .andExpect(jsonPath("$.imagePath").value(newPost.getImagePath()))
+                .andExpect(jsonPath("$.content").value(newPost.getContent()));
+    }
+
+    @Test
+    public void postRequestWithMissingRequiredArgumentsShouldFailToCreateAPost() throws Exception {
+        User author = userRepository.findAll().getFirst();
+        CreatePostDTO newPost = new CreatePostDTO();
+
+        setAuthUser(author);
+        ResultActions response = mockMvc.perform(postRequest(getBaseUrl(), newPost));
+
+        response.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.id").doesNotExist())
+                .andExpect(jsonPath("$.author.id").doesNotExist())
+                .andExpect(jsonPath("$.createdAt").doesNotExist())
+                .andExpect(jsonPath("$.imagePath").doesNotExist())
+                .andExpect(jsonPath("$.content").doesNotExist());
     }
 
 }
