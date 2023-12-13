@@ -38,8 +38,7 @@ public class PostService {
         User existingUser = postRepository.findById(postId).orElseThrow().getAuthor();
 
         if (!AuthorizationManager.hasAuthorityOfUser(authenticatedUser, existingUser)) {
-            throw new AuthorizationException("You are not allowed to delete this post") {
-            };
+            throw new AuthorizationException("You are not allowed to delete this post");
         }
         postRepository.deleteById(postId);
     }

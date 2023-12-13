@@ -7,6 +7,7 @@ import com.Pubrunda.entities.post.dto.request.PostQueryParams;
 import com.Pubrunda.entities.user.Role;
 import com.Pubrunda.entities.user.User;
 import com.Pubrunda.entities.user.UserRepository;
+import com.Pubrunda.exception.AuthorizationException;
 import jakarta.transaction.Transactional;
 import org.junit.After;
 import org.junit.Before;
@@ -130,4 +131,16 @@ public class PostServiceTest {
         assertThat(postRepository.findAll()).isEmpty();
     }
 
+    @Test(expected = AuthorizationException.class)
+    public void nonAuthorizedUserShouldNotBeAbleToDeleteOtherUsersPosts() {
+        User authorizedUser = userRepository.findAll().getFirst();
+        User nonAuthorizedUser = new User("username", "password", Role.USER);
+        LocalDateTime dateTime = LocalDateTime.of(2015, Month.AUGUST, 29, 19, 30, 40);
+        Post post = new Post(authorizedUser, dateTime, "imagePlaceholder");
+        postRepository.save(post);
+
+        long postId = postRepository.findAll().getLast().getId();
+
+        postService.deletePost(nonAuthorizedUser, postId);
+    }
 }
