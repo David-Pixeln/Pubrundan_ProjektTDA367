@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
@@ -20,46 +21,33 @@ public class PostSpecifications extends EntitySpecifications<Post> {
     @Override
     protected Collection<Specification<Post>> getSpecifications() {
         return Stream.of(
-                byAuthor(postParams.getAuthor()),
+                byId(postParams.getId()),
+                byAuthorId(postParams.getAuthorId()),
+                byAuthorUsername(postParams.getAuthorUsername()),
                 byTimeAfter((postParams.getAfter())),
                 byTimeBefore(postParams.getBefore())
         ).toList();
     }
 
-    public Specification<Post> byAuthor(User author) {
-        return (root, query, builder) -> {
-            Predicate predicate = builder.conjunction();
+    public Specification<Post> byId(Long id) {
+        return (root, query, builder) -> id != null ? builder.equal(root.get("id"), id) : null;
+    }
 
-            if (author != null) {
-                predicate = builder.and(predicate, builder.equal(root.get("author"), author));
-            }
+    public Specification<Post> byAuthorId(Long id) {
+        return (root, query, builder) -> id != null ? builder.equal(root.get("author").get("id"), id) : null;
+    }
 
-            return predicate;
-        };
+    public Specification<Post> byAuthorUsername(String username) {
+        return (root, query, builder) -> username != null ? builder.equal(root.get("author").get("username"), username) : null;
     }
 
     public Specification<Post> byTimeBefore(LocalDateTime before) {
-        return (root, query, builder) -> {
-            Predicate predicate = builder.conjunction();
-
-            if (before != null) {
-                predicate = builder.and(predicate, builder.lessThanOrEqualTo(root.get("createdAt"), before));
-            }
-
-            return predicate;
-        };
+        return (root, query, builder) -> before != null ? builder.lessThanOrEqualTo(root.get("createdAt"), before) : null;
     }
 
     public Specification<Post> byTimeAfter(LocalDateTime after) {
-        return (root, query, builder) -> {
-            Predicate predicate = builder.conjunction();
-
-            if (after != null) {
-                predicate = builder.and(predicate, builder.greaterThanOrEqualTo(root.get("createdAt"), after));
-            }
-
-            return predicate;
-        };
+        return (root, query, builder) -> after != null ? builder.greaterThanOrEqualTo(root.get("createdAt"), after) : null;
     }
+
 }
 
