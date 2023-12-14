@@ -5,7 +5,6 @@ import com.Pubrunda.entities.review.DTO.request.ReviewQueryParams;
 import com.Pubrunda.entities.review.DTO.response.ReviewDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,4 +41,5 @@ public class ReviewController {
     public List<ReviewDTO> getAllReviews(ReviewQueryParams params) {
         return reviewService.getAll(params).stream().map(review -> modelMapper.map(review, ReviewDTO.class)).toList();
     }
+
 }
