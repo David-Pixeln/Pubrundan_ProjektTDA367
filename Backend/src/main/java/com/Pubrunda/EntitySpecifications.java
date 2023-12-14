@@ -11,15 +11,18 @@ import java.util.Collection;
 
 public abstract class EntitySpecifications<T> implements Specification<T> {
 
-    protected abstract Collection<Specification<T>> getSpecifications();
+    private Root<T> root;
+
+    protected abstract Collection<Specification<T>> getSpecifications(Root<T> root);
 
     @Override
     public Predicate toPredicate(@NonNull Root<T> root, @NonNull CriteriaQuery<?> query, @NonNull CriteriaBuilder criteriaBuilder) {
+        this.root = root;
         return getCompositeSpecification().toPredicate(root, query, criteriaBuilder);
     }
 
     private Specification<T> getCompositeSpecification() {
-        return combine(getSpecifications());
+        return combine(getSpecifications(root));
     }
 
     // PARENT
