@@ -3,8 +3,6 @@ package com.Pubrunda.entities.review;
 import com.Pubrunda.entities.user.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 

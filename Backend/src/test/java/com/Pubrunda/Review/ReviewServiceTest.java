@@ -1,8 +1,6 @@
 package com.Pubrunda.Review;
 
 import com.Pubrunda.ServiceTest;
-import com.Pubrunda.entities.post.Post;
-import com.Pubrunda.entities.post.dto.request.CreatePostDTO;
 import com.Pubrunda.entities.review.DTO.request.CreateReviewDTO;
 import com.Pubrunda.entities.review.DTO.request.ReviewQueryParams;
 import com.Pubrunda.entities.review.Review;
@@ -185,6 +183,7 @@ public class ReviewServiceTest extends ServiceTest {
         assertThat(allReviews).hasSize(reviewCountBefore - 1);
         assertThat(allReviews.stream().allMatch(review -> review.getId() != existingReviewId)).isTrue();
     }
+
     private List<Review> getReviewFromAuthor(User author) {
         return reviewRepository.findAll().stream().filter(review -> review.getAuthor().equals(author)).toList();
     }

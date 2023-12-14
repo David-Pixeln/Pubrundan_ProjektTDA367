@@ -1,7 +1,6 @@
 package com.Pubrunda.entities.review;
 
 import com.Pubrunda.AuthorizationManager;
-import com.Pubrunda.entities.post.Post;
 import com.Pubrunda.entities.review.DTO.request.CreateReviewDTO;
 import com.Pubrunda.entities.review.DTO.request.ReviewQueryParams;
 import com.Pubrunda.entities.user.User;
