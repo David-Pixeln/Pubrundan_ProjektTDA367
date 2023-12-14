@@ -27,7 +27,7 @@ public class Review {
     private String mediaPath;
 
     @NonNull
-    private Integer rating;
+    private int rating;
 
     @NonNull
     private LocalDateTime createdAt;
