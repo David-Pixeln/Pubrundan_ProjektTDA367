@@ -64,6 +64,12 @@ public class ReviewRepositoryTest extends RepositoryTest {
     }
 
     @Test
+    public void testFindAll() {
+        assertThat(reviewRepository.findAll()).isNotEmpty();
+        assertThat(reviewRepository.findAll()).hasSize(3);
+    }
+
+    @Test
     public void deleteReviewShouldNotDeleteUser() {
         reviewRepository.deleteAll();
 
