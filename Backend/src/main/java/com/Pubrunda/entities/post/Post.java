@@ -3,13 +3,17 @@ package com.Pubrunda.entities.post;
 import com.Pubrunda.entities.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class Post {
 
     @Id
@@ -18,8 +22,8 @@ public class Post {
     private long id;
 
     @NonNull
-    @Setter
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
     private User author;
 
