@@ -3,6 +3,8 @@ package com.Pubrunda.entities.review;
 import com.Pubrunda.entities.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
@@ -20,16 +22,16 @@ public class Review {
     private long id;
 
     @NonNull
-    @Setter
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne()
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
     private User author;
 
-    @Setter
+    private int rating;
+
     private String mediaPath;
 
-    @NonNull
-    private int rating;
+    private String content;
 
     @NonNull
     private LocalDateTime createdAt;
