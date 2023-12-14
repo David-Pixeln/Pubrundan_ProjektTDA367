@@ -2,6 +2,7 @@ package com.Pubrunda;
 
 import com.Pubrunda.auth.services.JwtService;
 import com.Pubrunda.entities.user.User;
+import lombok.Setter;
 import org.junit.After;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public abstract class ControllerTest {
     @Autowired
     private JwtService jwtService;
 
+    @Setter
     private User authUser;
 
 
@@ -47,30 +49,30 @@ public abstract class ControllerTest {
         return "http://localhost:" + port + "/api";
     }
 
-    protected void setAuthUser(User user) {
-        authUser = user;
-    }
-
     protected MockHttpServletRequestBuilder getRequest(String url) {
-        return get(url).headers(getHeaders());
+        return request(get(url));
     }
 
     protected MockHttpServletRequestBuilder postRequest(String url, Object body) {
-        return post(url)
-                .headers(getHeaders())
-                .content(JsonObjectMapper.toJsonString(body))
-                .contentType(MediaType.APPLICATION_JSON);
+        return request(post(url), body);
     }
 
     protected MockHttpServletRequestBuilder putRequest(String url, Object body) {
-        return put(url)
-                .headers(getHeaders())
-                .content(JsonObjectMapper.toJsonString(body))
-                .contentType(MediaType.APPLICATION_JSON);
+        return request(put(url), body);
     }
 
     protected MockHttpServletRequestBuilder deleteRequest(String url) {
-        return delete(url).headers(getHeaders());
+        return request(delete(url));
+    }
+
+    private MockHttpServletRequestBuilder request(MockHttpServletRequestBuilder method) {
+        return method.headers(getHeaders());
+    }
+
+    private MockHttpServletRequestBuilder request(MockHttpServletRequestBuilder method, Object body) {
+        return request(method)
+                .content(JsonObjectMapper.toJsonString(body))
+                .contentType(MediaType.APPLICATION_JSON);
     }
 
     private HttpHeaders getHeaders() {
@@ -84,17 +86,16 @@ public abstract class ControllerTest {
         return headers;
     }
 
+    protected String getResponseContent(ResultActions response) throws UnsupportedEncodingException {
+        return response.andReturn().getResponse().getContentAsString();
+    }
+
     protected <T> T getObjectFromResponse(ResultActions response, Class<T> clazz) throws IOException {
         return JsonObjectMapper.getObjectFromJson(getResponseContent(response), clazz);
     }
 
     protected <T> List<T> getObjectListFromResponse(ResultActions response, Class<T> clazz) throws IOException {
         return JsonObjectMapper.getObjectListFromJson(getResponseContent(response), clazz);
-    }
-
-    protected String getResponseContent(ResultActions response) throws UnsupportedEncodingException {
-        return response.andReturn().getResponse().getContentAsString();
-
     }
 
     private String getAuthToken(User user) {
