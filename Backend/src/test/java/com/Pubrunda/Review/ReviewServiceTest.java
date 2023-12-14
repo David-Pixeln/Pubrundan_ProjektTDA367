@@ -90,7 +90,7 @@ public class ReviewServiceTest extends ServiceTest {
 
     @Test
     public void getAllReviewsWithQueryParameterForAuthorIdShouldReturnTwoReviewsFromAuthor() {
-        User author = userRepository.findAll().get(1);
+        User author = userRepository.findAll().getFirst();
         List<Review> authorReviews = getReviewFromAuthor(author);
 
         ReviewQueryParams reviewQueryParamForAuthor = ReviewQueryParams.builder().authorId(author.getId()).build();
