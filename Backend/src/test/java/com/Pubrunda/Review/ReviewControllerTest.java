@@ -213,6 +213,8 @@ public class ReviewControllerTest extends ControllerTest {
         setAuthUser(userRepository.findAll().getFirst());
         ResultActions response = mockMvc.perform(getRequest(getBaseUrl() + '/' + firstReview.getId()));
 
+        response.andExpect(status().isOk());
+
         ReviewDTO responseReview = getObjectFromResponse(response, ReviewDTO.class);
 
         assertThat(responseReview).isEqualTo(firstReviewDTO);
@@ -223,7 +225,13 @@ public class ReviewControllerTest extends ControllerTest {
         setAuthUser(userRepository.findAll().getFirst());
         ResultActions response = mockMvc.perform(getRequest(getBaseUrl() + "/999"));
 
-        response.andExpect(status().isNotFound());
+        response.andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.id").doesNotExist())
+                .andExpect(jsonPath("$.author").doesNotExist())
+                .andExpect(jsonPath("$.createdAt").doesNotExist())
+                .andExpect(jsonPath("$.rating").doesNotExist())
+                .andExpect(jsonPath("$.mediaPath").doesNotExist())
+                .andExpect(jsonPath("$.content").doesNotExist());
     }
 
     @Test
@@ -274,7 +282,7 @@ public class ReviewControllerTest extends ControllerTest {
 
         response.andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.id").doesNotExist())
-                .andExpect(jsonPath("$.author.id").doesNotExist())
+                .andExpect(jsonPath("$.author").doesNotExist())
                 .andExpect(jsonPath("$.rating").doesNotExist())
                 .andExpect(jsonPath("$.mediaPath").doesNotExist())
                 .andExpect(jsonPath("$.content").doesNotExist())
