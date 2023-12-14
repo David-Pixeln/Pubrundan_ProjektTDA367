@@ -2,14 +2,11 @@ package com.Pubrunda.entities.post;
 
 import com.Pubrunda.EntitySpecifications;
 import com.Pubrunda.entities.post.dto.request.PostQueryParams;
-import com.Pubrunda.entities.user.User;
-import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor

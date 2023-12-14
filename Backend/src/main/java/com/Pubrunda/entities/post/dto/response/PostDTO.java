@@ -7,11 +7,11 @@ import java.time.LocalDateTime;
 
 @Data
 public class PostDTO {
-  
+
     private long id;
     private UserDTO author;
     private LocalDateTime createdAt;
     private String imagePath;
     private String content;
- 
+
 }

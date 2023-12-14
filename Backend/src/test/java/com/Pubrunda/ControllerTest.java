@@ -31,7 +31,7 @@ public abstract class ControllerTest {
 
     @LocalServerPort
     private int port;
-    
+
     @Autowired
     private JwtService jwtService;
 

@@ -7,7 +7,6 @@ import com.Pubrunda.entities.post.dto.request.PostQueryParams;
 import com.Pubrunda.entities.post.dto.response.PostDTO;
 import com.Pubrunda.entities.user.User;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;

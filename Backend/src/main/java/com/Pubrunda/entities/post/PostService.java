@@ -3,7 +3,6 @@ package com.Pubrunda.entities.post;
 import com.Pubrunda.AuthorizationManager;
 import com.Pubrunda.entities.post.dto.request.CreatePostDTO;
 import com.Pubrunda.entities.post.dto.request.PostQueryParams;
-import com.Pubrunda.entities.post.dto.response.PostDTO;
 import com.Pubrunda.entities.user.User;
 import com.Pubrunda.exception.AuthorizationException;
 import com.Pubrunda.exception.MissingRequiredAttributeException;
@@ -42,7 +41,7 @@ public class PostService {
                     .build();
 
             return postRepository.save(post);
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             throw new MissingRequiredAttributeException();
         }
     }

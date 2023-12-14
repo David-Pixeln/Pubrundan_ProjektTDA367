@@ -1,6 +1,5 @@
 package com.Pubrunda.entities.post.dto.request;
 
-import com.Pubrunda.entities.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
