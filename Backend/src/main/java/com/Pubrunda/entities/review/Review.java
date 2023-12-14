@@ -3,6 +3,8 @@ package com.Pubrunda.entities.review;
 import com.Pubrunda.entities.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
@@ -20,8 +22,8 @@ public class Review {
     private long id;
 
     @NonNull
-    @OneToOne()
-    //@OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
     private User author;
 
