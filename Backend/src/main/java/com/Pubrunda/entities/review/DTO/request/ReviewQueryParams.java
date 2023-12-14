@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 public class ReviewQueryParams {
 
     private long id;
-    private User author;
+    private Long authorId;
+    private Long authorUsername;
     private LocalDateTime createdAt;
+
 }
