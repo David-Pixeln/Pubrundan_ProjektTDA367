@@ -2,6 +2,7 @@ package com.Pubrunda.Review;
 
 import com.Pubrunda.ControllerTest;
 import com.Pubrunda.DTOMapper;
+import com.Pubrunda.JsonObjectMapper;
 import com.Pubrunda.entities.post.Post;
 import com.Pubrunda.entities.post.PostRepository;
 import com.Pubrunda.entities.post.PostService;
@@ -106,20 +107,20 @@ public class ReviewControllerTest extends ControllerTest {
 
         for (int i = 0; i < allReviews.size(); i++) {
             ReviewDTO review = DTOMapper.convertToDto(allReviews.get(i), ReviewDTO.class);
-            UserDTO postAuthor = DTOMapper.convertToDto(allReviews.get(i).getAuthor(), UserDTO.class);
+            UserDTO reviewAuthor = DTOMapper.convertToDto(allReviews.get(i).getAuthor(), UserDTO.class);
 
             ReviewDTO responseReview = responseReviewList.get(i);
 
             assertThat(responseReview).isEqualTo(review);
-            assertThat(responseReview.getAuthor()).isEqualTo(postAuthor);
+            assertThat(responseReview.getAuthor()).isEqualTo(reviewAuthor);
         }
     }
 
     @Test
-    public void getAllReviewsWithReviewQueryParamForAuthorIdShouldReturnAllReviewsFromAuthor() throws Exception {
-        User author = userRepository.findAll().get(1);
+    public void getAllReviewsWithQueryParamForAuthorIdShouldReturnAllReviewsFromAuthor() throws Exception {
+        User author = userRepository.findAll().getFirst();
         List<Review> existingReviews = reviewRepository.findAll().stream().filter(review -> review.getAuthor().equals(author)).toList();
-        List<ReviewDTO> existingReviewDto = DTOMapper.convertToDto(existingReviews, ReviewDTO.class);
+        List<ReviewDTO> existingReviewsDto = DTOMapper.convertToDto(existingReviews, ReviewDTO.class);
         setAuthUser(author);
 
         ResultActions response = mockMvc.perform(
@@ -131,12 +132,12 @@ public class ReviewControllerTest extends ControllerTest {
 
         List<ReviewDTO> responseReviews = getObjectListFromResponse(response, ReviewDTO.class);
 
-        assertThat(responseReviews).isEqualTo(existingReviewDto);
+        assertThat(responseReviews).isEqualTo(existingReviewsDto);
     }
 
     @Test
-    public void getAllReviewsWithReviewQueryParamForAuthorUsernameShouldReturnAllReviewsFromAuthor() throws Exception {
-        User author = userRepository.findAll().get(1);
+    public void getAllReviewsWithQueryParamForAuthorUsernameShouldReturnAllReviewsFromAuthor() throws Exception {
+        User author = userRepository.findAll().getFirst();
         List<Review> existingReviews = reviewRepository.findAll().stream().filter(review -> review.getAuthor().equals(author)).toList();
         List<ReviewDTO> existingReviewsDto = DTOMapper.convertToDto(existingReviews, ReviewDTO.class);
         setAuthUser(author);
@@ -154,10 +155,10 @@ public class ReviewControllerTest extends ControllerTest {
     }
 
     @Test
-    public void getAllReviewWithReviewQueryParamForAfterShouldReturnAllReviewsAfterASetTime() throws Exception {
+    public void getAllReviewWithQueryParamForAfterShouldReturnAllReviewsAfterASetTime() throws Exception {
         LocalDateTime queryTime = LocalDateTime.MIN.withYear(2015);
         List<Review> reviewsAfterQueryTime = reviewService.getAllReviews(ReviewQueryParams.builder().after(queryTime).build());
-        List<ReviewDTO> reviewDTO = DTOMapper.convertToDto(reviewsAfterQueryTime, ReviewDTO.class);
+        List<ReviewDTO> reviewsDTO = DTOMapper.convertToDto(reviewsAfterQueryTime, ReviewDTO.class);
         setAuthUser(userRepository.findAll().getFirst());
 
         ResultActions response = mockMvc.perform(
@@ -169,11 +170,11 @@ public class ReviewControllerTest extends ControllerTest {
 
         List<ReviewDTO> responseReviews = getObjectListFromResponse(response, ReviewDTO.class);
 
-        assertThat(responseReviews).isEqualTo(reviewDTO);
+        assertThat(responseReviews).isEqualTo(reviewsDTO);
     }
 
     @Test
-    public void getAllReviewsWithReviewQueryParamForBeforeShouldReturnAllReviewsBeforeASetTime() throws Exception {
+    public void getAllReviewsWithQueryParamForBeforeShouldReturnAllReviewsBeforeASetTime() throws Exception {
         LocalDateTime queryTime = LocalDateTime.MAX.withYear(2015);
         List<Review> reviewsAfterQueryTime = reviewService.getAllReviews(ReviewQueryParams.builder().before(queryTime).build());
         List<ReviewDTO> reviewsDTO = DTOMapper.convertToDto(reviewsAfterQueryTime, ReviewDTO.class);
@@ -192,49 +193,79 @@ public class ReviewControllerTest extends ControllerTest {
     }
 
     @Test
-    public void getAllReviewsUnauthorizedShouldReturnUnauthorizedRequest() throws Exception {
+    public void getAllReviewsUnauthenticatedShouldReturnUnauthorizedRequest() throws Exception {
         ResultActions response = mockMvc.perform(getRequest(getBaseUrl()));
 
-        response.andExpect(status().isUnauthorized());
+        response.andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.id").doesNotExist())
+                .andExpect(jsonPath("$.author").doesNotExist())
+                .andExpect(jsonPath("$.createdAt").doesNotExist())
+                .andExpect(jsonPath("$.rating").doesNotExist())
+                .andExpect(jsonPath("$.mediaPath").doesNotExist())
+                .andExpect(jsonPath("$.content").doesNotExist());
     }
 
     @Test
     public void getReviewByIdShouldReturnOneReviewWithCorrectId() throws Exception {
         Review firstReview = reviewRepository.findAll().getFirst();
-        long postId = firstReview.getId();
+        ReviewDTO firstReviewDTO = DTOMapper.convertToDto(firstReview, ReviewDTO.class);
 
         setAuthUser(userRepository.findAll().getFirst());
-        ResultActions response = mockMvc.perform(getRequest(getBaseUrl() + '/' + postId));
+        ResultActions response = mockMvc.perform(getRequest(getBaseUrl() + '/' + firstReview.getId()));
 
-        response.andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(postId))
-                .andExpect(jsonPath("$.author.id").value(firstReview.getAuthor().getId()))
-                .andExpect(jsonPath("$.createdAt").value(firstReview.getCreatedAt().toString()))
-                .andExpect(jsonPath("$.imagePath").value(firstReview.getMediaPath()));
+        ReviewDTO responseReview = getObjectFromResponse(response, ReviewDTO.class);
+
+        assertThat(responseReview).isEqualTo(firstReviewDTO);
     }
+
+    @Test
+    public void getReviewByIdShouldReturnNotFoundIfReviewDoesNotExist() throws Exception {
+        setAuthUser(userRepository.findAll().getFirst());
+        ResultActions response = mockMvc.perform(getRequest(getBaseUrl() + "/999"));
+
+        response.andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void getReviewByIdUnauthenticatedShouldReturnUnAuthorizedRequest() throws Exception {
+        Review firstReview = reviewRepository.findAll().getFirst();
+        long reviewId = firstReview.getId();
+
+        ResultActions response = mockMvc.perform(getRequest(getBaseUrl() + '/' + reviewId));
+
+        response.andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.id").doesNotExist())
+                .andExpect(jsonPath("$.author").doesNotExist())
+                .andExpect(jsonPath("$.createdAt").doesNotExist())
+                .andExpect(jsonPath("$.rating").doesNotExist())
+                .andExpect(jsonPath("$.mediaPath").doesNotExist())
+                .andExpect(jsonPath("$.content").doesNotExist());
+    }
+
     /*
      * POST
      */
 
     @Test
-    public void reviewRequestShouldCreateAReview() throws Exception {
+    public void postRequestShouldCreateAReview() throws Exception {
         User author = userRepository.findAll().getFirst();
         CreateReviewDTO newReview = new CreateReviewDTO(1, "contentPlaceholder", "mediaPathPlaceholder");
 
         setAuthUser(author);
         ResultActions response = mockMvc.perform(postRequest(getBaseUrl(), newReview));
 
-        response.andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.author.id").value(author.getId()))
-                .andExpect(jsonPath("$.rating").exists())
-                .andExpect(jsonPath("$.mediaPath").value(newReview.getMediaPath()))
-                .andExpect(jsonPath("$.content").value(newReview.getContent()))
-                .andExpect(jsonPath("$.createdAt").value(newReview.getContent()));
+        response.andExpect(status().isCreated());
+
+        ReviewDTO responseReview = getObjectFromResponse(response, ReviewDTO.class);
+
+        Review createdReview = reviewRepository.findAll().getLast();
+        ReviewDTO createdReviewDTO = DTOMapper.convertToDto(createdReview, ReviewDTO.class);
+
+        assertThat(responseReview).isEqualTo(createdReviewDTO);
     }
 
     @Test
-    public void reviewRequestWithMissingRequiredArgumentsShouldReturnBadRequest() throws Exception {
+    public void postRequestWithMissingRequiredArgumentsShouldReturnBadRequest() throws Exception {
         User author = userRepository.findAll().getFirst();
         CreateReviewDTO newReview = new CreateReviewDTO();
 
@@ -251,18 +282,18 @@ public class ReviewControllerTest extends ControllerTest {
     }
 
     @Test
-    public void reviewRequestUnauthorizedShouldReturnUnauthorizedRequest() throws Exception {
-        CreateReviewDTO newReview = new CreateReviewDTO();
+    public void postRequestUnauthenticatedShouldReturnUnauthorizedRequest() throws Exception {
+        CreateReviewDTO newReview = new CreateReviewDTO(1, "contentPlaceholder", "mediaPathPlaceholder");
 
         ResultActions response = mockMvc.perform(postRequest(getBaseUrl(), newReview));
 
         response.andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.id").doesNotExist())
-                .andExpect(jsonPath("$.author.id").doesNotExist())
+                .andExpect(jsonPath("$.author").doesNotExist())
+                .andExpect(jsonPath("$.createdAt").doesNotExist())
                 .andExpect(jsonPath("$.rating").doesNotExist())
                 .andExpect(jsonPath("$.mediaPath").doesNotExist())
-                .andExpect(jsonPath("$.content").doesNotExist())
-                .andExpect(jsonPath("$.createdAt").doesNotExist());
+                .andExpect(jsonPath("$.content").doesNotExist());
     }
 
     /*
@@ -286,21 +317,22 @@ public class ReviewControllerTest extends ControllerTest {
     public void deleteOtherReviewThanYourOwnShouldReturnForbiddenRequest() throws Exception {
         User author = userRepository.findAll().getFirst();
         Review secondReview = reviewRepository.findAll().get(1);
-        long postId = secondPost.getId();
+        long reviewId = secondReview.getId();
 
         setAuthUser(author);
-        ResultActions response = mockMvc.perform(deleteRequest(getBaseUrl() + '/' + postId));
+        ResultActions response = mockMvc.perform(deleteRequest(getBaseUrl() + '/' + reviewId));
 
         response.andExpect(status().isForbidden());
     }
 
     @Test
-    public void deleteRequestUnauthorizedShouldReturnUnauthorizedRequest() throws Exception {
-        Post firstPost = postRepository.findAll().getFirst();
-        long postId = firstPost.getId();
+    public void deleteRequestUnauthenticatedShouldReturnUnauthorizedRequest() throws Exception {
+        Review firstReview = reviewRepository.findAll().getFirst();
+        long reviewId = firstReview.getId();
 
-        ResultActions response = mockMvc.perform(deleteRequest(getBaseUrl() + '/' + postId));
+        ResultActions response = mockMvc.perform(deleteRequest(getBaseUrl() + '/' + reviewId));
 
         response.andExpect(status().isUnauthorized());
     }
+
 }
