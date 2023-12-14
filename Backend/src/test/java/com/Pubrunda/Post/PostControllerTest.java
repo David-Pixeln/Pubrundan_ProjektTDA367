@@ -169,25 +169,30 @@ public class PostControllerTest extends ControllerTest {
     }
 
     @Test
-    public void getAllPostsUnauthorizedShouldReturnUnauthorizedRequest() throws Exception {
+    public void getAllPostsUnauthenticatedShouldReturnUnauthorizedRequest() throws Exception {
         ResultActions response = mockMvc.perform(getRequest(getBaseUrl()));
 
-        response.andExpect(status().isUnauthorized());
+        response.andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.id").doesNotExist())
+                .andExpect(jsonPath("$.author").doesNotExist())
+                .andExpect(jsonPath("$.createdAt").doesNotExist())
+                .andExpect(jsonPath("$.imagePath").doesNotExist())
+                .andExpect(jsonPath("$.content").doesNotExist());
     }
 
     @Test
     public void getPostByIdShouldReturnOnePostWithCorrectId() throws Exception {
         Post firstPost = postRepository.findAll().getFirst();
-        long postId = firstPost.getId();
+        PostDTO firstPostDTO = DTOMapper.convertToDto(firstPost, PostDTO.class);
 
         setAuthUser(userRepository.findAll().getFirst());
-        ResultActions response = mockMvc.perform(getRequest(getBaseUrl() + '/' + postId));
+        ResultActions response = mockMvc.perform(getRequest(getBaseUrl() + '/' + firstPost.getId()));
 
-        response.andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(postId))
-                .andExpect(jsonPath("$.author.id").value(firstPost.getAuthor().getId()))
-                .andExpect(jsonPath("$.createdAt").value(firstPost.getCreatedAt().toString()))
-                .andExpect(jsonPath("$.imagePath").value(firstPost.getImagePath()));
+        response.andExpect(status().isOk());
+
+        PostDTO responsePost = getObjectFromResponse(response, PostDTO.class);
+
+        assertThat(responsePost).isEqualTo(firstPostDTO);
     }
 
     @Test
@@ -195,11 +200,16 @@ public class PostControllerTest extends ControllerTest {
         setAuthUser(userRepository.findAll().getFirst());
         ResultActions response = mockMvc.perform(getRequest(getBaseUrl() + "/999"));
 
-        response.andExpect(status().isNotFound());
+        response.andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.id").doesNotExist())
+                .andExpect(jsonPath("$.author").doesNotExist())
+                .andExpect(jsonPath("$.createdAt").doesNotExist())
+                .andExpect(jsonPath("$.imagePath").doesNotExist())
+                .andExpect(jsonPath("$.content").doesNotExist());
     }
 
     @Test
-    public void getPostByIdUnauthorizedShouldReturnUnAuthorizedRequest() throws Exception {
+    public void getPostByIdUnauthenticatedShouldReturnUnAuthorizedRequest() throws Exception {
         Post firstPost = postRepository.findAll().getFirst();
         long postId = firstPost.getId();
 
@@ -225,12 +235,14 @@ public class PostControllerTest extends ControllerTest {
         setAuthUser(author);
         ResultActions response = mockMvc.perform(postRequest(getBaseUrl(), newPost));
 
-        response.andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.author.id").value(author.getId()))
-                .andExpect(jsonPath("$.createdAt").exists())
-                .andExpect(jsonPath("$.imagePath").value(newPost.getImagePath()))
-                .andExpect(jsonPath("$.content").value(newPost.getContent()));
+        response.andExpect(status().isCreated());
+
+        PostDTO responsePost = getObjectFromResponse(response, PostDTO.class);
+
+        Post createdPost = postRepository.findAll().getLast();
+        PostDTO createdPostDTO = DTOMapper.convertToDto(createdPost, PostDTO.class);
+
+        assertThat(responsePost).isEqualTo(createdPostDTO);
     }
 
     @Test
@@ -250,7 +262,7 @@ public class PostControllerTest extends ControllerTest {
     }
 
     @Test
-    public void postRequestUnauthorizedShouldReturnUnauthorizedRequest() throws Exception {
+    public void postRequestUnauthenticatedShouldReturnUnauthorizedRequest() throws Exception {
         CreatePostDTO newPost = new CreatePostDTO();
 
         ResultActions response = mockMvc.perform(postRequest(getBaseUrl(), newPost));
@@ -293,7 +305,7 @@ public class PostControllerTest extends ControllerTest {
     }
 
     @Test
-    public void deleteRequestUnauthorizedShouldReturnUnauthorizedRequest() throws Exception {
+    public void deleteRequestUnauthenticatedShouldReturnUnauthorizedRequest() throws Exception {
         Post firstPost = postRepository.findAll().getFirst();
         long postId = firstPost.getId();
 

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -37,7 +38,7 @@ public class PostService {
                     .author(authenticatedUser)
                     .content(newPost.getContent())
                     .imagePath(newPost.getImagePath())
-                    .createdAt(LocalDateTime.now())
+                    .createdAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                     .build();
 
             return postRepository.save(post);
