@@ -1,53 +1,57 @@
 package com.Pubrunda.entities.pub;
 
+import com.Pubrunda.DTOMapper;
+import com.Pubrunda.dto.response.MessageResponse;
+import com.Pubrunda.entities.post.dto.request.PostQueryParams;
+import com.Pubrunda.entities.post.dto.response.PostDTO;
+import com.Pubrunda.entities.pub.dto.request.CreatePubDTO;
+import com.Pubrunda.entities.pub.dto.request.PubQueryParams;
+import com.Pubrunda.entities.pub.dto.response.PubDTO;
+import com.Pubrunda.entities.user.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/pubs")
+@RequiredArgsConstructor
 public class PubController {
 
-    private final PubRepository repository;
-
-    PubController(PubRepository repository) {
-        this.repository = repository;
-    }
-
-    @GetMapping
-    public List<Pub> getAllPubs() {
-        return repository.findAll();
-    }
+    private final PubService pubService;
 
     // READ
     @GetMapping("/{pubId}")
-    public Pub getPubById(@PathVariable long pubId) {
-        return repository.findById(pubId).orElseThrow();
+    public PubDTO getPubById(@PathVariable long pubId) {
+        return DTOMapper.convertToDto(pubService.getPubById(pubId), PubDTO.class);
+    }
+
+    @GetMapping
+    public List<PubDTO> getAllPubs(PubQueryParams params) {
+        return DTOMapper.convertToDto(pubService.getAllPubs(params), PubDTO.class);
     }
 
     // CREATE
-    @PostMapping("")
-    public Pub createPub(@RequestBody Pub newPub) {
-        return repository.save(newPub);
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public PubDTO createPub(@AuthenticationPrincipal User authenticatedUser, @RequestBody CreatePubDTO newPub) {
+        return DTOMapper.convertToDto(pubService.createPub(authenticatedUser, newPub), PubDTO.class);
     }
 
     // UPDATE
     @PutMapping("/{pubId}")
-    public Pub updatePub(@RequestBody Pub newPub, @PathVariable Long pubId) {
-        Pub existingPub = repository.findById(pubId).orElseThrow();
-        existingPub.setName(newPub.getName());
-        existingPub.setOpeningTime(newPub.getOpeningTime());
-        existingPub.setClosingTime(newPub.getClosingTime());
-        return repository.save(existingPub);
+    public PubDTO updatePub(@AuthenticationPrincipal User authenticatedUser, @RequestBody CreatePubDTO newPub, @PathVariable long pubId) {
+        return DTOMapper.convertToDto(pubService.updatePub(authenticatedUser, newPub, pubId), PubDTO.class);
     }
 
     // DELETE
     @DeleteMapping("/{pubId}")
-    public ResponseEntity<Pub> deletePub(@PathVariable Long pubId) {
-        Pub existingPub = repository.findById(pubId).orElseThrow();
-        repository.delete(existingPub);
-        return ResponseEntity.ok().build();
+    public MessageResponse deletePub(@AuthenticationPrincipal User authenticatedUser, @PathVariable long pubId) {
+        pubService.deletePub(authenticatedUser, pubId);
+        return new MessageResponse("Pub Deleted Successfully");
     }
 
 }
