@@ -64,9 +64,10 @@ public class ReviewRepositoryTest extends RepositoryTest {
     }
 
     @Test
-    public void testFindAll() {
-        assertThat(reviewRepository.findAll()).isNotEmpty();
-        assertThat(reviewRepository.findAll()).hasSize(3);
+    public void testFindAllShouldReturnAllReviews() {
+        List<Review> reviews = reviewRepository.findAll();
+        assertThat(reviews).isNotEmpty();
+        assertThat(reviews).hasSize(3);
     }
 
     @Test
