@@ -26,12 +26,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @AutoConfigureMockMvc
 public abstract class ControllerTest {
 
-    @LocalServerPort
-    private int port;
-
     @Autowired
     protected MockMvc mockMvc;
 
+    @LocalServerPort
+    private int port;
+    
     @Autowired
     private JwtService jwtService;
 
