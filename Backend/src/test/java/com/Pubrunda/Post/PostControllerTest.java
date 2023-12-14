@@ -207,7 +207,7 @@ public class PostControllerTest extends ControllerTest {
 
         response.andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.id").doesNotExist())
-                .andExpect(jsonPath("$.author.id").doesNotExist())
+                .andExpect(jsonPath("$.author").doesNotExist())
                 .andExpect(jsonPath("$.createdAt").doesNotExist())
                 .andExpect(jsonPath("$.imagePath").doesNotExist())
                 .andExpect(jsonPath("$.content").doesNotExist());
@@ -243,7 +243,7 @@ public class PostControllerTest extends ControllerTest {
 
         response.andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.id").doesNotExist())
-                .andExpect(jsonPath("$.author.id").doesNotExist())
+                .andExpect(jsonPath("$.author").doesNotExist())
                 .andExpect(jsonPath("$.createdAt").doesNotExist())
                 .andExpect(jsonPath("$.imagePath").doesNotExist())
                 .andExpect(jsonPath("$.content").doesNotExist());
@@ -257,7 +257,7 @@ public class PostControllerTest extends ControllerTest {
 
         response.andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.id").doesNotExist())
-                .andExpect(jsonPath("$.author.id").doesNotExist())
+                .andExpect(jsonPath("$.author").doesNotExist())
                 .andExpect(jsonPath("$.createdAt").doesNotExist())
                 .andExpect(jsonPath("$.imagePath").doesNotExist())
                 .andExpect(jsonPath("$.content").doesNotExist());
