@@ -1,10 +1,14 @@
 package com.Pubrunda.entities.post;
 
+import com.Pubrunda.DTOMapper;
 import com.Pubrunda.dto.response.MessageResponse;
+import com.Pubrunda.entities.post.dto.request.CreatePostDTO;
 import com.Pubrunda.entities.post.dto.request.PostQueryParams;
 import com.Pubrunda.entities.post.dto.response.PostDTO;
+import com.Pubrunda.entities.user.User;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,30 +18,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
 
-    private final ModelMapper modelMapper;
     private final PostService postService;
 
     // READ
     @GetMapping("/{postId}")
-    public Post getPostById(@PathVariable long postId) {
-        return postService.getPostById(postId);
+    public PostDTO getPostById(@PathVariable long postId) {
+        return DTOMapper.convertToDto(postService.getPostById(postId), PostDTO.class);
     }
 
-    @GetMapping("/{postId}")
+    @GetMapping
     public List<PostDTO> getAllPosts(PostQueryParams params) {
-        return postService.getAllPosts(params).stream().map(post -> modelMapper.map(post, PostDTO.class)).toList();
+        return DTOMapper.convertToDto(postService.getAllPosts(params), PostDTO.class);
     }
 
     // CREATE
-    @PostMapping()
-    public Post createPost(@RequestBody Post newPost) {
-        return postService.createPost(newPost);
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public PostDTO createPost(@AuthenticationPrincipal User authenticatedUser, @RequestBody CreatePostDTO newPost) {
+        return DTOMapper.convertToDto(postService.createPost(authenticatedUser, newPost), PostDTO.class);
     }
 
     // DELETE
     @DeleteMapping("/{postId}")
-    public MessageResponse deletePost(@PathVariable long postId) {
-        postService.deletePost(postId);
+    public MessageResponse deletePost(@AuthenticationPrincipal User authenticatedUser, @PathVariable long postId) {
+        postService.deletePost(authenticatedUser, postId);
         return new MessageResponse("Post Deleted Successfully");
     }
 

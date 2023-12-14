@@ -6,7 +6,6 @@ import com.Pubrunda.entities.user.dto.request.UpdateUserParams;
 import com.Pubrunda.entities.user.dto.request.UserQueryParams;
 import com.Pubrunda.entities.user.dto.response.UserDTO;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
