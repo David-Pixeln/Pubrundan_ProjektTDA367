@@ -178,11 +178,7 @@ public class ReviewServiceTest extends ServiceTest {
         assertThat(allReviews).hasSize(reviewCountBefore - 1);
         assertThat(allReviews.stream().allMatch(review -> review.getId() != existingReviewId)).isTrue();
     }
-<<<<<<< Updated upstream
 
-=======
-    
->>>>>>> Stashed changes
     private List<Review> getReviewFromAuthor(User author) {
         return reviewRepository.findAll().stream().filter(review -> review.getAuthor().equals(author)).toList();
     }
