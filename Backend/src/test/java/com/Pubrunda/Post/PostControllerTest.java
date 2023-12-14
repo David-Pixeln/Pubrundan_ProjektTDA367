@@ -12,7 +12,6 @@ import com.Pubrunda.entities.user.Role;
 import com.Pubrunda.entities.user.User;
 import com.Pubrunda.entities.user.UserRepository;
 import com.Pubrunda.entities.user.dto.response.UserDTO;
-import jdk.jshell.spi.ExecutionControl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -100,8 +99,7 @@ public class PostControllerTest extends ControllerTest {
         setAuthUser(userRepository.findAll().getFirst());
 
         ResultActions response = mockMvc.perform(
-                getRequest(getBaseUrl())
-                .param("id", String.valueOf(existingPost.getId()))
+                getRequest(getBaseUrl()).param("id", String.valueOf(existingPost.getId()))
         );
 
         response.andExpect(status().isOk())
@@ -119,7 +117,9 @@ public class PostControllerTest extends ControllerTest {
         List<PostDTO> existingPostsDto = DTOMapper.convertToDto(existingPosts, PostDTO.class);
         setAuthUser(author);
 
-        ResultActions response = mockMvc.perform(getRequest(getBaseUrl()).param("authorId", String.valueOf(author.getId())));
+        ResultActions response = mockMvc.perform(
+                getRequest(getBaseUrl()).param("authorId", String.valueOf(author.getId()))
+        );
 
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("length()").value(2));
@@ -136,7 +136,9 @@ public class PostControllerTest extends ControllerTest {
         List<PostDTO> existingPostsDto = DTOMapper.convertToDto(existingPosts, PostDTO.class);
         setAuthUser(author);
 
-        ResultActions response = mockMvc.perform(getRequest(getBaseUrl()).param("authorUsername", author.getUsername()));
+        ResultActions response = mockMvc.perform(
+                getRequest(getBaseUrl()).param("authorUsername", author.getUsername())
+        );
 
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("length()").value(2));
@@ -153,7 +155,9 @@ public class PostControllerTest extends ControllerTest {
         List<PostDTO> postsDTO = DTOMapper.convertToDto(postsAfterQueryTime, PostDTO.class);
         setAuthUser(userRepository.findAll().getFirst());
 
-        ResultActions response = mockMvc.perform(getRequest(getBaseUrl()).param("after", String.valueOf(queryTime)));
+        ResultActions response = mockMvc.perform(
+                getRequest(getBaseUrl()).param("after", String.valueOf(queryTime))
+        );
 
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("length()").value(2));
@@ -170,7 +174,9 @@ public class PostControllerTest extends ControllerTest {
         List<PostDTO> postsDTO = DTOMapper.convertToDto(postsAfterQueryTime, PostDTO.class);
         setAuthUser(userRepository.findAll().getFirst());
 
-        ResultActions response = mockMvc.perform(getRequest(getBaseUrl()).param("before", String.valueOf(queryTime)));
+        ResultActions response = mockMvc.perform(
+                getRequest(getBaseUrl()).param("before", String.valueOf(queryTime))
+        );
 
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("length()").value(2));

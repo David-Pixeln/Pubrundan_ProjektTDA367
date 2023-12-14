@@ -47,6 +47,7 @@ public class PostRepositoryTest extends RepositoryTest {
         userRepository.deleteAll();
         postRepository.deleteAll();
     }
+
     @Test
     public void deletePostShouldNotRemoveUser() {
         postRepository.deleteAll();
@@ -63,4 +64,5 @@ public class PostRepositoryTest extends RepositoryTest {
         assertThat(userRepository.findAll()).isEmpty();
         assertThat(postRepository.findAll()).isEmpty();
     }
+
 }
