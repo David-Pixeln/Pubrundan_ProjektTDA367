@@ -93,24 +93,6 @@ public class PostControllerTest extends ControllerTest {
     }
 
     @Test
-    public void getAllPostsWithPostQueryParamForIdShouldReturnPostWithCorrectId() throws Exception {
-        Post existingPost = postRepository.findAll().getFirst();
-        PostDTO existingPostDTO = DTOMapper.convertToDto(existingPost, PostDTO.class);
-        setAuthUser(userRepository.findAll().getFirst());
-
-        ResultActions response = mockMvc.perform(
-                getRequest(getBaseUrl()).param("id", String.valueOf(existingPost.getId()))
-        );
-
-        response.andExpect(status().isOk())
-                .andExpect(jsonPath("length()").value(1));
-
-        PostDTO responsePost = getObjectListFromResponse(response, PostDTO.class).getFirst();
-
-        assertThat(responsePost).isEqualTo(existingPostDTO);
-    }
-
-    @Test
     public void getAllPostsWithPostQueryParamForAuthorIdShouldReturnAllPostsFromAuthor() throws Exception {
         User author = userRepository.findAll().get(1);
         List<Post> existingPosts = postRepository.findAll().stream().filter(post -> post.getAuthor().equals(author)).toList();

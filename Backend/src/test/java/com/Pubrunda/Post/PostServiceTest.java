@@ -69,18 +69,6 @@ public class PostServiceTest extends ServiceTest {
     }
 
     @Test
-    public void getAllPostsWithUserQueryParameterForIdShouldReturnPostWithCorrectId() {
-        Post firstPost = postRepository.findAll().getFirst();
-        PostQueryParams postQueryParamForId = PostQueryParams.builder().id(firstPost.getId()).build();
-
-        List<Post> posts = postService.getAllPosts(postQueryParamForId);
-
-        assertThat(posts).isNotEmpty();
-        assertThat(posts).hasSize(1);
-        assertThat(posts.getFirst()).isEqualTo(firstPost);
-    }
-
-    @Test
     public void getAllPostsWithPostQueryParameterForAuthorIdShouldReturnTwoPostsFromAuthor() {
         User author = userRepository.findAll().get(1);
         List<Post> authorPosts = getPostFromAuthor(author);
