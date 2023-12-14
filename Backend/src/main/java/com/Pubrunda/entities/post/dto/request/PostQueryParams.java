@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PostQueryParams {
 
-    private Long id;
     private Long authorId;
     private String authorUsername;
     private LocalDateTime after;
