@@ -85,10 +85,7 @@ public class ReviewServiceTest extends ServiceTest {
 
         assertThat(reviews).isNotEmpty();
         assertThat(reviews).hasSize(3);
-
-        for (int i = 0; i < allReviews.size(); i++) {
-            assertThat(reviews.get(i)).isEqualTo(allReviews.get(i));
-        }
+        assertThat(reviews).isEqualTo(allReviews);
     }
 
     @Test
@@ -132,7 +129,6 @@ public class ReviewServiceTest extends ServiceTest {
         assertThat(reviews.getLast()).isEqualTo(thirdReview);
     }
 
-
     /*
      * Create
      */
@@ -162,7 +158,6 @@ public class ReviewServiceTest extends ServiceTest {
         reviewService.deleteReview(nonAuthorizedUser, reviewByAuthorizedUser.getId());
     }
 
-
     /*
      * Delete
      */
@@ -183,10 +178,13 @@ public class ReviewServiceTest extends ServiceTest {
         assertThat(allReviews).hasSize(reviewCountBefore - 1);
         assertThat(allReviews.stream().allMatch(review -> review.getId() != existingReviewId)).isTrue();
     }
+<<<<<<< Updated upstream
 
+=======
+    
+>>>>>>> Stashed changes
     private List<Review> getReviewFromAuthor(User author) {
         return reviewRepository.findAll().stream().filter(review -> review.getAuthor().equals(author)).toList();
     }
 
 }
-
