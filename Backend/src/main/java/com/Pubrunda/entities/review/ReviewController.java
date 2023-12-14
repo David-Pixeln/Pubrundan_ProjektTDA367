@@ -2,15 +2,13 @@ package com.Pubrunda.entities.review;
 
 import com.Pubrunda.DTOMapper;
 import com.Pubrunda.dto.response.MessageResponse;
+import com.Pubrunda.entities.review.DTO.request.CreateReviewDTO;
 import com.Pubrunda.entities.review.DTO.request.ReviewQueryParams;
 import com.Pubrunda.entities.review.DTO.response.ReviewDTO;
 import com.Pubrunda.entities.user.User;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-<<<<<<< Updated upstream
-=======
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
->>>>>>> Stashed changes
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,25 +18,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewController {
 
-    private final ModelMapper modelMapper;
     private final ReviewService reviewService;
 
     // READ
     @GetMapping("/{reviewId}")
-    public Review getReviewById(@PathVariable long reviewId) {
-        return reviewService.getReviewById(reviewId);
+    public ReviewDTO getReviewById(@PathVariable long reviewId) {
+        return DTOMapper.convertToDto(reviewService.getReviewById(reviewId), ReviewDTO.class);
     }
 
     // List
     @GetMapping
     public List<ReviewDTO> getAllReviews(ReviewQueryParams params) {
-        return reviewService.getAllReviews(params).stream().map(review -> modelMapper.map(review, ReviewDTO.class)).toList();
+        return DTOMapper.convertToDto(reviewService.getAllReviews(params), ReviewDTO.class);
     }
 
     // CREATE
     @PostMapping
-    public Review createReview(@AuthenticationPrincipal User authenticatedUser, @RequestBody ReviewDTO newReview) {
-        //return reviewService.createReview(newReview);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ReviewDTO createReview(@AuthenticationPrincipal User authenticatedUser, @RequestBody CreateReviewDTO newReview) {
         return DTOMapper.convertToDto(reviewService.createReview(authenticatedUser, newReview), ReviewDTO.class);
     }
 
@@ -48,14 +45,5 @@ public class ReviewController {
         reviewService.deleteReview(authenticatedUser, reviewId);
         return new MessageResponse("Review deleted successfully");
     }
-<<<<<<< Updated upstream
 
-    // List
-    @GetMapping("/{reviewId}")
-    public List<ReviewDTO> getAllReviews(ReviewQueryParams params) {
-        return reviewService.getAll(params).stream().map(review -> modelMapper.map(review, ReviewDTO.class)).toList();
-    }
-
-=======
->>>>>>> Stashed changes
 }
