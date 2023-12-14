@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,6 +47,13 @@ public class PostRepositoryTest extends RepositoryTest {
     public final void cleanDB() {
         userRepository.deleteAll();
         postRepository.deleteAll();
+    }
+
+    @Test
+    public void findAllShouldReturnAllPosts() {
+        List<Post> posts = postRepository.findAll();
+        assertThat(posts).isNotEmpty();
+        assertThat(posts).hasSize(3);
     }
 
     @Test
