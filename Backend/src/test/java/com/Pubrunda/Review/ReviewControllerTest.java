@@ -1,4 +1,9 @@
 package com.Pubrunda.Review;
 
-public class ReviewControllerTest {
+import com.Pubrunda.ControllerTest;
+
+public class ReviewControllerTest extends ControllerTest {
+
+
+
 }
