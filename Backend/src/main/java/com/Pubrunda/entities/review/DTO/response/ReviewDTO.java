@@ -10,8 +10,9 @@ public class ReviewDTO {
 
     private long id;
     private UserDTO author;
-    private String mediaPath;
-    private int rating;
-    private String content;
     private LocalDateTime createdAt;
+    private int rating;
+    private String mediaPath;
+    private String content;
+
 }

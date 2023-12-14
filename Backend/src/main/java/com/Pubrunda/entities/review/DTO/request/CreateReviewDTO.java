@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateReviewDTO {
 
-    private int rating;
+    private Integer rating;
 
     private String mediaPath;
 

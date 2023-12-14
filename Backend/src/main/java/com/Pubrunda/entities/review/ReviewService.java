@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -37,7 +38,7 @@ public class ReviewService {
                     .mediaPath(newReview.getMediaPath())
                     .rating(newReview.getRating())
                     .content(newReview.getContent())
-                    .createdAt(LocalDateTime.now())
+                    .createdAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                     .build();
 
             return reviewRepository.save(review);
