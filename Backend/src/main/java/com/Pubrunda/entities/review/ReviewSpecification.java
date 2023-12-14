@@ -18,41 +18,23 @@ public class ReviewSpecification extends EntitySpecifications<Review> {
 
     @Override
     protected Collection<Specification<Review>> getSpecifications() {
-        return Stream.of(byAuthor(reviewParams.getAuthor()), byTimeAfter(reviewParams.getCreatedAt()), byTimeBefore(reviewParams.getCreatedAt())).toList();
+        return Stream.of(
+                byAuthorId(reviewParams.getAuthorId()),
+                byTimeAfter(reviewParams.getCreatedAt()),
+                byTimeBefore(reviewParams.getCreatedAt())
+                ).toList();
     }
 
-    public Specification<Review> byAuthor(User author) {
-        return (root, query, builder) -> {
-            Predicate predicate = builder.conjunction();
-
-            if (author != null) {
-                predicate = builder.and(predicate, builder.equal(root.get("author"), author));
-            }
-            return predicate;
-        };
+    public Specification<Review> byAuthorId(Long id) {
+        return (root, query, builder) -> id != null ? builder.equal(root.get("author").get("id"), id) : null;
     }
 
     public Specification<Review> byTimeBefore(LocalDateTime createdAt) {
-        return (root, query, builder) -> {
-            Predicate predicate = builder.conjunction();
-
-            if (createdAt != null) {
-                predicate = builder.and(predicate, builder.lessThanOrEqualTo(root.get("createdAt"), createdAt));
-            }
-
-            return predicate;
-        };
+        return (root, query, builder) -> createdAt != null ? builder.lessThanOrEqualTo(root.get("createdAt"), createdAt) : null;
     }
 
     public Specification<Review> byTimeAfter(LocalDateTime createdAt) {
-        return (root, query, builder) -> {
-            Predicate predicate = builder.conjunction();
-
-            if (createdAt != null) {
-                predicate = builder.and(predicate, builder.greaterThanOrEqualTo(root.get("createdAt"), createdAt));
-            }
-
-            return predicate;
-        };
+        return (root, query, builder) -> createdAt != null ? builder.greaterThanOrEqualTo(root.get("createdAt"), createdAt) : null;
     }
+
 }
