@@ -51,7 +51,7 @@ public class FriendRequestService {
     }
 
     public FriendRequest createFriendRequest(User authenticatedUser, CreateFriendRequestDTO friendRequest) {
-        User toUser = userService.getUserById(friendRequest.getTo().getId());
+        User toUser = userService.getUser(friendRequest.getTo().getId());
         return createFriendRequest(authenticatedUser, toUser);
     }
 
