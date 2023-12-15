@@ -1,6 +1,6 @@
 package com.Pubrunda.entities.friendList;
 
-import com.Pubrunda.appEvents.CreationEvent;
+import com.Pubrunda.events.CreationEvent;
 import com.Pubrunda.entities.friendList.dto.request.FriendListQueryParams;
 import com.Pubrunda.entities.friendRequest.FriendRequestAcceptedEvent;
 import com.Pubrunda.entities.user.User;
@@ -61,7 +61,7 @@ public class FriendListService {
 
     @EventListener
     public void handleUserRegistrationEvent(CreationEvent<User> event) {
-        createFriendListForUser(event.getEntity());
+        createFriendListForUser(event.getCreatedObject());
     }
 
     @EventListener
