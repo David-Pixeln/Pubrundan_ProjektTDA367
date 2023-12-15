@@ -23,18 +23,8 @@ import static org.antlr.v4.runtime.tree.xpath.XPath.findAll;
 public class FriendRequestService {
 
     private final UserService userService;
+
     private final FriendRequestRepository friendRequestRepository;
-
-
-    public List<FriendRequest> getAllFriendRequests(User authenticatedUser) {
-        List<FriendRequest> friendRequests = friendRequestRepository.findAll();
-        return filterFriendRequests(authenticatedUser, friendRequests);
-    }
-
-    public List<FriendRequest> getAllFriendRequests(User authenticatedUser, FriendRequestQueryParams queryParams) {
-        List<FriendRequest> friendRequests = friendRequestRepository.findAll(new FriendRequestSpecifications(queryParams));
-        return filterFriendRequests(authenticatedUser, friendRequests);
-    }
 
     public FriendRequest getFriendRequestById(User authenticatedUser, long friendRequestId) {
         FriendRequest friendRequest = friendRequestRepository.findById(friendRequestId).orElseThrow();
@@ -44,6 +34,16 @@ public class FriendRequestService {
         }
 
         return friendRequest;
+    }
+
+    public List<FriendRequest> getAllFriendRequests(User authenticatedUser) {
+        List<FriendRequest> friendRequests = friendRequestRepository.findAll();
+        return filterFriendRequests(authenticatedUser, friendRequests);
+    }
+
+    public List<FriendRequest> getAllFriendRequests(User authenticatedUser, FriendRequestQueryParams queryParams) {
+        List<FriendRequest> friendRequests = friendRequestRepository.findAll(new FriendRequestSpecifications(queryParams));
+        return filterFriendRequests(authenticatedUser, friendRequests);
     }
 
     public FriendRequest createFriendRequest(User authenticatedUser, CreateFriendRequestDTO friendRequest) {

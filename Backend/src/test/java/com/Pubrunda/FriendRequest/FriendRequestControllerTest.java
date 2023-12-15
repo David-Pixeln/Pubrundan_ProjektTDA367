@@ -1,10 +1,12 @@
-package com.Pubrunda.Post;
+package com.Pubrunda.FriendRequest;
 
 import com.Pubrunda.ControllerTest;
 import com.Pubrunda.DTOMapper;
+import com.Pubrunda.entities.friendRequest.FriendRequest;
+import com.Pubrunda.entities.friendRequest.FriendRequestRepository;
+import com.Pubrunda.entities.friendRequest.FriendRequestService;
+import com.Pubrunda.entities.friendRequest.dto.response.FriendRequestDTO;
 import com.Pubrunda.entities.post.Post;
-import com.Pubrunda.entities.post.PostRepository;
-import com.Pubrunda.entities.post.PostService;
 import com.Pubrunda.entities.post.dto.request.CreatePostDTO;
 import com.Pubrunda.entities.post.dto.request.PostQueryParams;
 import com.Pubrunda.entities.post.dto.response.PostDTO;
@@ -20,57 +22,70 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class PostControllerTest extends ControllerTest {
+public class FriendRequestControllerTest extends ControllerTest {
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private PostRepository postRepository;
+    private FriendRequestRepository friendRequestRepository;
 
     @Autowired
-    private PostService postService;
-
+    private FriendRequestService friendRequestService;
 
     @Override
-    protected String getBaseUrl() {
-        return super.getBaseUrl() + "/posts";
-    }
+    protected String getBaseUrl() {return super.getBaseUrl() + "/friendRequests";}
 
     @Before
     public final void preloadDB() {
         User testUser1 = new User("test1", "test1", Role.USER);
         User testUser2 = new User("test2", "test2", Role.USER);
+        User testUser3 = new User("test3", "test3", Role.USER);
 
-        userRepository.saveAll(List.of(testUser1, testUser2));
+        userRepository.saveAll(List.of(testUser1, testUser2, testUser3));
 
         LocalDateTime dateTime1 = LocalDateTime.of(2010, Month.JULY, 29, 19, 30, 40);
         LocalDateTime dateTime2 = LocalDateTime.of(2015, Month.AUGUST, 3, 23, 10, 5);
         LocalDateTime dateTime3 = LocalDateTime.of(2020, Month.DECEMBER, 10, 5, 25, 15);
-        postRepository.save(new Post(testUser1, dateTime1, "imagePlaceholder"));
-        postRepository.save(new Post(testUser2, dateTime2, "imagePlaceholder"));
-        postRepository.save(new Post(testUser2, dateTime3, "imagePlaceholder"));
+
+        friendRequestRepository.save(FriendRequest.builder()
+                .createdAt(dateTime1)
+                .to(testUser1)
+                .from(testUser2)
+                .build());
+        friendRequestRepository.save(FriendRequest.builder()
+                .createdAt(dateTime2)
+                .to(testUser2)
+                .from(testUser1)
+                .build());
+        friendRequestRepository.save(FriendRequest.builder()
+                .createdAt(dateTime3)
+                .to(testUser2)
+                .from(testUser3)
+                .build());
     }
 
     @After
     public final void cleanDB() {
         userRepository.deleteAll();
-        postRepository.deleteAll();
+        friendRequestRepository.deleteAll();
     }
 
     /*
      * GET
      */
 
+    /*
     @Test
-    public void getPostsShouldReturnAllPosts() throws Exception {
-        List<Post> allPosts = postRepository.findAll();
+    public void getFriendRequestShouldReturnAllFriendRequest() throws Exception {
+        List<FriendRequest> allFriendRequests = friendRequestRepository.findAll();
         List<User> allUsers = userRepository.findAll();
         setAuthUser(allUsers.getFirst());
 
@@ -91,28 +106,29 @@ public class PostControllerTest extends ControllerTest {
             assertThat(responsePost.getAuthor()).isEqualTo(postAuthor);
         }
     }
+    */
 
     @Test
-    public void getAllPostsWithPostQueryParamForAuthorIdShouldReturnAllPostsFromAuthor() throws Exception {
-        User author = userRepository.findAll().get(1);
-        List<Post> existingPosts = postRepository.findAll().stream().filter(post -> post.getAuthor().equals(author)).toList();
-        List<PostDTO> existingPostsDto = DTOMapper.convertToDto(existingPosts, PostDTO.class);
-        setAuthUser(author);
+    public void getAllFriendRequestsWithQueryParamForToShouldReturnAllFriendRequestToUser() throws Exception {
+        User user = userRepository.findAll().get(1);
+        List<FriendRequest> existingFriendRequests = friendRequestRepository.findAll().stream().filter(friendRequest -> friendRequest.getTo().equals(user)).toList();
+        List<FriendRequestDTO> existingFriendRequestsDto = DTOMapper.convertToDto(existingFriendRequests, FriendRequestDTO.class);
+        setAuthUser(user);
 
         ResultActions response = mockMvc.perform(
-                getRequest(getBaseUrl()).param("authorId", String.valueOf(author.getId()))
+                getRequest(getBaseUrl()).param("to", String.valueOf(user.getId()))
         );
 
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("length()").value(2));
 
-        List<PostDTO> responsePosts = getObjectListFromResponse(response, PostDTO.class);
+        List<FriendRequestDTO> responseFriendRequests = getObjectListFromResponse(response, FriendRequestDTO.class);
 
-        assertThat(responsePosts).isEqualTo(existingPostsDto);
+        assertThat(responseFriendRequests).isEqualTo(existingFriendRequestsDto);
     }
 
     @Test
-    public void getAllPostsWithPostQueryParamForAuthorUsernameShouldReturnAllPostsFromAuthor() throws Exception {
+    public void getAllFriendRequestsWithQueryParamForAuthorUsernameShouldReturnAllPostsFromAuthor() throws Exception {
         User author = userRepository.findAll().get(1);
         List<Post> existingPosts = postRepository.findAll().stream().filter(post -> post.getAuthor().equals(author)).toList();
         List<PostDTO> existingPostsDto = DTOMapper.convertToDto(existingPosts, PostDTO.class);
@@ -313,5 +329,4 @@ public class PostControllerTest extends ControllerTest {
 
         response.andExpect(status().isUnauthorized());
     }
-
 }
