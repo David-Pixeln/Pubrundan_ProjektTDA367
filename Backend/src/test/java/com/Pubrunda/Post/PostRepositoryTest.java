@@ -1,6 +1,7 @@
 package com.Pubrunda.Post;
 
 import com.Pubrunda.RepositoryTest;
+import com.Pubrunda.entities.image.Image;
 import com.Pubrunda.entities.post.Post;
 import com.Pubrunda.entities.post.PostRepository;
 import com.Pubrunda.entities.user.Role;
@@ -38,9 +39,11 @@ public class PostRepositoryTest extends RepositoryTest {
         LocalDateTime dateTime2 = LocalDateTime.of(2015, Month.AUGUST, 3, 23, 10, 5);
         LocalDateTime dateTime3 = LocalDateTime.of(2020, Month.DECEMBER, 10, 5, 25, 15);
 
-        postRepository.save(new Post(testUser1, dateTime1, "imagePlaceholder"));
-        postRepository.save(new Post(testUser2, dateTime2, "imagePlaceholder"));
-        postRepository.save(new Post(testUser2, dateTime3, "imagePlaceholder"));
+
+
+        postRepository.save(new Post(testUser1, dateTime1, List.of(new Image())));
+        postRepository.save(new Post(testUser2, dateTime2, List.of(new Image())));
+        postRepository.save(new Post(testUser2, dateTime3, List.of(new Image())));
     }
 
     @After
