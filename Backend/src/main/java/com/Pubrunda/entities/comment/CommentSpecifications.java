@@ -25,4 +25,5 @@ public class CommentSpecifications extends EntitySpecifications<Comment> {
                 TimeSpecifications.byTimeAfter(commentParams.getAfter(), root.get("createdAt"))
         );
     }
+
 }
