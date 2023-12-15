@@ -6,43 +6,52 @@ This document serves to describe how to interact and make use of the Pubrunda AP
 
 The following instructions explain what requests can be made through the API, while also documenting which classes they can be used with. 
 
+## Authentication
 
 
-## Get An Object
+
+## Get A Single Resource
 
 ### Request
 
-`GET /api/[resource]`
+`GET /api/[resource]/{id}`
 
-    curl -i -H 'Accept: application/json' http://localhost:7000/thing/
+    curl -i -H 'Accept: application/json' http://localhost:8080/api/users/1
 
 ### Response
 
     HTTP/1.1 200 OK
-    Date: Thu, 24 Feb 2011 12:36:30 GMT
+    Date: Fri, 15 Dec 2023 15:46:11 GMT
     Status: 200 OK
-    Connection: close
+    Connection: keep-alive
     Content-Type: application/json
-    Content-Length: 2
 
-    []
+    {"id": 1,"username": "test","role": "USER"}
 
 ### Relevant Entities
 Post, Review, Comment, User, FriendRequest, Pub
 
 
-### Get A List of Objects
--------------------------
-#### Relevant Classes
-Post, Review, Comment, User, FriendRequest, Pub
 
-#### Request
+## Get All Of A Resource
 
-> [Insert Code Here]
+### Request
 
-#### Parameters
+`GET /api/[resource]`
 
-The following tables describes what parameters you can filter with when getting a list of objects.
+    curl -i -H 'Accept: application/json' http://localhost:8080/api/users
+
+### Response
+
+    HTTP/1.1 200 OK
+    Date: Fri, 15 Dec 2023 15:46:11 GMT
+    Status: 200 OK
+    Connection: keep-alive
+    Content-Type: application/json
+
+    [{"id": 1,"username": "test","role": "USER"}, {"id": 2,"username": "test2","role": "USER"}]
+
+### Query Parameters
 
 ##### Post
 > | Parameter      | Type           | description    |
@@ -96,61 +105,69 @@ The following tables describes what parameters you can filter with when getting 
 > | closedBefore  | LocalDateTime  |                |
 
 
-##### Response
-
-> [Insert Code Here]
-
-
-
-### Create an Object
--------------------------
 #### Relevant Classes
 Post, Review, Comment, User, FriendRequest, Pub
 
-#### Request
-
-> [Insert Code Here]
 
 
-#### Response
+## Create A Resource
 
-> [Insert Code Here]
+### Request
 
+`POST /api/[resource]`
 
+### Response
 
-### Update an Object
----------------------
-#### Relevant Classes
-User, Pub
+    HTTP/1.1 201 CREATED
+    Date: Fri, 15 Dec 2023 15:46:11 GMT
+    Status: 201 CREATED
+    Connection: keep-alive
+    Content-Type: application/json
 
-#### Request
-
-> [Insert Code Here]
-
-
-#### Response
-
-> [Insert Code Here]
+    [{"id":1,"from":{"id":1,"username":"test","role":"USER"},"to":{"id":2,"username":"test2","role":"USER"}}]
 
 
 
-### Delete an Object
----------------------
-#### Relevant Classes
+## Update A Resource
+
+### Request
+
+`PUT /api/[resource]/{id}`
+
+    curl -i -H 'Accept: application/json' -X PUT -d 'username=newUsername' http://localhost:8080/api/users/1
+
+
+### Response
+
+    HTTP/1.1 200 OK
+    Date: Fri, 15 Dec 2023 15:46:11 GMT
+    Status: 200 OK
+    Connection: keep-alive
+    Content-Type: application/json
+
+    {"id": 1,"username": "newUsername","role": "USER"}
+
+
+
+## Delete an Object
+
+### Request
+
+`DELETE /api/[resource]/{id}`
+
+    curl -i -H 'Accept: application/json' -X DELETE http://localhost:8080/api/users/1
+
+
+### Response
+
+    HTTP/1.1 200 OK
+    Date: Fri, 15 Dec 2023 15:46:11 GMT
+    Status: 200 OK
+    Connection: keep-alive
+    Content-Type: application/json
+
+    {message: "User was deleted successfully"}
+
+
+### Relevant Classes
 Post, Review, Comment, User, FriendRequest, Pub
-
-#### Request
-
-> [Insert Code Here]
-
-
-#### Response
-
-> [Insert Code Here]
-
-
------------
-
-#### Authorization
-
->
