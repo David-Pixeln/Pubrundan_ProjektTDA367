@@ -34,7 +34,7 @@ public class CommentController {
     // CREATE
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CommentDTO createComment(@AuthenticationPrincipal User authenticatedUser, @RequestBody CreateCommentDTO newComment) {
+    public CommentDTO createComment(@AuthenticationPrincipal User authenticatedUser, CreateCommentDTO newComment) {
         return DTOMapper.convertToDto(commentService.createComment(authenticatedUser, newComment), CommentDTO.class);
     }
 
@@ -44,4 +44,5 @@ public class CommentController {
         commentService.deleteComment(authenticatedUser, commentId);
         return new MessageResponse("Post Deleted Successfully");
     }
+    
 }
