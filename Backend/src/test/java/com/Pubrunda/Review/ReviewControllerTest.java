@@ -2,12 +2,6 @@ package com.Pubrunda.Review;
 
 import com.Pubrunda.ControllerTest;
 import com.Pubrunda.DTOMapper;
-import com.Pubrunda.JsonObjectMapper;
-import com.Pubrunda.entities.post.Post;
-import com.Pubrunda.entities.post.PostRepository;
-import com.Pubrunda.entities.post.PostService;
-import com.Pubrunda.entities.post.dto.request.PostQueryParams;
-import com.Pubrunda.entities.post.dto.response.PostDTO;
 import com.Pubrunda.entities.review.DTO.request.CreateReviewDTO;
 import com.Pubrunda.entities.review.DTO.request.ReviewQueryParams;
 import com.Pubrunda.entities.review.DTO.response.ReviewDTO;
