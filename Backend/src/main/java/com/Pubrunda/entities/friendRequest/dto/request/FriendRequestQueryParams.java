@@ -1,10 +1,12 @@
 package com.Pubrunda.entities.friendRequest.dto.request;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 public class FriendRequestQueryParams {
 
     private Long id;
