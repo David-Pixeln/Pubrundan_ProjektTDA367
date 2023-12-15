@@ -2,6 +2,7 @@ package com.Pubrunda.Post;
 
 import com.Pubrunda.ControllerTest;
 import com.Pubrunda.DTOMapper;
+import com.Pubrunda.entities.image.Image;
 import com.Pubrunda.entities.post.Post;
 import com.Pubrunda.entities.post.PostRepository;
 import com.Pubrunda.entities.post.PostService;
@@ -16,6 +17,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDateTime;
@@ -53,14 +55,14 @@ public class PostControllerTest extends ControllerTest {
         LocalDateTime dateTime1 = LocalDateTime.of(2010, Month.JULY, 29, 19, 30, 40);
         LocalDateTime dateTime2 = LocalDateTime.of(2015, Month.AUGUST, 3, 23, 10, 5);
         LocalDateTime dateTime3 = LocalDateTime.of(2020, Month.DECEMBER, 10, 5, 25, 15);
-        postRepository.save(new Post(testUser1, dateTime1, "imagePlaceholder"));
-        postRepository.save(new Post(testUser2, dateTime2, "imagePlaceholder"));
-        postRepository.save(new Post(testUser2, dateTime3, "imagePlaceholder"));
+        postRepository.save(new Post(testUser1, dateTime1, List.of(new Image())));
+        postRepository.save(new Post(testUser2, dateTime2, List.of(new Image())));
+        postRepository.save(new Post(testUser2, dateTime3, List.of(new Image())));
     }
 
     @After
     public final void cleanDB() {
-        userRepository.deleteAll(); // TODO: Add this for postServiceTest as well
+        userRepository.deleteAll();
         postRepository.deleteAll();
     }
 
@@ -69,7 +71,7 @@ public class PostControllerTest extends ControllerTest {
      */
 
     @Test
-    public void getPostsShouldReturnAllPostsWithCorrectAttributes() throws Exception {
+    public void getPostsShouldReturnAllPosts() throws Exception {
         List<Post> allPosts = postRepository.findAll();
         List<User> allUsers = userRepository.findAll();
         setAuthUser(allUsers.getFirst());
@@ -230,7 +232,15 @@ public class PostControllerTest extends ControllerTest {
     @Test
     public void postRequestShouldCreateAPost() throws Exception {
         User author = userRepository.findAll().getFirst();
-        CreatePostDTO newPost = new CreatePostDTO("imagePath", "testContent");
+
+        MockMultipartFile image = new MockMultipartFile(
+                "image",
+                "image.png",
+                "image/png",
+                "image".getBytes()
+        );
+
+        CreatePostDTO newPost = new CreatePostDTO(List.of(image), "testContent");
 
         setAuthUser(author);
         ResultActions response = mockMvc.perform(postRequest(getBaseUrl(), newPost));

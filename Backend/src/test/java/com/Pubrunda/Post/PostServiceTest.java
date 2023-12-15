@@ -1,6 +1,8 @@
 package com.Pubrunda.Post;
 
 import com.Pubrunda.ServiceTest;
+import com.Pubrunda.entities.image.Image;
+import com.Pubrunda.entities.image.ImageRepository;
 import com.Pubrunda.entities.post.Post;
 import com.Pubrunda.entities.post.PostRepository;
 import com.Pubrunda.entities.post.PostService;
@@ -10,16 +12,19 @@ import com.Pubrunda.entities.user.Role;
 import com.Pubrunda.entities.user.User;
 import com.Pubrunda.entities.user.UserRepository;
 import com.Pubrunda.exception.AuthorizationException;
+import jakarta.transaction.Transactional;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 public class PostServiceTest extends ServiceTest {
 
@@ -32,20 +37,27 @@ public class PostServiceTest extends ServiceTest {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private ImageRepository imageRepository;
+
 
     @Before
     public final void preloadDB() {
         User testUser1 = new User("test1", "test1", Role.USER);
         User testUser2 = new User("test2", "test2", Role.USER);
-
         userRepository.saveAll(List.of(testUser1, testUser2));
+
+        Image image1 = Image.builder().name("image1").type("image/jpeg").path("path1").build();
+        Image image2 = Image.builder().name("image2").type("image/jpeg").path("path2").build();
+        Image image3 = Image.builder().name("image3").type("image/jpeg").path("path3").build();
+        imageRepository.saveAll(List.of(image1, image2, image3));
 
         LocalDateTime dateTime1 = LocalDateTime.of(2010, Month.JULY, 29, 19, 30, 40);
         LocalDateTime dateTime2 = LocalDateTime.of(2015, Month.AUGUST, 3, 23, 10, 5);
         LocalDateTime dateTime3 = LocalDateTime.of(2020, Month.DECEMBER, 10, 5, 25, 15);
-        postRepository.save(new Post(testUser1, dateTime1, "imagePlaceholder"));
-        postRepository.save(new Post(testUser2, dateTime2, "imagePlaceholder"));
-        postRepository.save(new Post(testUser2, dateTime3, "imagePlaceholder"));
+        postRepository.save(new Post(testUser1, dateTime1, List.of(image1)));
+        postRepository.save(new Post(testUser2, dateTime2, List.of(image2)));
+        postRepository.save(new Post(testUser2, dateTime3, List.of(image3)));
     }
 
     @After
@@ -55,6 +67,7 @@ public class PostServiceTest extends ServiceTest {
     }
 
     @Test
+    @Transactional
     public void getAllPostsShouldReturnThreePostsWithCorrectId() {
         List<Post> allPosts = postRepository.findAll();
 
@@ -62,13 +75,11 @@ public class PostServiceTest extends ServiceTest {
 
         assertThat(posts).isNotEmpty();
         assertThat(posts).hasSize(3);
-
-        for (int i = 0; i < 3; i++) {
-            assertThat(posts.get(i).getId()).isEqualTo(allPosts.get(i).getId());
-        }
+        assertThat(posts).isEqualTo(allPosts);
     }
 
     @Test
+    @Transactional
     public void getAllPostsWithPostQueryParameterForAuthorIdShouldReturnTwoPostsFromAuthor() {
         User author = userRepository.findAll().get(1);
         List<Post> authorPosts = getPostFromAuthor(author);
@@ -82,6 +93,7 @@ public class PostServiceTest extends ServiceTest {
     }
 
     @Test
+    @Transactional
     public void getAllPostsWithPostQueryParameterForAuthorUsernameShouldReturnTwoPostsFromAuthor() {
         User author = userRepository.findAll().get(1);
         List<Post> authorPosts = getPostFromAuthor(author);
@@ -91,10 +103,11 @@ public class PostServiceTest extends ServiceTest {
 
         assertThat(posts).isNotEmpty();
         assertThat(posts).hasSize(2);
-        assertThat(posts).isEqualTo(authorPosts);
+        assertEquals(posts, authorPosts);
     }
 
     @Test
+    @Transactional
     public void getAllPostsWithPostQueryParameterForBeforeShouldReturnAllPostsBeforeTime() {
         Post firstPost = postRepository.findAll().getFirst();
         Post secondPost = postRepository.findAll().get(1);
@@ -108,8 +121,8 @@ public class PostServiceTest extends ServiceTest {
         assertThat(posts.getLast()).isEqualTo(secondPost);
     }
 
-
     @Test
+    @Transactional
     public void getAllPostsWithPostQueryParameterForAfterShouldReturnAllPostsAfterTime() {
         Post secondPost = postRepository.findAll().get(1);
         Post thirdPost = postRepository.findAll().get(2);
@@ -124,20 +137,29 @@ public class PostServiceTest extends ServiceTest {
     }
 
     @Test
+    @Transactional
     public void getPostByIdShouldReturnOnePostWithCorrectId() {
-        long postId = postRepository.findAll().getFirst().getId();
+        Post post = postRepository.findAll().getFirst();
 
-        Post post = postService.getPostById(postId);
+        Post fetchedPost = postService.getPostById(post.getId());
 
         assertThat(post).isNotNull();
-        assertThat(post.getId()).isEqualTo(postId);
+        assertThat(post).isEqualTo(fetchedPost);
     }
 
     @Test
     public void createPostShouldAddPostToDatabase() {
         int postCountBefore = postRepository.findAll().size();
         User author = userRepository.findAll().getFirst();
-        CreatePostDTO newPost = new CreatePostDTO("imagePlaceholder", "contentPlaceholder");
+
+        MockMultipartFile image = new MockMultipartFile(
+                "image",
+                "image.jpg",
+                "image/jpeg",
+                "image".getBytes()
+        );
+
+        CreatePostDTO newPost = new CreatePostDTO(List.of(image), "contentPlaceholder");
 
         Post post = postService.createPost(author, newPost);
 

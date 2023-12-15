@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -42,13 +41,13 @@ public class ImageService {
     }
 
     public List<Image> upload(List<MultipartFile> files) throws IOException {
-        List<Image> images = new ArrayList<>();
-
-        for (MultipartFile file : files) {
-            images.add(upload(file));
-        }
-
-        return images;
+        return files.stream().map(file -> {
+            try {
+                return upload(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).toList();
     }
 
     public byte[] getImageById(long id) throws IOException {
