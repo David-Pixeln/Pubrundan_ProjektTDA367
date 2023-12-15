@@ -9,6 +9,7 @@ import com.Pubrunda.entities.user.User;
 import com.Pubrunda.entities.user.UserService;
 import com.Pubrunda.exception.AuthorizationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -25,6 +26,9 @@ public class FriendRequestService {
     private final UserService userService;
 
     private final FriendRequestRepository friendRequestRepository;
+
+    private final ApplicationEventPublisher eventPublisher;
+
 
     public FriendRequest getFriendRequestById(User authenticatedUser, long friendRequestId) {
         FriendRequest friendRequest = friendRequestRepository.findById(friendRequestId).orElseThrow();
@@ -48,7 +52,10 @@ public class FriendRequestService {
 
     public FriendRequest createFriendRequest(User authenticatedUser, CreateFriendRequestDTO friendRequest) {
         User toUser = userService.getUserById(friendRequest.getTo().getId());
+        return createFriendRequest(authenticatedUser, toUser);
+    }
 
+    public FriendRequest createFriendRequest(User authenticatedUser, User toUser) {
         FriendRequest newFriendRequest = FriendRequest.builder()
                 .from(authenticatedUser)
                 .to(toUser)
@@ -59,13 +66,33 @@ public class FriendRequestService {
     }
 
     public void deleteFriendRequest(User authenticatedUser, long friendRequestId) {
-        FriendRequest existingFriendRequest = getFriendRequestById(authenticatedUser, friendRequestId);
+        deleteFriendRequest(authenticatedUser, getFriendRequestById(authenticatedUser, friendRequestId));
+    }
 
-        if (!AuthorizationManager.hasAuthorityOfUser(authenticatedUser, existingFriendRequest.getFrom())) {
-            throw new NoSuchElementException(); // Don't leak information about the existence of the friend request
+    public void deleteFriendRequest(User authenticatedUser, FriendRequest friendRequest) {
+        if (!AuthorizationManager.hasAuthorityOfUser(authenticatedUser, friendRequest.getFrom())) {
+            throw new AuthorizationException("You are not authorized to delete this friend request");
         }
 
-        friendRequestRepository.deleteById(friendRequestId);
+        deleteFriendRequest(friendRequest);
+    }
+
+    private void deleteFriendRequest(FriendRequest friendRequest) {
+        friendRequestRepository.delete(friendRequest);
+    }
+
+    public void acceptFriendRequest(User authenticatedUser, long friendRequestId) {
+        acceptFriendRequest(authenticatedUser, getFriendRequestById(authenticatedUser, friendRequestId));
+    }
+
+    public void acceptFriendRequest(User authenticatedUser, FriendRequest friendRequest) {
+        if (!AuthorizationManager.hasAuthorityOfUser(authenticatedUser, friendRequest.getTo())) {
+            throw new AuthorizationException("You are not authorized to accept this friend request");
+        }
+
+        eventPublisher.publishEvent(new FriendRequestAcceptedEvent(this, friendRequest.getFrom(), friendRequest.getTo()));
+
+        deleteFriendRequest(friendRequest);
     }
 
     private List<FriendRequest> filterFriendRequests(User authenticatedUser, List<FriendRequest> friendRequests) {
