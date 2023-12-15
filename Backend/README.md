@@ -218,3 +218,9 @@ Post, Review, Comment, User, FriendRequest, Pub
 
     {message: "Friend request accepted successfully"}
 
+
+## Additional Notes:
+
+### FriendList
+
+Friend lists are created automatically when a user is created. The same applies for deletion. Friends are added to this list through acceptance of friend requests.
