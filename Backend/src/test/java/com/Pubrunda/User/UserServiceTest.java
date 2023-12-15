@@ -57,7 +57,7 @@ public class UserServiceTest {
     public void testGetUserByIdShouldReturnOneUser() {
         long userId = userRepository.findAll().getFirst().getId();
 
-        User user = userService.getUserById(userId);
+        User user = userService.getUser(userId);
 
         assertThat(user).isNotNull();
         assertThat(user.getUsername()).isEqualTo("test1");

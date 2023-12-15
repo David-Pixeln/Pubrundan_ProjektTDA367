@@ -20,6 +20,11 @@ public class UserController {
 
 
     // GET
+    @GetMapping("/{userId}")
+    public UserDTO getUserById(@PathVariable long userId) {
+        return DTOMapper.convertToDto(userService.getUser(userId), UserDTO.class);
+    }
+
     @GetMapping
     public List<UserDTO> getAllUsers(UserQueryParams params) {
         // TODO: Add pagination
@@ -28,20 +33,14 @@ public class UserController {
         return DTOMapper.convertToDto(userService.getAllUsers(params), UserDTO.class);
     }
 
-    @GetMapping("/{userId}")
-    public UserDTO getUserById(@PathVariable long userId) {
-        User user = userService.getUserById(userId);
-        return DTOMapper.convertToDto(user, UserDTO.class);
-    }
-
     // UPDATE
     @PutMapping("/{userId}")
     public UserDTO updateUser(
             @AuthenticationPrincipal User authenticatedUser,
-            @RequestBody UpdateUserParams newUserDetails,
-            @PathVariable long userId
+            @PathVariable long userId,
+            @RequestBody UpdateUserParams newUserDetails
     ) {
-        User updatedUser = userService.updateUser(authenticatedUser, newUserDetails, userId);
+        User updatedUser = userService.updateUser(authenticatedUser, userId, newUserDetails);
         return DTOMapper.convertToDto(updatedUser, UserDTO.class);
     }
 

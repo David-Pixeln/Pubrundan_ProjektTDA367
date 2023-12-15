@@ -1,7 +1,9 @@
 package com.Pubrunda.entities.user;
 
+import com.Pubrunda.AuthorizationManager;
 import com.Pubrunda.entities.user.dto.request.UpdateUserParams;
 import com.Pubrunda.entities.user.dto.request.UserQueryParams;
+import com.Pubrunda.exception.AuthorizationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,12 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
 
+    public User getUser(long userId) {
+        return userRepository.findById(userId).orElseThrow();
+    }
+
     public List<User> getAllUsers() {
-        return getAllUsers(new UserQueryParams());
+        return userRepository.findAll();
     }
 
     public List<User> getAllUsers(UserQueryParams params) {
@@ -25,45 +31,44 @@ public class UserService {
         return userRepository.findAll(userSpecification);
     }
 
-    public User getUserById(long userId) {
-        return getUser(userId);
+    public User updateUser(User authenticatedUser, long userId, UpdateUserParams newUser) {
+        return updateUser(authenticatedUser, getUser(userId), newUser);
     }
 
-    public User updateUser(User authenticatedUser, UpdateUserParams newUser, long userId) {
-        User existingUser = getUser(userId);
-
-        if (!hasAuthorityOfUser(authenticatedUser, existingUser)) {
-            throw new RuntimeException("You are not allowed to update this user"); // FIXME: User better exception
+    public User updateUser(User authenticatedUser, User user, UpdateUserParams newUserDetails) {
+        if (!AuthorizationManager.hasAuthorityOfUser(authenticatedUser, user)) {
+            throw new AuthorizationException("You are not allowed to update this user");
         }
 
-        if (newUser.getUsername() != null) {
-            existingUser.setUsername(newUser.getUsername());
+        return updateUser(user, newUserDetails);
+    }
+
+    private User updateUser(User user, UpdateUserParams newUserDetails) {
+        if (newUserDetails.getUsername() != null) {
+            user.setUsername(newUserDetails.getUsername());
         }
 
-        if (newUser.getPassword() != null) {
-            existingUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        if (newUserDetails.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(newUserDetails.getPassword()));
         }
 
-        return userRepository.save(existingUser);
+        return userRepository.save(user);
     }
 
     public void deleteUser(User authenticatedUser, long userId) {
-        User existingUser = getUser(userId);
+        deleteUser(authenticatedUser, getUser(userId));
+    }
 
-        if (!hasAuthorityOfUser(authenticatedUser, existingUser)) {
-            throw new RuntimeException("You are not allowed to delete this user"); // FIXME: User better exception
+    public void deleteUser(User authenticatedUser, User user) {
+        if (!AuthorizationManager.hasAuthorityOfUser(authenticatedUser, user)) {
+            throw new AuthorizationException("You are not allowed to delete this user");
         }
 
-        userRepository.delete(existingUser);
+        deleteUser(user);
     }
 
-    private User getUser(long userId) {
-        return userRepository.findById(userId).orElseThrow();
-    }
-
-    // TODO: Move this to a separate class (refactor in some way)
-    private boolean hasAuthorityOfUser(User authenticatedUser, User user) {
-        return authenticatedUser.getId() == user.getId();
+    private void deleteUser(User user) {
+        userRepository.delete(user);
     }
 
 }
