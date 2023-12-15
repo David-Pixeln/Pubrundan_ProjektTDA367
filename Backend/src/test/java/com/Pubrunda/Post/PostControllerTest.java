@@ -60,7 +60,7 @@ public class PostControllerTest extends ControllerTest {
 
     @After
     public final void cleanDB() {
-        userRepository.deleteAll(); // TODO: Add this for postServiceTest as well
+        userRepository.deleteAll();
         postRepository.deleteAll();
     }
 
@@ -69,7 +69,7 @@ public class PostControllerTest extends ControllerTest {
      */
 
     @Test
-    public void getPostsShouldReturnAllPostsWithCorrectAttributes() throws Exception {
+    public void getPostsShouldReturnAllPosts() throws Exception {
         List<Post> allPosts = postRepository.findAll();
         List<User> allUsers = userRepository.findAll();
         setAuthUser(allUsers.getFirst());

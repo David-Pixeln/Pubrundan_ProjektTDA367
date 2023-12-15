@@ -1,36 +1,54 @@
 package com.Pubrunda.entities.friendRequest;
 
+import com.Pubrunda.DTOMapper;
+import com.Pubrunda.dto.response.MessageResponse;
+import com.Pubrunda.entities.friendRequest.dto.request.CreateFriendRequestDTO;
+import com.Pubrunda.entities.friendRequest.dto.request.FriendRequestQueryParams;
+import com.Pubrunda.entities.friendRequest.dto.response.FriendRequestDTO;
+import com.Pubrunda.entities.user.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/friendRequests")
+@RequiredArgsConstructor
 public class FriendRequestController {
 
-    private final FriendRequestRepository repository;
-
-    FriendRequestController(FriendRequestRepository repository) {
-        this.repository = repository;
-    }
+    private final FriendRequestService friendRequestService;
 
     // READ
+    @GetMapping
+    public List<FriendRequestDTO> getFriendRequests(@AuthenticationPrincipal User authenticatedUser,
+                                                    FriendRequestQueryParams queryParams) {
+        return DTOMapper.convertToDto(friendRequestService.getAllFriendRequests(authenticatedUser, queryParams), FriendRequestDTO.class);
+    }
+
     @GetMapping("/{friendRequestId}")
-    public FriendRequest getFriendRequestById(@PathVariable long friendRequestId) {
-        return repository.findById(friendRequestId).orElseThrow();
+    public FriendRequestDTO getFriendRequestById(@AuthenticationPrincipal User authenticatedUser,
+                                              @PathVariable long friendRequestId) {
+        return DTOMapper.convertToDto(friendRequestService.getFriendRequestById(authenticatedUser, friendRequestId), FriendRequestDTO.class);
     }
 
     // CREATE
     @PostMapping
-    public FriendRequest createFriendRequest(@RequestBody FriendRequest newFriendRequest) {
-        return repository.save(newFriendRequest);
+    @ResponseStatus(HttpStatus.CREATED)
+    public FriendRequestDTO createFriendRequest(@AuthenticationPrincipal User authenticatedUser,
+                                                @RequestBody CreateFriendRequestDTO newFriendRequest) {
+        return DTOMapper.convertToDto(friendRequestService.createFriendRequest(authenticatedUser, newFriendRequest), FriendRequestDTO.class);
     }
 
     // DELETE
     @DeleteMapping("/{friendRequestId}")
-    public ResponseEntity<FriendRequest> deleteUser(@PathVariable Long friendRequestId) {
-        FriendRequest existingFriendRequest = repository.findById(friendRequestId).orElseThrow();
-        repository.delete(existingFriendRequest);
-        return ResponseEntity.ok().build();
+    public MessageResponse deleteUser(@AuthenticationPrincipal User authenticatedUser,
+                                      @PathVariable long friendRequestId) {
+        friendRequestService.deleteFriendRequest(authenticatedUser, friendRequestId);
+
+        return new MessageResponse("Friend request deleted successfully");
     }
 
 }
