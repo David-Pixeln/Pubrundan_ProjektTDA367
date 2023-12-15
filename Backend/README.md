@@ -41,7 +41,7 @@ To authenticate a request, add the following header to the request:
     {"id": 1,"username": "test","role": "USER"}
 
 ### Relevant Entities
-Post, Review, Comment, User, FriendRequest, Pub
+Post, Review, Comment, User, FriendRequest, Pub, FriendList
 
 
 
@@ -115,9 +115,14 @@ openBefore    | DateTime | Filter pubs opening before timestamp
 closedAfter   | DateTime | Filter pubs closing after timestamp
 closedBefore  | DateTime | Filter pubs closing before timestamp
 
+#### FriendList
+Parameter     | Type   | Description
+---------     |--------| -----------
+username      | String | Filter friendList by username of owner
+
 
 #### Relevant Classes
-Post, Review, Comment, User, FriendRequest, Pub
+Post, Review, Comment, User, FriendRequest, Pub, FriendList
 
 
 
@@ -189,3 +194,27 @@ Post, Review, Comment, FriendRequest, Pub
 
 ### Relevant Classes
 Post, Review, Comment, User, FriendRequest, Pub
+
+
+
+## Resource Specific Requests
+
+### `FriendRequest`
+
+### Request
+
+`GET /api/[resource]/{friendRequestId}/accept`
+
+    curl -i -H 'Accept: application/json' -X GET http://localhost:8080/api/friendRequests/1/accept
+
+
+### Response
+
+    HTTP/1.1 200 OK
+    Date: Fri, 15 Dec 2023 15:46:11 GMT
+    Status: 200 OK
+    Connection: keep-alive
+    Content-Type: application/json
+
+    {message: "Friend request accepted successfully"}
+
