@@ -27,7 +27,6 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-    private final ImageService imageService;
 
     // READ
     @GetMapping("/{postId}")
