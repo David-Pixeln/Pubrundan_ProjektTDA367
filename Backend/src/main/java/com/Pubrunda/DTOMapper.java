@@ -19,6 +19,10 @@ public class DTOMapper {
         return collection.stream().map(object -> convertToDto(object, dtoClass)).toList();
     }
 
+    public static <A, B> TypeMap<A, B> getTypeMap(Class<A> sourceType, Class<B> destinationType) {
+        return modelMapper.getTypeMap(sourceType, destinationType);
+    }
+
     public static <A, B> TypeMap<A, B> createTypeMap(Class<A> sourceType, Class<B> destinationType) {
         return modelMapper.createTypeMap(sourceType, destinationType);
     }
