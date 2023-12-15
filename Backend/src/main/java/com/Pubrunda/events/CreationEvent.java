@@ -1,23 +1,25 @@
-package com.Pubrunda.appEvents;
+package com.Pubrunda.events;
 
-import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.ResolvableTypeProvider;
 
-@Getter
 public class CreationEvent<T> extends ApplicationEvent implements ResolvableTypeProvider {
 
-    private final T entity;
+    private final T object;
 
-    public CreationEvent(Object source, T entity) {
+    public CreationEvent(Object source, T object) {
         super(source);
-        this.entity = entity;
+        this.object = object;
     }
 
     @Override
     public ResolvableType getResolvableType() {
-        return ResolvableType.forClassWithGenerics(getClass(), ResolvableType.forInstance(entity));
+        return ResolvableType.forClassWithGenerics(getClass(), ResolvableType.forInstance(object));
+    }
+
+    public T getCreatedObject() {
+        return object;
     }
 
 }

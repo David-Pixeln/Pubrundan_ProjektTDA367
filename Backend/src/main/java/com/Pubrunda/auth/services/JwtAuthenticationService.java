@@ -1,6 +1,6 @@
 package com.Pubrunda.auth.services;
 
-import com.Pubrunda.appEvents.CreationEvent;
+import com.Pubrunda.events.CreationEvent;
 import com.Pubrunda.auth.dto.request.AuthenticationRequest;
 import com.Pubrunda.auth.dto.request.RegisterUserRequest;
 import com.Pubrunda.auth.dto.response.TokenAuthenticationResponse;

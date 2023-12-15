@@ -1,18 +1,16 @@
 package com.Pubrunda.entities.profile;
 
+import com.Pubrunda.entities.image.Image;
 import com.Pubrunda.entities.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class Profile {
 
     @Id
@@ -23,7 +21,9 @@ public class Profile {
 
     private String description;
 
-    private String profileImagePath;
+    @OneToOne
+    @JoinColumn(name = "profile_image_id")
+    private Image profileImage;
 
     @MapsId
     @OneToOne(cascade = CascadeType.ALL, optional = false)
@@ -31,8 +31,5 @@ public class Profile {
     @NonNull
     private User user;
 
-    public BufferedImage getProfileImage() throws IOException {
-        return ImageIO.read(new File(profileImagePath));
-    }
 
 }
