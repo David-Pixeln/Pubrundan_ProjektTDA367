@@ -3,7 +3,6 @@ package com.Pubrunda.entities.comment;
 import com.Pubrunda.entities.user.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 

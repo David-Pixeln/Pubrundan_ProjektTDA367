@@ -82,6 +82,7 @@ public class CommentServiceTest extends ServiceTest {
         assertThat(comments).hasSize(2);
         assertThat(comments).isEqualTo(authorComments);
     }
+
     @Test
     public void getAllCommentsWithQueryParameterForAuthorUsernameShouldReturnTwoCommentsFromAuthor() {
         User author = userRepository.findAll().get(1);
@@ -186,7 +187,6 @@ public class CommentServiceTest extends ServiceTest {
     private List<Comment> getCommentFromAuthor(User author) {
         return commentRepository.findAll().stream().filter(comment -> comment.getAuthor().equals(author)).toList();
     }
-
 
 
 }

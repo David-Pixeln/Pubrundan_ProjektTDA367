@@ -2,8 +2,6 @@ package com.Pubrunda.entities.comment;
 
 import com.Pubrunda.EntitySpecifications;
 import com.Pubrunda.entities.comment.dto.request.CommentQueryParams;
-import com.Pubrunda.entities.post.Post;
-import com.Pubrunda.entities.post.dto.request.PostQueryParams;
 import com.Pubrunda.specifications.Specifications;
 import com.Pubrunda.specifications.TimeSpecifications;
 import jakarta.persistence.criteria.Root;

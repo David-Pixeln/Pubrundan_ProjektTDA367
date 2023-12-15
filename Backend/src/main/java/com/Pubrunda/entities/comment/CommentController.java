@@ -37,6 +37,7 @@ public class CommentController {
     public CommentDTO createComment(@AuthenticationPrincipal User authenticatedUser, @RequestBody CreateCommentDTO newComment) {
         return DTOMapper.convertToDto(commentService.createComment(authenticatedUser, newComment), CommentDTO.class);
     }
+
     // DELETE
     @DeleteMapping("/{commentId}")
     public MessageResponse deleteComment(@AuthenticationPrincipal User authenticatedUser, @PathVariable long commentId) {

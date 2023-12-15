@@ -53,7 +53,7 @@ public class CommentControllerTest extends ControllerTest {
         LocalDateTime dateTime2 = LocalDateTime.of(2015, Month.AUGUST, 3, 23, 10, 5);
         LocalDateTime dateTime3 = LocalDateTime.of(2020, Month.DECEMBER, 10, 5, 25, 15);
 
-        commentRepository.save(new Comment(testUser1, "content",dateTime1));
+        commentRepository.save(new Comment(testUser1, "content", dateTime1));
         commentRepository.save(new Comment(testUser2, "content", dateTime2));
         commentRepository.save(new Comment(testUser2, "content", dateTime3));
     }
