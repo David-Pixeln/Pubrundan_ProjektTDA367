@@ -9,6 +9,7 @@ The following instructions explain what requests can be made through the API, wh
 ## Authentication
 
 
+
 ## Get A Single Resource
 
 ### Request
@@ -29,6 +30,7 @@ The following instructions explain what requests can be made through the API, wh
 
 ### Relevant Entities
 Post, Review, Comment, User, FriendRequest, Pub
+
 
 
 ## Get All Of A Resource
@@ -108,15 +110,11 @@ Post, Review, Comment, User, FriendRequest, Pub
 
 
 
-### Create an Object
--------------------------
+## Create A Resource
 
 ### Request
 
 `POST /api/[resource]`
-
-    curl -i -H 'Accept: application/json' http://localhost:8080/api/users
-
 
 ### Response
 
@@ -126,23 +124,20 @@ Post, Review, Comment, User, FriendRequest, Pub
     Connection: keep-alive
     Content-Type: application/json
 
-    {"id": 1,"username": "test","role": "USER"}
+    [{"id":1,"from":{"id":1,"username":"test","role":"USER"},"to":{"id":2,"username":"test2","role":"USER"}}]
 
 
 
-### Update an Object
----------------------
-#### Relevant Classes
-User, Pub
+## Update A Resource
 
-#### Request
+### Request
 
-> `PUT /api/[resource]/{id}`
+`PUT /api/[resource]/{id}`
 
-    curl -i -H 'Accept: application/json' http://localhost:8080/api/users/1
+    curl -i -H 'Accept: application/json' -X PUT -d 'username=newUsername' http://localhost:8080/api/users/1
 
 
-#### Response
+### Response
 
     HTTP/1.1 200 OK
     Date: Fri, 15 Dec 2023 15:46:11 GMT
@@ -150,31 +145,29 @@ User, Pub
     Connection: keep-alive
     Content-Type: application/json
 
-    {"id": 1,"username": "test","role": "USER"}
+    {"id": 1,"username": "newUsername","role": "USER"}
 
 
 
-### Delete an Object
----------------------
-#### Relevant Classes
+## Delete an Object
+
+### Request
+
+`DELETE /api/[resource]/{id}`
+
+    curl -i -H 'Accept: application/json' -X DELETE http://localhost:8080/api/users/1
+
+
+### Response
+
+    HTTP/1.1 200 OK
+    Date: Fri, 15 Dec 2023 15:46:11 GMT
+    Status: 200 OK
+    Connection: keep-alive
+    Content-Type: application/json
+
+    {message: "User was deleted successfully"}
+
+
+### Relevant Classes
 Post, Review, Comment, User, FriendRequest, Pub
-
-#### Request
-
-`GET /api/[resource]/{id}`
-
-    curl -i -H 'Accept: application/json' http://localhost:8080/api/users/1
-
-
-#### Response
-
-    HTTP/1.1 200 OK
-    Date: Fri, 15 Dec 2023 15:46:11 GMT
-    Status: 200 OK
-    Connection: keep-alive
-    Content-Type: application/json
-
-    {"User was deleted successfully"}
-
-
------------
