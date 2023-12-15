@@ -28,8 +28,7 @@ public class CommentService {
     }
 
     public List<Comment> getAllComments(CommentQueryParams params) {
-        CommentSpecifications commentSpecifications = new CommentSpecifications(params);
-        return commentRepository.findAll(commentSpecifications);
+        return commentRepository.findAll(new CommentSpecifications(params));
     }
 
     public Comment createComment(User authenticatedUser, CreateCommentDTO newComment) {
@@ -55,4 +54,5 @@ public class CommentService {
 
         commentRepository.deleteById(commentId);
     }
+
 }
