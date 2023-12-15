@@ -3,8 +3,8 @@ package com.Pubrunda.entities.comment;
 import com.Pubrunda.DTOMapper;
 import com.Pubrunda.dto.response.MessageResponse;
 import com.Pubrunda.entities.comment.dto.request.CommentQueryParams;
+import com.Pubrunda.entities.comment.dto.request.CreateCommentDTO;
 import com.Pubrunda.entities.comment.dto.response.CommentDTO;
-import com.Pubrunda.entities.post.dto.response.PostDTO;
 import com.Pubrunda.entities.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class CommentController {
 
     @GetMapping
     public List<CommentDTO> getAllComments(CommentQueryParams params) {
-        return DTOMapper.convertToDto(commentService.getAllComments(params), PostDTO.class);
+        return DTOMapper.convertToDto(commentService.getAllComments(params), CommentDTO.class);
     }
 
     // CREATE
@@ -38,11 +38,9 @@ public class CommentController {
         return DTOMapper.convertToDto(commentService.createComment(authenticatedUser, newComment), CommentDTO.class);
     }
     // DELETE
-    @DeleteMapping("/{postId}")
+    @DeleteMapping("/{commentId}")
     public MessageResponse deleteComment(@AuthenticationPrincipal User authenticatedUser, @PathVariable long commentId) {
         commentService.deleteComment(authenticatedUser, commentId);
         return new MessageResponse("Post Deleted Successfully");
     }
-
-    // TODO: get function for user
 }
