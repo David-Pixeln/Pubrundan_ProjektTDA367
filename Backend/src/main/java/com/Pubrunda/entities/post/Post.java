@@ -33,8 +33,9 @@ public class Post {
     private LocalDateTime createdAt;
 
     @NonNull
-    @OneToMany
-    //@OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "post_id")
     private List<Image> images;
 
     private int numberOfLikes; // FIXME: Should be database table?
