@@ -20,6 +20,10 @@ public class DTOConfig {
 
     @Bean
     public void imageDTOConfig() {
+        if (DTOMapper.getTypeMap(Image.class, ImageDTO.class) != null) {
+            return;
+        }
+
         TypeMap<Image, ImageDTO> propertyMapper = DTOMapper.createTypeMap(Image.class, ImageDTO.class);
 
         Converter<String, byte[]> imageConverter = ctx -> {
