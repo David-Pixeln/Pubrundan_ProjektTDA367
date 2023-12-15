@@ -1,13 +1,16 @@
 package com.Pubrunda.entities.comment;
 
+import com.Pubrunda.AuthorizationManager;
 import com.Pubrunda.entities.comment.dto.request.CommentQueryParams;
-import com.Pubrunda.entities.post.Post;
-import com.Pubrunda.entities.post.PostRepository;
-import com.Pubrunda.entities.post.PostSpecifications;
-import com.Pubrunda.entities.post.dto.request.PostQueryParams;
+import com.Pubrunda.entities.comment.dto.request.CreateCommentDTO;
+import com.Pubrunda.entities.user.User;
+import com.Pubrunda.exception.AuthorizationException;
+import com.Pubrunda.exception.MissingRequiredAttributeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -25,7 +28,31 @@ public class CommentService {
     }
 
     public List<Comment> getAllComments(CommentQueryParams params) {
-        CommentSpecifications = new CommentSpecifications(params);
+        CommentSpecifications commentSpecifications = new CommentSpecifications(params);
         return commentRepository.findAll(commentSpecifications);
+    }
+
+    public Comment createComment(User authenticatedUser, CreateCommentDTO newComment) {
+        try {
+            Comment comment = Comment.builder()
+                    .author(authenticatedUser)
+                    .content(newComment.getContent())
+                    .createdAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                    .build();
+
+            return commentRepository.save(comment);
+        } catch (NullPointerException e) {
+            throw new MissingRequiredAttributeException();
+        }
+    }
+
+    public void deleteComment(User authenticatedUser, long commentId) {
+        User existingUser = commentRepository.findById(commentId).orElseThrow().getAuthor();
+
+        if (!AuthorizationManager.hasAuthorityOfUser(authenticatedUser, existingUser)) {
+            throw new AuthorizationException("You are not allowed to delete this comment");
+        }
+
+        commentRepository.deleteById(commentId);
     }
 }
