@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -24,7 +24,7 @@ public class PubCrawl {
     @NonNull
     @OneToMany
     @JoinColumn(name = "pub_id")
-    private ArrayList<Pub> pubs;
+    private List<Pub> pubs;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
