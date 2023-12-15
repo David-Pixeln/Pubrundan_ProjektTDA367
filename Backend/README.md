@@ -8,7 +8,19 @@ The following instructions explain what requests can be made through the API, wh
 
 ## Authentication
 
+In order to access the resources, all api requests need to be authenticated. This is done by first creating a user, which will return a bearer token that should be provided in all future requests.
 
+To create a user, provide the user details (username and password) with:
+
+`POST /api/auth/register`
+
+To reauthenticate an already existing user, provide the user details (username and password) with:
+
+`POST /api/auth/authenticate`
+
+To authenticate a request, add the following header to the request:
+
+    Authorization: Bearer <token>
 
 ## Get A Single Resource
 
