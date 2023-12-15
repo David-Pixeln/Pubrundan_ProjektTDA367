@@ -22,16 +22,23 @@ public class FriendRequestController {
     private final FriendRequestService friendRequestService;
 
     // READ
+    @GetMapping("/{friendRequestId}")
+    public FriendRequestDTO getFriendRequestById(@AuthenticationPrincipal User authenticatedUser,
+                                                 @PathVariable long friendRequestId) {
+        return DTOMapper.convertToDto(friendRequestService.getFriendRequestById(authenticatedUser, friendRequestId), FriendRequestDTO.class);
+    }
+
+    @GetMapping("/{friendRequestId}/accept")
+    public MessageResponse acceptFriendRequest(@AuthenticationPrincipal User authenticatedUser,
+                                                               @PathVariable long friendRequestId) {
+        friendRequestService.acceptFriendRequest(authenticatedUser, friendRequestId);
+        return new MessageResponse("Friend request accepted successfully");
+    }
+
     @GetMapping
     public List<FriendRequestDTO> getFriendRequests(@AuthenticationPrincipal User authenticatedUser,
                                                     FriendRequestQueryParams queryParams) {
         return DTOMapper.convertToDto(friendRequestService.getAllFriendRequests(authenticatedUser, queryParams), FriendRequestDTO.class);
-    }
-
-    @GetMapping("/{friendRequestId}")
-    public FriendRequestDTO getFriendRequestById(@AuthenticationPrincipal User authenticatedUser,
-                                              @PathVariable long friendRequestId) {
-        return DTOMapper.convertToDto(friendRequestService.getFriendRequestById(authenticatedUser, friendRequestId), FriendRequestDTO.class);
     }
 
     // CREATE
