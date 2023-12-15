@@ -3,11 +3,17 @@ package com.Pubrunda.entities.comment;
 import com.Pubrunda.entities.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class Comment {
 
     @Id
@@ -17,11 +23,15 @@ public class Comment {
 
     @NonNull
     @Setter
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
     private User author;
 
     @NonNull
     private String content;
+
+    @NonNull
+    private LocalDateTime createdAt;
 
 }

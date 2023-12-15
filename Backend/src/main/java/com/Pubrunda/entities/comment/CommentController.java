@@ -1,37 +1,47 @@
 package com.Pubrunda.entities.comment;
 
-import org.springframework.http.ResponseEntity;
+import com.Pubrunda.DTOMapper;
+import com.Pubrunda.dto.response.MessageResponse;
+import com.Pubrunda.entities.comment.dto.request.CommentQueryParams;
+import com.Pubrunda.entities.comment.dto.request.CreateCommentDTO;
+import com.Pubrunda.entities.comment.dto.response.CommentDTO;
+import com.Pubrunda.entities.user.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping("${api.baseurl}/comments")
+@RequiredArgsConstructor
 public class CommentController {
 
-    private final CommentRepository repository;
-
-    CommentController(CommentRepository repository) {
-        this.repository = repository;
-    }
+    private final CommentService commentService;
 
     // READ
     @GetMapping("/{commentId}")
-    public Comment getCommentById(@PathVariable long commentId) {
-        return repository.findById(commentId).orElseThrow();
+    public CommentDTO getCommentById(@PathVariable long commentId) {
+        return DTOMapper.convertToDto(commentService.getCommentById(commentId), CommentDTO.class);
+    }
+
+    @GetMapping
+    public List<CommentDTO> getAllComments(CommentQueryParams params) {
+        return DTOMapper.convertToDto(commentService.getAllComments(params), CommentDTO.class);
     }
 
     // CREATE
     @PostMapping
-    public Comment createComment(@RequestBody Comment newComment) {
-        return repository.save(newComment);
+    @ResponseStatus(HttpStatus.CREATED)
+    public CommentDTO createComment(@AuthenticationPrincipal User authenticatedUser, @RequestBody CreateCommentDTO newComment) {
+        return DTOMapper.convertToDto(commentService.createComment(authenticatedUser, newComment), CommentDTO.class);
     }
 
     // DELETE
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<Comment> deleteComment(@PathVariable long commentId) {
-        Comment existingComment = repository.findById(commentId).orElseThrow();
-        repository.delete(existingComment);
-        return ResponseEntity.ok().build();
+    public MessageResponse deleteComment(@AuthenticationPrincipal User authenticatedUser, @PathVariable long commentId) {
+        commentService.deleteComment(authenticatedUser, commentId);
+        return new MessageResponse("Post Deleted Successfully");
     }
-
-    // TODO: get function for user
 }
