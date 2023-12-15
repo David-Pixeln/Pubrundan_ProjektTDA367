@@ -1,6 +1,7 @@
 package com.Pubrunda;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,6 +17,10 @@ public class DTOMapper {
 
     public static <T, C> List<C> convertToDto(Collection<T> collection, Class<C> dtoClass) {
         return collection.stream().map(object -> convertToDto(object, dtoClass)).toList();
+    }
+
+    public static <A, B> TypeMap<A, B> createTypeMap(Class<A> sourceType, Class<B> destinationType) {
+        return modelMapper.createTypeMap(sourceType, destinationType);
     }
 
 }

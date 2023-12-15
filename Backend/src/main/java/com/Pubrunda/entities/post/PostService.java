@@ -1,6 +1,8 @@
 package com.Pubrunda.entities.post;
 
 import com.Pubrunda.AuthorizationManager;
+import com.Pubrunda.entities.image.Image;
+import com.Pubrunda.entities.image.ImageService;
 import com.Pubrunda.entities.post.dto.request.CreatePostDTO;
 import com.Pubrunda.entities.post.dto.request.PostQueryParams;
 import com.Pubrunda.entities.user.User;
@@ -9,6 +11,7 @@ import com.Pubrunda.exception.MissingRequiredAttributeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostService {
 
+    private final ImageService imageService;
     private final PostRepository postRepository;
 
     public Post getPostById(long postId) {
@@ -34,16 +38,20 @@ public class PostService {
 
     public Post createPost(User authenticatedUser, CreatePostDTO newPost) {
         try {
+            List<Image> images = imageService.upload(newPost.getImages());
+
             Post post = Post.builder()
                     .author(authenticatedUser)
                     .content(newPost.getContent())
-                    .imagePath(newPost.getImagePath())
+                    .images(images)
                     .createdAt(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                     .build();
 
             return postRepository.save(post);
         } catch (NullPointerException e) {
             throw new MissingRequiredAttributeException();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

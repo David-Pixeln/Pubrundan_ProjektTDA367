@@ -1,5 +1,6 @@
 package com.Pubrunda.entities.post;
 
+import com.Pubrunda.entities.image.Image;
 import com.Pubrunda.entities.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -31,7 +33,9 @@ public class Post {
     private LocalDateTime createdAt;
 
     @NonNull
-    private String imagePath;
+    @OneToMany
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Image> images;
 
     private int numberOfLikes; // FIXME: Should be database table?
 
