@@ -22,7 +22,6 @@ public class Comment {
     private long id;
 
     @NonNull
-    @Setter
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")

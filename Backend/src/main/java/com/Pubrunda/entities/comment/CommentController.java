@@ -6,6 +6,8 @@ import com.Pubrunda.entities.comment.dto.request.CommentQueryParams;
 import com.Pubrunda.entities.comment.dto.request.CreateCommentDTO;
 import com.Pubrunda.entities.comment.dto.response.CommentDTO;
 import com.Pubrunda.entities.user.User;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,7 +36,7 @@ public class CommentController {
     // CREATE
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CommentDTO createComment(@AuthenticationPrincipal User authenticatedUser, CreateCommentDTO newComment) {
+    public CommentDTO createComment(@AuthenticationPrincipal User authenticatedUser, @RequestBody CreateCommentDTO newComment) {
         return DTOMapper.convertToDto(commentService.createComment(authenticatedUser, newComment), CommentDTO.class);
     }
 
